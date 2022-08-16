@@ -1,0 +1,48 @@
+{% extends "dashboard/base.html" %}
+
+{% block DashboardTitle %}
+  Homepage
+{% endblock DashboardTitle %}
+
+{% block DashboardContent %}
+  <h2 class="my-2 py-2 rounded-3 heading">Edit Delivery Point #{{object.id}}</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card card-body shadow-md border-0">
+        <form action="" method="post" class="custom-form">
+          {% csrf_token %}
+          <div class="form-group mt-2">
+            <label for="">{{form.name.label}}</label>
+            {{form.name}}
+          </div>
+          {% if form.name.errors %}
+            {% for error in form.name.errors %}
+              <small class="text-danger">{{error}}</small>
+            {% endfor %}
+          {% endif %}
+          <div class="form-group mt-2">
+            <label for="">{{form.fee.label}}</label>
+            {{form.fee}}
+          </div>
+          {% if form.fee.errors %}
+            {% for error in form.fee.errors %}
+              <small class="text-danger">{{error}}</small>
+            {% endfor %}
+          {% endif %}
+          <div class="form-group mt-2">
+            <label for="">{{form.description.label}}</label>
+            {{form.description}}
+          </div>
+          {% if form.description.errors %}
+            {% for error in form.description.errors %}
+              <small class="text-danger">{{error}}</small>
+            {% endfor %}
+          {% endif %}
+          <div class="text-end">
+            <button type="submit" class="btn btn-primary mt-4"><i class="fa fa-truck"></i> update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock DashboardContent %}

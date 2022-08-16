@@ -1,0 +1,23 @@
+info:
+  description: ''
+  title: ''
+  version: ''
+openapi: 3.0.0
+paths:
+  /api/v1/openapi:
+    get:
+      operationId: openapi_list
+      tags:
+      - openapi
+  /api/v1/orders:
+    post:
+      operationId: orders_create
+      tags:
+      - orders
+  /api/v1/products:
+    get:
+      operationId: products_list
+      tags:
+      - products
+servers:
+- url: ''

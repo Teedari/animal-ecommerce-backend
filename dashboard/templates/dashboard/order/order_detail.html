@@ -1,0 +1,143 @@
+{% extends "dashboard/base.html" %}
+
+{% block DashboardTitle %}
+  Category
+{% endblock DashboardTitle %}
+
+{% block DashboardContent %}
+  <h2 class="my-2 py-2 rounded-3 heading">Order Detail</h2>
+  <div class="row mb-4">
+    <div class="col-md-8 offset-md-2">
+      <div class="card card-body shadow-lg px-4 rounded-lg">
+        <div class="thank-you text-center">
+          <h3 class="text-primary">Thanks 4 shopping</h3>
+          <p class="m-0 mt-2"><strong>Hi John Doe ☺, we have received your order and are getting ready to be delivery</strong></p>
+          <p class=""><strong>Lorem ipsum dolor sit.</strong></p>
+        </div>
+
+        <div class="custom-carousel">
+          <div class="custom-carousel-tab-container">
+            <div class="custom-carousel-tab active">
+              <div class="custom-carousel-tab-icon">
+                <i class="fa fa-shopping-basket"></i>
+              </div>
+              <p class="custom-carousel-tab-label">Order Confirmed</p>
+            </div>
+            <div class="custom-carousel-tab">
+              <div class="custom-carousel-tab-icon">
+                <i class="fa fa-truck"></i>
+              </div>
+              <p class="custom-carousel-tab-label">Order Delivering</p>
+            </div>
+            <div class="custom-carousel-tab">
+              <div class="custom-carousel-tab-icon">
+                <i class="fa fa-send-o"></i>
+              </div>
+              <p class="custom-carousel-tab-label">Order Delivering</p>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between">
+            <label for="" class="d-flex gap-4 h6"><strong>Order No.</strong><span>a234234</span></label>
+            <label for="" class="d-flex gap-4 h6"><strong>Order Date</strong><span>{{time}}</span></label>
+          </div>
+          <div class="custom-carousel-list d-flex flex-column gap-2" style="max-height: 300px; overflow-y: auto">
+            <div class="custom-carousel-list-item">
+              <div class="card card-body">
+                <div class="d-flex">
+                  <div class="card-image" style="width: 200px; height: 100px;">
+                    <img src="https://images.unsplash.com/photo-1571846599782-8164c94f5892?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Y2F0dGxlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" style="object-fit: cover;" alt="" width="200px" height="100px">
+                  </div>
+                  <div class="d-flex align-items-center justify-content-between px-4" style="flex-grow: 1;">
+                    <div>
+                      <h4>Cattle</h4>
+                      <h6>Breed</h6>
+                    </div>
+                   <div> <h6>7</h6></div>
+                    <div>
+                      <h6>GHc 12.34</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="custom-carousel-list-item">
+              <div class="card card-body">
+                <div class="d-flex">
+                  <div class="card-image" style="width: 200px; height: 100px;">
+                    <img src="https://images.unsplash.com/photo-1571846599782-8164c94f5892?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Y2F0dGxlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" style="object-fit: cover;" alt="" width="200px" height="100px">
+                  </div>
+                  <div class="d-flex align-items-center justify-content-between px-4" style="flex-grow: 1;">
+                    <div>
+                      <h4>Cattle</h4>
+                      <h6>Breed</h6>
+                    </div>
+                   <div> <h6>7</h6></div>
+                    <div>
+                      <h6>GHc 12.34</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="custom-carousel-list-item">
+              <div class="card card-body">
+                <div class="d-flex">
+                  <div class="card-image" style="width: 200px; height: 100px;">
+                    <img src="https://images.unsplash.com/photo-1571846599782-8164c94f5892?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Y2F0dGxlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" style="object-fit: cover;" alt="" width="200px" height="100px">
+                  </div>
+                  <div class="d-flex align-items-center justify-content-between px-4" style="flex-grow: 1;">
+                    <div>
+                      <h4>Cattle</h4>
+                      <h6>Breed</h6>
+                    </div>
+                   <div> <h6>7</h6></div>
+                    <div>
+                      <h6>GHc 12.34</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <section class="py-2">
+            <h5><strong>Payment & Delivery Details</strong></h5>
+            <div class="row">
+              <div class="col-md-8">
+                <table class="table">
+                  <tr>
+                    <td>Payment method</td>
+                    <td>45523</td>
+                  </tr>
+                  <tr>
+                    <td>Delivered to</td>
+                    <td>45523</td>
+                  </tr>
+                  <tr>
+                    <td>Destination Point</td>
+                    <td>45523</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="col-md-4">
+                <table class="table table-no-border">
+                  <tr>
+                    <td>Subtotal</td>
+                    <td><strong>223423</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Delivering Charges</td>
+                    <td><strong>223423</strong></td>
+                  </tr>
+                  <tr>
+                    <td class="text-primary">Total</td>
+                    <td><strong>223423</strong></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock DashboardContent %}

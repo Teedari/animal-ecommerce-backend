@@ -1,0 +1,44 @@
+{% extends "dashboard/base.html" %}
+
+{% block DashboardTitle %}
+  Category
+{% endblock DashboardTitle %}
+
+{% block DashboardContent %}
+  <h2 class="my-2 py-2 rounded-3 heading">List All Orders</h2>
+  <div>
+    <table class="table table-striped table-responsive">
+      <thead>
+        <th>#</th>
+        <th>Customer</th>
+        <th>Items Bought</th>
+        <th>Total Amount</th>
+        <th>Action</th>
+      </thead>
+      <tbody>
+        {% if object_list %}
+          {% for order in object_list %}
+            <tr class="">
+              <td>{{order.id}}</td>
+              <td>{{order.customer}}</td>
+              <td class="text-capitalize">{{order.total_amount}}</td>
+              <td>{{order.status}}</td>
+              <td>
+                <a href="{% url 'dashboard:order_detail' order.id %}" class="btn btn-info rounded-pill"><i class="fa fa-eye text-white"></i> </a>
+                <a href="{% url 'dashboard:order_delete' order.id %}" class="btn btn-danger rounded-pill"><i class="fa fa-trash text-white"></i> </a>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td class="text-center text-info py-4" colspan='4'>No data available at the moment</td>
+            </tr>
+          {% endfor %}
+          {% else %}
+          <tr>
+            <td class="text-center text-info py-4" colspan='4'>No data available at the moment</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+{% endblock DashboardContent %}

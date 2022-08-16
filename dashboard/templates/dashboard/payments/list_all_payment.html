@@ -1,0 +1,41 @@
+{% extends "dashboard/base.html" %}
+
+{% block DashboardTitle %}
+  Category
+{% endblock DashboardTitle %}
+
+{% block DashboardContent %}
+  <h2 class="my-2 py-2 rounded-3 heading">List All Categories</h2>
+  <div>
+    <table class="table table-striped table-responsive custom-table">
+      <thead>
+        <th>#</th>
+        <th>Paid By</th>
+        <th>Payment Method</th>
+        <th>Amount</th>
+        <th>Status</th>
+        <th>Action</th>
+      </thead>
+      <tbody>
+        {% if object_list %}
+          {% for payment in object_list %}
+            <tr>
+              <td>{{payment.id}}</td>
+              <td>{{payment.paid_by}}</td>
+              <td>{{payment.payment_method}}</td>
+              <td>{{payment.amount}}</td>
+              <td>{{payment.status}}</td>
+              {% comment %}
+                
+              <!-- <td>
+                <a href="{% url 'dashboard:payment_delete' payment.id %}" class="btn btn-danger rounded-pill"><i class="fa fa-trash text-white"></i> </a>
+              </td> -->
+              {% endcomment %}
+            </tr>
+            {% empty %}
+          {% endfor %}
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+{% endblock DashboardContent %}
