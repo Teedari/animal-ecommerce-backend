@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load custom_tags %}
 {% block Title %}
   Dashboard | {% block DashboardTitle %}{% endblock DashboardTitle %}
 {% endblock Title %}
@@ -14,9 +14,9 @@
     <main id="layout-main" class="layout-main">
       <section class="layout-header shadow-sm d-flex justify-content-end align-items-center px-4" id="layout-header">
         <a class="avatar text-white text-decoration-none" href="#">
-          <h5 class="">T</h5>
+          <h5 class="">{{user | short_name}}</h5>
         </a>
-        <a href="" class="text-dark text-decoration-none ms-4"><i class="fa fa-rss"></i> Logout</a>
+        <a href="{% url 'account:sign_out' %}" class="text-dark text-decoration-none ms-4"><i class="fa fa-rss"></i> Logout</a>
       </section>
       <section class="container">
         {% if messages %}
