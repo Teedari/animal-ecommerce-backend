@@ -51,35 +51,7 @@ class Category(BaseModel):
     if category.exists():
       category.first().delete()
       return True
-  
-  
-# MODEL-PRODUCT
-# class Product(BaseModel):
-#   AVAILABLE = 'available'
-#   OUT_OF_STOCK = 'out_of_stock'
-  
-#   STATUS = (
-#     (AVAILABLE, AVAILABLE),
-#     (OUT_OF_STOCK, get_readable_choice_value(OUT_OF_STOCK))
-#   )
-  
-#   product = models.ForeignKey(to='Animal', on_delete=models.CASCADE)
-#   quantity = models.BigIntegerField(default=0)
-#   price = models.DecimalField(decimal_places=2, max_digits=999, default=0)
-#   discount = models.BigIntegerField(null=True)
-#   status = models.CharField(choices=STATUS, default=OUT_OF_STOCK, max_length=100, blank=True)
-  
-#   @property
-#   def jsonfields(self):
-#     return {
-#       'quantity': self.quantity,
-#       'price': self.price,
-#       'discount': self.discount
-#     }
-  
-  
-  
-  
+   
   
 # MODEL - Order
 class Order(BaseModel):
