@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.views import View, generic
+from django.views import View
 from django.contrib.auth import logout
-from .forms.sign_in_form import SignInForm
-
+from account.forms.sign_in_form import SignInForm
 
 
 class SignInView(View):
@@ -37,4 +36,5 @@ def signOut(request):
       pass
   return redirect(reverse('dashboard:homepage'))
   
+    
     

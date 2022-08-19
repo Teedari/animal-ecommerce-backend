@@ -1,5 +1,8 @@
 from django.urls import path
-from .views import SignInView, signOut
+
+from account.views.view import SignInView, signOut
+
+
 
 
 app_name = 'account'
