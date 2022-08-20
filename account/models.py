@@ -33,6 +33,8 @@ class UserProfile(BaseModel):
   def is_agent(self):
     return self.user_role == UserProfile.AGENT
   
+  
+  
   @classmethod
   def add_user_to_group(cls, user_role):
     if user_role in list(map(lambda role:  role[0], [])):

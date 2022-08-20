@@ -142,6 +142,7 @@ class OrderedItem(BaseModel):
     self.price = self.product.price
     return super().save(*args, **kwargs)
   
+  
   @property
   def total_amount(self):
     return self.price * self.quantity
