@@ -98,30 +98,36 @@ class Order(BaseModel):
   )
 
   customer = models.ForeignKey(to='account.UserProfile', null=True, blank=True, related_name='+', on_delete=models.CASCADE)
-  total_amount = models.FloatField(null=True, blank=True)
   status = models.CharField(choices=ORDERED_STATUS, default=WAITING, max_length=100)
   
   
   @property
-  def ordered_items(self):
-    return self.ordereditem_set.all()
-  @property
-  def total_amount_of_ordered_items(self):
-    items = OrderedItem.objects.filter(id=self.id)
-    total = reduce(lambda prevPrice, nextPrice: prevPrice + nextPrice, [ item.price for item in items], 0)
+  def total_items_amount(self):
+    total = 0
+    for item in  self.ordereditem.all():
+      total += item.total_amount
     return total
-
-  def validate_amount_been_paid(self, amount:Decimal):
-    return self.total_amount_of_ordered_items == amount
+  
+  @property
+  def items(self):
+    return self.ordereditem.all()
+  
+  def is_total_amount_paid_match(self, amount):
+    if not amount:
+      return False
+    return self.total_items_amount == amount
+  
+  
   
   
   
   
 class OrderedItem(BaseModel):
   order = models.ForeignKey(to='Order', related_name='ordereditem', on_delete=models.CASCADE)
-  product = models.ForeignKey(to='Animal', related_name='+',on_delete=models.SET_NULL, null=True)
-  price = models.DecimalField(decimal_places=2, max_digits=99999, default=0, null=True)
+  product = models.ForeignKey(to='Animal', related_name='+',on_delete=models.DO_NOTHING)
+  price = models.DecimalField(max_digits=10, decimal_places=2)
   quantity = models.BigIntegerField(blank=False)
+  
   
   
   
@@ -137,7 +143,7 @@ class OrderedItem(BaseModel):
     return super().save(*args, **kwargs)
   
   @property
-  def item_total_price(self):
+  def total_amount(self):
     return self.price * self.quantity
   
   @classmethod
@@ -164,6 +170,7 @@ class Payment(BaseModel):
   payment_method = models.CharField(max_length=200)
   is_paid = models.BooleanField(default=False, null=True)
   paid_by = models.ForeignKey(to='account.UserProfile', on_delete=models.CASCADE, null=True)
+  status = models.CharField(null=True, max_length=200)
   remarks = models.CharField(null=True, max_length=200)
   
   

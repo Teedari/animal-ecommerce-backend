@@ -20,6 +20,19 @@ class UserProfile(BaseModel):
   email_verified = models.BooleanField(default=False)
   user_role = models.CharField(choices=USER_ROLES,default=UNKNOWN, max_length=100)
   
+  
+  @property
+  def is_customer(self):
+    return self.user_role == UserProfile.CUSTOMER
+  
+  @property
+  def is_admin(self):
+    return self.user_role == UserProfile.ADMIN
+  
+  @property
+  def is_agent(self):
+    return self.user_role == UserProfile.AGENT
+  
   @classmethod
   def add_user_to_group(cls, user_role):
     if user_role in list(map(lambda role:  role[0], [])):
@@ -35,6 +48,11 @@ class UserProfile(BaseModel):
     
     return instance
     
+    
+  @classmethod 
+  def get_user_profile(cls, user:'User'):
+    profile = cls.objects.filter(user=user)
+    return profile.first() if profile.exists() else None
     
     
     

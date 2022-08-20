@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework import generics
+from rest_framework import permissions
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from api.serializers import AnimalSerializer, CategorySerializer, OrderSerializer, OrderedItemSerializer, PaymentSerializer, PurchaseSerializer
+from account.models import UserProfile
+from api.permissions.OnlyCustomPermission import AllowOnlyCustomerPermission
+from api.serializers import AnimalSerializer, CategorySerializer, OrderCreateSerializer, PaymentCreateSerializer
 
 from ecommerce.models import Animal, Category, Order, Payment
 # Create your views here.
@@ -24,14 +27,19 @@ def listAllAnimalsAPI(request):
     return Response(serializer.data)
   
 class OrderAPI(generics.ListCreateAPIView):
-  serializer_class = OrderSerializer
+  serializer_class = OrderCreateSerializer
   queryset = Order.objects.all()
+  permission_classes = [permissions.IsAuthenticated, AllowOnlyCustomerPermission,]
 
 
 class CreateListPaymentViewAPI(generics.ListCreateAPIView):
-  serializer_class = PaymentSerializer
+  serializer_class = PaymentCreateSerializer
   queryset = Payment.objects.all()
+  permission_classes = [permissions.IsAuthenticated,]
+  
+  def perform_create(self, serializer):
+    serializer.save(paid_by=UserProfile.get_user_profile(self.request.user))
   
   
-class CreatePurchaseAPI(generics.CreateAPIView):
-  serializer_class = PurchaseSerializer
+# class CreatePurchaseAPI(generics.CreateAPIView):
+#   serializer_class = PurchaseSerializer
