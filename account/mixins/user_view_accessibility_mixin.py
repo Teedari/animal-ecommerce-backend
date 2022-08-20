@@ -3,7 +3,7 @@ from django.utils.decorators import method_decorator
 from account import models as acc_model
 
 @method_decorator(decorators.login_required, name='dispatch')
-class UserViewAccessibilityMixin(mixins.UserPassesTestMixin, mixins.PermissionRequiredMixin):
+class UserViewAccessibilityMixin(mixins.UserPassesTestMixin):
   allow_user_profiles = []
   def test_func(self):
     if not acc_model.UserProfile.get_user_profile(self.request.user):

@@ -18,7 +18,7 @@
         {% if object_list %}
           {% for profile in object_list %}
             <tr>
-              <td>{{profile.id}}</td>
+              <td>{{forloop.counter}}</td>
               <td>{{profile.user.username}}</td>
               <td>{{profile.user_role}}</td>
                 
@@ -36,6 +36,7 @@
             </tr>
             {% empty %}
           {% endfor %}
+
         {% endif %}
       </tbody>
     </table>
