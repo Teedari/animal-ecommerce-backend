@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 from dashboard.views.animal.animal_views import AddNewAnimalView, AnimalDeleteView, ListAnimalsView
 from dashboard.views.category.category_views import CreateCategory, DeleteCategory, ListCategories
 from dashboard.views.delivery_point.delivery_point_view import CreateDeliveryPoints, EditDeliveryPointView, ListDeliveryPointsView
+from dashboard.views.user.list_all_users_view import DeleteUserView, ListUsersView, ToggleUserActiveStatusView
 from .views.payment.payment_views import ListPaymentView
 from .views.order.order_views import DeleteOrderView, DetailOrderView, ListOrderView
 from .views.user.user_admin_creation_view import CreateNewUserAdminView
@@ -37,4 +38,9 @@ urlpatterns = [
   
   # Payment
   path('payments', ListPaymentView.as_view(), name='payment_list'),
+  
+  # Users
+  path('users', ListUsersView.as_view(), name='user_list'),
+  path('user/<int:pk>/delete', DeleteUserView.as_view(), name='user_delete'),
+  path('user/<int:pk>/toggle/status', ToggleUserActiveStatusView.as_view(), name='user_toggle_active_status'),
 ]

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+
 from core.models import BaseModel
 
 
@@ -55,9 +56,25 @@ class UserProfile(BaseModel):
   def get_user_profile(cls, user:'User'):
     profile = cls.objects.filter(user=user)
     return profile.first() if profile.exists() else None
+  
+  @classmethod
+  def get_user_role(cls, user:'User') -> str:
+    profile = cls.get_user_profile(user)
+    return profile.user_role if profile else None
+  
+  def toggle_user_active_status(self):
+    user = User.objects.filter(id = self.user.id)
+    print(user)
+    if user:
+      user = user.first()
+      user.is_active = False if  user.is_active else True
+      user.save()
+      user.refresh_from_db()
+      return user.is_active
     
-    
-    
+  def user_remove(self):
+    self.user.delete()
+  
   
   
   

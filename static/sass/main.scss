@@ -259,8 +259,8 @@ h1, h2, h3, h4, h5, h6{
       transition: transform 250ms ease-in;
     }
     tr:hover{
-      transform: scale(1.02);
-      transition: transform 250ms ease-out;
+      // transform: scale(1.02);
+      // transition: transform 250ms ease-out;
     }
   }
 }

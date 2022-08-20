@@ -41,7 +41,7 @@
       </div>
       <a href="{% url 'dashboard:order_list' %}" class="menu-item menu-title"><i class="fa fa-shopping-cart"></i> Orders</a>
       <a href="{% url 'dashboard:payment_list' %}" class="menu-item menu-title"><i class="fa fa-paypal"></i> Payments</a>
-      <a href="#" class="menu-item menu-title"><i class="fa fa-users"></i> Customers</a>
+      <a href="{% url 'dashboard:user_list' %}" class="menu-item menu-title"><i class="fa fa-users"></i> Users</a>
       <a href="{% url 'dashboard:user_create_admin' %}" class="menu-item menu-title"><i class="fa fa-user"></i> Create New Admin</a>
     </section>
   </div>
