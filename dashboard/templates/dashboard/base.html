@@ -90,13 +90,34 @@
 {% block InternalScript %}
 <script>
   $(document).ready(function(){
+    const screen = 600
     const sidebar_toggle_handler = function(){
-      const target = $(this).data('td-target')
       const layout = $('#layout')
-      layout.toggleClass('sidebar-toggle')
+      const className = 'sidebar-toggle'
+      if(layout.hasClass(className)){
+        layout.removeClass(className)
+      }else{
+        layout.addClass(className)
+      }
     }
+
+  
     $('#layout-toggler').click(sidebar_toggle_handler)
     
+    const windowSize =$(window).width()
+    if(windowSize < screen){
+      sidebar_toggle_handler()
+    }
+    
+    $(window).resize(function(){
+      const layout = $('#layout')
+      const className = 'sidebar-toggle'
+      if($(this).width() < screen){
+        layout.addClass(className)
+      }else{
+        layout.removeClass(className)
+      }
+    })
   })
 </script>
 

@@ -415,6 +415,6 @@ a {
 @media (max-width: 600px){
   .layout-sidebar{
     width: unset !important;
-    @include MobileViewToggle();
+    // @include MobileViewToggle();
   }
 }
