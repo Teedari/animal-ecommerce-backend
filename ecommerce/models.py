@@ -26,10 +26,13 @@ class Animal(BaseModel):
   def __str__(self) -> str:
     return f'{self.name} - {self.category} - {self.quantity}'
   
+  def images(self):
+    upload_images = self.animal_uploaded_image.all()
+    return upload_images.first().image.url
 
   
 class UploadAnimalImages(BaseModel):
-  animal =models.ForeignKey(to='Animal', on_delete=models.CASCADE)
+  animal =models.ForeignKey(to='Animal', on_delete=models.CASCADE, related_name='animal_uploaded_image')
   image = models.ImageField(upload_to='media/images/animals')
   
   
@@ -98,7 +101,11 @@ class Order(BaseModel):
   )
 
   customer = models.ForeignKey(to='account.UserProfile', null=True, blank=True, related_name='+', on_delete=models.CASCADE)
+  delivery_point = models.ForeignKey(to='DeliveryPoint', null=True, blank=True, related_name='+', on_delete=models.DO_NOTHING)
   status = models.CharField(choices=ORDERED_STATUS, default=WAITING, max_length=100)
+  
+  
+  
   
   
   @property
@@ -109,13 +116,34 @@ class Order(BaseModel):
     return total
   
   @property
+  def total_amount(self):
+    return self.total_items_amount + self.delivery_point.fee
+  
+  @property
   def items(self):
     return self.ordereditem.all()
+  
+  
+  @property 
+  def items_in_cart(self):
+    return sum([ quantity[0] for quantity in self.items.values_list('quantity')])
+  
+  def is_accepted(self):
+    return self.status == Order.ACCEPTED
+  
+  def is_delivering(self):
+    return self.status == Order.DELIVERING
+  
+  def is_received(self):
+    return self.status == Order.RECEIVED
   
   def is_total_amount_paid_match(self, amount):
     if not amount:
       return False
-    return self.total_items_amount == amount
+    return self.total_amount == amount
+  
+  def get_payments_history(self):
+    return self.payment_order
   
   
   
@@ -159,6 +187,9 @@ class OrderedItem(BaseModel):
       instance.save()
     return instance
   
+  def product_info(self):
+    info = {}
+    info['']
     
     
     
@@ -166,7 +197,7 @@ class OrderedItem(BaseModel):
   
   
 class Payment(BaseModel):
-  order = models.OneToOneField(to='Order', on_delete=models.CASCADE, null=True)
+  order = models.OneToOneField(to='Order', related_name='payment_order', on_delete=models.CASCADE, null=True)
   amount = models.DecimalField(max_digits=9999, decimal_places=2)
   payment_method = models.CharField(max_length=200)
   is_paid = models.BooleanField(default=False, null=True)

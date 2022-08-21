@@ -34,6 +34,10 @@ class UserProfile(BaseModel):
   def is_agent(self):
     return self.user_role == UserProfile.AGENT
   
+  @property
+  def get_username(self):
+    return self.user.get_username()
+  
   
   
   @classmethod
