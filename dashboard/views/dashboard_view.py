@@ -7,6 +7,6 @@ from account.models import UserProfile
 
 class DashboardHomePageView(UserViewAccessibilityMixin, generic.TemplateView):
   template_name = 'dashboard/index.html'
-  # allow_user_profiles = [UserProfile.ADMIN]
+  allow_user_profiles = [UserProfile.ADMIN]
 
   
