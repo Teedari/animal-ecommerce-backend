@@ -19,9 +19,9 @@
         {% if object_list %}
           {% for order in object_list %}
             <tr class="">
-              <td>{{order.id}}</td>
-              <td>{{order.customer}}</td>
-              <td class="text-capitalize">{{order.total_amount}}</td>
+              <td>{{forloop.counter}}</td>
+              <td class="text-capitalize">{{order.customer.user.get_username}}</td>
+              <td>{{order.items_in_cart}}</td>
               <td>{{order.status}}</td>
               <td>
                 <a href="{% url 'dashboard:order_detail' order.id %}" class="btn btn-info rounded-pill"><i class="fa fa-eye text-white"></i> </a>
