@@ -11,7 +11,7 @@ class ListOrderView(generic.ListView):
 class DetailOrderView(generic.DetailView):
   model = md.Order
   template_name = 'dashboard/order/order_detail.html'
-  
+  context_object_name = 'order'
   
 class DeleteOrderView(generic.DeleteView):
   success_url = '/orders'
