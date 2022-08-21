@@ -73,6 +73,20 @@ h1, h2, h3, h4, h5, h6{
   }
 }
 
+.image-container{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  img{
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
 .custom-carousel{
   &-tab-container{
     width: 100%;
