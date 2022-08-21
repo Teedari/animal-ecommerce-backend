@@ -33,6 +33,23 @@ a{
   font-size: 1.4rem !important;
 }
 
+.heading-404{
+  font-size: 7rem;
+  text-shadow: 2px 4px $primary-300;
+  animation: disco 300ms linear infinite;
+  @keyframes disco {
+    40%{
+      text-shadow: 2px 4px $primary;
+    }
+    60%{
+      text-shadow: 2px 4px $primary-100;
+    }
+    100%{
+      text-shadow: 2px 4px $primary-500;
+    }
+  }
+}
+
 .avatar{
   width: 50px;
   height: 50px;

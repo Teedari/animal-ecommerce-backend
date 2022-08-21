@@ -2,6 +2,7 @@ from django.urls import path
 from django.views.generic import TemplateView
 from dashboard.views.animal.animal_views import AddNewAnimalView, AnimalDeleteView, ListAnimalsView
 from dashboard.views.category.category_views import CreateCategory, DeleteCategory, ListCategories
+from dashboard.views.dashboard_view import DashboardHomePageView
 from dashboard.views.delivery_point.delivery_point_view import CreateDeliveryPoints, EditDeliveryPointView, ListDeliveryPointsView
 from dashboard.views.user.list_all_users_view import DeleteUserView, ListUsersView, ToggleUserActiveStatusView
 from .views.payment.payment_views import ListPaymentView
@@ -11,7 +12,7 @@ from .views.user.user_admin_creation_view import CreateNewUserAdminView
 app_name = 'dashboard'
 
 urlpatterns = [
-  path('', TemplateView.as_view(template_name='dashboard/index.html'), name='homepage'),
+  path('', DashboardHomePageView.as_view(), name='homepage'),
   
   # User
   path('user/admin/create', CreateNewUserAdminView.as_view(), name='user_create_admin'),

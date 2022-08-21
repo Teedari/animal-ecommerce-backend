@@ -5,6 +5,12 @@ from django.contrib.auth import logout
 from account.forms.sign_in_form import SignInForm
 
 
+
+
+def error403(request, exception):
+  return render(request, 'account/error403.html', {})
+
+
 class SignInView(View):
   template_name = 'account/sign_in.html'
   form_class = SignInForm
