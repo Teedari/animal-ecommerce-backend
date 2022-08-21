@@ -6,16 +6,38 @@
 
 {% block DashboardContent %}
   <h2 class="my-2 py-2 rounded-3 heading">Dashboard Content</h2>
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-      Dropdown button
-    </button>
-    <div class="dropdown-menu">
-      <a class="dropdown-item" href="#">Action</a>
-      <a class="dropdown-item" href="#">Another action</a>
-      <a class="dropdown-item" href="#">Something else here</a>
+  <section class="card card-body border-0">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="px-2 py-4 border-r-1">
+          <h4>Users Count</h4>
+          <h1><strong>1.240</strong> <i class="fa fa-users text-muted"></i></h1>
+          <small class="text-muted">Views</small>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="px-2 py-4">
+          <h4>Animal Count</h4>
+          <h1><strong>123</strong> <i class="fa fa-optin-monster text-muted"></i></h1>
+          <small class="text-muted">Views</small>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="px-2 py-4">
+          <h4>Payments Count</h4>
+          <h1><strong>1.240</strong> <i class="fa fa-credit-card-alt text-muted"></i></h1>
+          <small class="text-muted">Views</small>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="px-2 py-4">
+          <h4>Orders Count</h4>
+          <h1><strong>1.240</strong> <i class="fa fa-cart-plus text-muted"></i></h1>
+          <small class="text-muted">Views</small>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 {% endblock DashboardContent %}
 
 {% block DashboardModals %}

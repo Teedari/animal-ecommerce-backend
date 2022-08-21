@@ -1,56 +1,81 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css2?family=Niconne&family=Poppins:wght@400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Niconne&family=Poppins:wght@400;600;700&display=swap");
 
 $primary: #bc824c;
-$primary-100: lighten($color: $primary, $amount: 10);
-$primary-200: lighten($color: $primary, $amount: 20);
-$primary-300: lighten($color: $primary, $amount: 30);
-$primary-400: lighten($color: $primary, $amount: 40);
-$primary-500: lighten($color: $primary, $amount: 50);
+$primary-100: lighten(
+  $color: $primary,
+  $amount: 10,
+);
+$primary-200: lighten(
+  $color: $primary,
+  $amount: 20,
+);
+$primary-300: lighten(
+  $color: $primary,
+  $amount: 30,
+);
+$primary-400: lighten(
+  $color: $primary,
+  $amount: 40,
+);
+$primary-500: lighten(
+  $color: $primary,
+  $amount: 50,
+);
 $secondary: #f6ae54;
 $accent: #f6e3c5;
 
 $bg-main-color: #f0f2f5;
+$bg-main-color-200: lighten(
+  $color: $bg-main-color,
+  $amount: 80,
+);
 
-html, body{
-  font-family: 'Poppins', 'sans-serif' !important;
+html,
+body {
+  font-family: "Poppins", "sans-serif" !important;
 }
-strong{
+strong {
   font-weight: 600 !important;
 }
 
-h1, h2, h3, h4, h5, h6{
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin-bottom: 0 !important;
 }
-a{
+a {
   color: inherit !important;
 }
 
-.heading{
+.heading {
   background: #f8f8f8;
   display: inline-block;
   padding: 1rem;
   font-size: 1.4rem !important;
 }
 
-.heading-404{
+.heading-404 {
   font-size: 7rem;
   text-shadow: 2px 4px $primary-300;
   animation: disco 300ms linear infinite;
   @keyframes disco {
-    40%{
+    40% {
       text-shadow: 2px 4px $primary;
     }
-    60%{
+    60% {
       text-shadow: 2px 4px $primary-100;
     }
-    100%{
+    100% {
       text-shadow: 2px 4px $primary-500;
     }
   }
 }
 
-.avatar{
+.avatar {
   width: 50px;
   height: 50px;
   background: $primary;
@@ -61,7 +86,12 @@ a{
   overflow: hidden;
   position: relative;
 
-  img{
+  &.sm {
+    width: 40px;
+    height: 40px;
+  }
+
+  img {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -70,21 +100,20 @@ a{
     object-fit: cover;
   }
 
-  &.success{
+  &.success {
     background: rgb(48, 219, 48);
   }
 }
 
-.animate{
-  &-spin{
+.animate {
+  &-spin {
     transform: rotateZ(-180deg);
-    animation: spin 200ms linear 1s infinite ;
+    animation: spin 200ms linear 1s infinite;
   }
 
   @keyframes spin {
     to {
       transform: rotateZ(180deg);
-      
     }
   }
 }
@@ -93,18 +122,18 @@ a{
 //   cursor: pointer !important;
 // }
 
-.text{
-  &-primary{
+.text {
+  &-primary {
     color: $primary !important;
   }
 }
 
-.image-container{
+.image-container {
   width: 100%;
   height: 100%;
   overflow: hidden;
   position: relative;
-  img{
+  img {
     display: block;
     position: absolute;
     width: 100%;
@@ -113,40 +142,40 @@ a{
   }
 }
 
-.custom-carousel{
-  &-tab-container{
+.custom-carousel {
+  &-tab-container {
     width: 100%;
     display: flex;
     justify-content: space-between;
     position: relative;
-    &::before{
-      content: '';
+    &::before {
+      content: "";
       position: absolute;
       top: 50%;
       left: 0;
       transform: translateY(-50%);
       width: 100%;
-      height:2px;
+      height: 2px;
       background: #ccc;
       // z-index: -1;
     }
   }
-  &-tab{
+  &-tab {
     background: white;
     color: #ccc;
     display: flex;
     flex-direction: column;
     align-items: center;
     z-index: 1;
-    &.active &-icon{
+    &.active &-icon {
       background: $primary;
       color: white;
     }
-    &.active &-label{
+    &.active &-label {
       color: $primary;
     }
-    
-    &-icon{
+
+    &-icon {
       width: 80px;
       height: 80px;
       display: flex;
@@ -155,38 +184,63 @@ a{
       border-radius: 50%;
       font-size: 1.3rem;
     }
-    &:hover{
+    &:hover {
       cursor: pointer;
     }
-    &:hover &-icon{
+    &:hover &-icon {
       background: $primary;
       color: white;
     }
-    &:hover &-label{
+    &:hover &-label {
       color: $primary;
     }
   }
 }
+/*** OVERWRITEN CSS **/
+.card {
+  background: #f9f9f9 !important;
+}
 
 // Customize Data Tables
-.dataTables_wrapper{
+.dataTables_wrapper {
   padding: 1rem;
-  box-shadow: 0 2px 4px 8px rbga(0,0,0,0.9) !important;
+  box-shadow: 0 2px 4px 8px rbga(0, 0, 0, 0.9) !important;
   .dataTables_length,
-  .dataTables_filter{
+  .dataTables_filter {
     margin-bottom: 1rem;
   }
 
-  .dataTables_paginate{
-
-    .paginate_button{
+  .dataTables_paginate {
+    .paginate_button {
       border-radius: 50% !important;
       border: none !important;
-      &.current{
+      &.current {
         background: $primary !important;
         color: white !important;
       }
     }
+  }
+}
+
+@mixin MobileViewToggle {
+  .layout-sidebar{
+    transition: width 500ms ease-in-out;
+    width: unset !important;
+  }
+  .menu-text {
+    display: none;
+    width: 0;
+  }
+  .menu-item {
+    width: 50px !important;
+    height: 50px !important;
+    display: block !important;
+  }
+  .menu-title::after {
+    display: none;
+  }
+  .profile {
+    display: none !important;
   }
 }
 
@@ -199,16 +253,22 @@ a{
   &-header {
     min-height: 80px;
     width: 100%;
-    
   }
 
   // SIDEBAR
   &-sidebar {
     overflow-y: auto;
     background: $primary-100 !important;
-    min-width: 280px;
+    // min-width: 280px;
     max-width: 280px;
+    width: 100%;
     height: 100vh;
+    transition: width 500ms ease-in-out
+  }
+  /** Toggle for mobile view **/
+  &.sidebar-toggle {
+    width: unset !important;
+    @include MobileViewToggle();
   }
 
   // MAIN
@@ -242,7 +302,7 @@ a{
     border: none;
     outline: none;
     text-align: start;
-    font-size: .9rem !important;
+    font-size: 0.9rem !important;
     * {
       color: #fff !important;
     }
@@ -278,26 +338,26 @@ a{
   }
 }
 
-.custom-form{
+.custom-form {
   input.form-control,
-  select.form-control{
-    padding: .7rem 1rem !important;
+  select.form-control {
+    padding: 0.7rem 1rem !important;
   }
-  .form-control{
+  .form-control {
     background-color: #f3f3f4 !important;
     border: 0;
   }
 }
 
-.alert{
+.alert {
   text-align: center;
-  padding: .5rem 1rem !important;
+  padding: 0.5rem 1rem !important;
 }
 
-.btn{
-  padding: .6rem 1.4rem !important;
+.btn {
+  padding: 0.6rem 1.4rem !important;
   font-weight: bold !important;
-  &-primary{
+  &-primary {
     background: $primary !important;
     border-color: $primary !important;
     outline-color: $primary !important;
@@ -305,48 +365,56 @@ a{
   }
 }
 
-.table{
-
-  thead{
+.table {
+  thead {
     background: $primary-300;
     border-radius: 1rem !important;
-    tr th{
-      padding-block: 1rem!important;
+    tr th {
+      padding-block: 1rem !important;
       border-bottom: 5px $bg-main-color solid !important;
     }
   }
-  tr{
+  tr {
     padding-inline: 1rem !important;
   }
-  tbody{
-    tr{
+  tbody {
+    tr {
       transition: transform 250ms ease-in;
     }
   }
 }
 
-.account{
+.account {
   background-color: $primary-100;
-  &-layout{
+  &-layout {
     display: flex;
     align-items: center;
     position: relative;
     height: 100vh !important;
-    & > div{
+    & > div {
       display: flex;
       align-items: center;
       min-height: 500px;
     }
   }
-  &-form{
-    input.form-control{
+  &-form {
+    input.form-control {
       background: $primary-300 !important;
       border-color: $primary !important;
       color: $primary !important;
-      padding: .7rem 1rem !important;
-      &::placeholder{
+      padding: 0.7rem 1rem !important;
+      &::placeholder {
         color: #fff !important;
       }
     }
+  }
+}
+
+
+
+@media (max-width: 600px){
+  .layout-sidebar{
+    width: unset !important;
+    @include MobileViewToggle();
   }
 }

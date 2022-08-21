@@ -7,21 +7,23 @@
           alt=""
         />
       </div>
-      <div class="">
-        <h6>Welcome back,</h6>
-        <small><strong>{{user}}</strong></small>
-      </div>
-      <button
+      <div class="profile d-flex align-items-center gap-2">
+        <div class="">
+          <h6>Welcome back,</h6>
+          <small class="text-capitalize"><strong>{{user}}</strong></small>
+        </div>
+        <button
         class="btn btn-default shadow-lg avatar d-flex align-items-center justify-content-center"
-      >
+        >
         <i class="fa fa-gear animate-spin"></i>
       </button>
+      </div>
     </div>
   </div>
   <div class="container">
     <section class="menu">
       <a href="{% url 'dashboard:homepage' %}" class="menu-item menu-title">
-        <i class="fa fa-dashboard"></i> Dashboard
+        <i class="fa fa-dashboard"></i><span class="menu-text"> Dashboard</span>
       </a>
       <div class="menu-sub">
         <button
@@ -30,7 +32,7 @@
           data-bs-toggle="collapse"
           data-bs-target="#menu-category"
         >
-          <i class="fa fa-cubes"></i> Category
+          <i class="fa fa-cubes"></i> <span class="menu-text">Category</span>
         </button>
         <div id="menu-category" class="collapse menu-sub-items">
           <a href="{% url 'dashboard:category_add' %}" class="menu-item"
@@ -48,7 +50,7 @@
           data-bs-toggle="collapse"
           data-bs-target="#menu-delivery_point"
         >
-          <i class="fa fa-truck"></i> Delivery point
+          <i class="fa fa-truck"></i> <span class="menu-text">Delivery point</span>
         </button>
         <div id="menu-delivery_point" class="collapse menu-sub-items">
           <a href="{% url 'dashboard:delivery_point_add' %}" class="menu-item"
@@ -66,7 +68,7 @@
           data-bs-toggle="collapse"
           data-bs-target="#menu-animal"
         >
-          <i class="fa fa-superpowers"></i> Animal
+          <i class="fa fa-superpowers"></i><span class="menu-text"> Animal</span>
         </button>
         <div id="menu-animal" class="collapse menu-sub-items">
           <a href="{% url 'dashboard:animal_add' %}" class="menu-item"
@@ -76,22 +78,19 @@
         </div>
       </div>
       <a href="{% url 'dashboard:order_list' %}" class="menu-item menu-title"
-        ><i class="fa fa-shopping-cart"></i> Orders</a
+        ><i class="fa fa-shopping-cart"></i><span class="menu-text"> Orders</span></a
       >
       <a href="{% url 'dashboard:payment_list' %}" class="menu-item menu-title"
-        ><i class="fa fa-paypal"></i> Payments</a
+        ><i class="fa fa-paypal"></i><span class="menu-text"> Payments</span></a
       >
       <a href="{% url 'dashboard:user_list' %}" class="menu-item menu-title"
-        ><i class="fa fa-users"></i> Users</a
+        ><i class="fa fa-users"></i><span class="menu-text">Users</span></a
       >
       <a
         href="{% url 'dashboard:user_create_admin' %}"
         class="menu-item menu-title"
-        ><i class="fa fa-user"></i> Create New Admin</a
+        ><i class="fa fa-user"></i><span class="menu-text"> Create New Admin</span></a
       >
     </section>
-    <div class="py-4 rounded" style="background: rgba(0, 0, 0, 0.1)">
-      {% include "components/logo_component.html" %}
-    </div>
   </div>
 </aside>
