@@ -22,7 +22,9 @@ strong{
 h1, h2, h3, h4, h5, h6{
   margin-bottom: 0 !important;
 }
-
+a{
+  color: inherit !important;
+}
 
 .avatar{
   width: 50px;
@@ -142,6 +144,28 @@ h1, h2, h3, h4, h5, h6{
   }
 }
 
+// Customize Data Tables
+.dataTables_wrapper{
+  padding: 1rem;
+  box-shadow: 0 2px 4px 8px rbga(0,0,0,0.9) !important;
+  .dataTables_length,
+  .dataTables_filter{
+    margin-bottom: 1rem;
+  }
+
+  .dataTables_paginate{
+
+    .paginate_button{
+      border-radius: 50% !important;
+      border: none !important;
+      &.current{
+        background: $primary !important;
+        color: white !important;
+      }
+    }
+  }
+}
+
 .layout {
   display: flex;
   flex-direction: row;
@@ -253,6 +277,7 @@ h1, h2, h3, h4, h5, h6{
     background: $primary !important;
     border-color: $primary !important;
     outline-color: $primary !important;
+    color: white !important;
   }
 }
 
@@ -260,6 +285,7 @@ h1, h2, h3, h4, h5, h6{
 
   thead{
     background: $primary-300;
+    border-radius: 1rem !important;
     tr th{
       padding-block: 1rem!important;
       border-bottom: 5px $bg-main-color solid !important;
@@ -271,10 +297,6 @@ h1, h2, h3, h4, h5, h6{
   tbody{
     tr{
       transition: transform 250ms ease-in;
-    }
-    tr:hover{
-      // transform: scale(1.02);
-      // transition: transform 250ms ease-out;
     }
   }
 }

@@ -5,9 +5,12 @@
 {% endblock DashboardTitle %}
 
 {% block DashboardContent %}
-  <h2 class="my-2 py-2 rounded-3 heading">List All Animals</h2>
+<div class="d-flex justify-content-between align-items-center my-4">
+  <h2 class="heading">List All Animals</h2>
+  <a class="btn btn-primary" href="{% url 'dashboard:animal_add' %}">New <i class="fa fa-plus"></i></a>
+</div>
   <div>
-    <table class="table table-striped table-responsive">
+    <table id="animals-table" class="table table-striped table-responsive">
       <thead>
         <th>#</th>
         <th>Name</th>
@@ -42,3 +45,10 @@
     </table>
   </div>
 {% endblock DashboardContent %}
+{% block DashboardScript %}
+  <script>
+    $('document').ready(function(){
+      $('#animals-table').DataTable();
+    })
+  </script>
+{% endblock DashboardScript %}
