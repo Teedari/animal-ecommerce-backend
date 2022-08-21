@@ -16,7 +16,7 @@
         <a class="avatar text-white text-decoration-none" href="#">
           <h5 class="">{{user | short_name}}</h5>
         </a>
-        <a href="{% url 'account:sign_out' %}" class="text-dark text-decoration-none ms-4"><i class="fa fa-rss"></i> Logout</a>
+        <a data-bs-toggle="modal"data-bs-target='#signOutModal'  class="text-dark text-decoration-none ms-4"><i class="fa fa-users"></i> </a>
       </section>
       <section class="container">
         {% if messages %}
@@ -59,6 +59,23 @@
       </section>
     </main>
   </section>
+<!-- Modal -->
+<div class="modal fade" id="signOutModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="signOutModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="signOutModalLabel">This action will sign you out of the dashboard.</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <a href="{% url 'account:sign_out' %}" type="button" class="btn btn-primary">Understood</a>
+      </div>
+    </div>
+  </div>
+{% block DashboardModals %}
+
+{% endblock DashboardModals %}
 
 {% endblock Content %}
 
