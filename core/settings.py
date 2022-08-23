@@ -25,8 +25,10 @@ SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False if config('DEPLOYMENT') == 'production' else True
-
-ALLOWED_HOSTS = ['192.168.43.203', '127.0.0.1']
+if DEBUG:
+    ALLOWED_HOSTS = ['192.168.43.203', '127.0.0.1']
+else:
+    ALLOWED_HOSTS = ['*']
 
 CORS_ALLOWED_ORIGINS = [
     "http://192.168.43.203",
