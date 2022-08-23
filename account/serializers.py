@@ -77,5 +77,8 @@ class UserLoginSerializer(serializers.Serializer):
   profile = serializers.SerializerMethodField(read_only=True)
   
   def get_profile(self, instance):
+    if self.is_valid():
+      return None
+    
     profile = UserProfile.objects.filter(user__username=instance.get('username'))
     return {'user_role': profile.first().user_role}
