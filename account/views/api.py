@@ -16,13 +16,14 @@ class AddNewAdminUserAPI(CreateAPIView):
 class AddNewAgentUserAPI(CreateAPIView):
   serializer_class = CreateAgentUserSerializer
   
+ 
 class LoginUserAPI(APIView):
   permission_classes = [permissions.AllowAny,]
   def post(self, request):
     try:
       serializer = UserLoginSerializer(data=request.data)
       serializer.is_valid(raise_exception=True)
-      
+      # breakpoint()
       auth = authenticate(request, username = serializer.data.get('username', None), password=serializer.data.get('password', None))
       if not auth:
         raise exceptions.AuthenticationFailed('Invalid Credentials')
