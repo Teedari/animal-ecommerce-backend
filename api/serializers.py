@@ -19,7 +19,9 @@ class AnimalSerializer(serializers.ModelSerializer):
     exclude = ['date_updated',]
     
   def get_images(self, instance):
-    return UploadAnimalImages.objects.filter(animal=instance).values_list('image')
+    _images = UploadAnimalImages.objects.filter(animal=instance)
+    images = [_image.image.url for _image in _images]
+    return  images
   
   def get_category(self, instance):
     return CategorySerializer(instance.category).data
