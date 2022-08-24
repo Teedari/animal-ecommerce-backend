@@ -44,5 +44,5 @@ class DeleteCategory(View):
       messages.success(request, f'Category #{kwargs["pk"]} is deleted')
     else:
       messages.error(request, f'Category #{kwargs["pk"]} delete unsuccessful')
-    return redirect(reverse('dashboard:list_categories'))
+    return redirect(reverse('dashboard:category_list'))
   

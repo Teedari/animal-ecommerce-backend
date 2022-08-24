@@ -48,7 +48,7 @@ CORS_ALLOW_METHODS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://192.168.43.203:9999",
+    "http://192.168.43.203:8080",
 ]
 # Application definition
 

@@ -41,7 +41,10 @@ class AnimalDeleteView(generic.DeleteView):
   model = Animal
   
   def get(self, request, *args, **kwargs):
-    if self.get_object().delete():
+    # breakpoint()
+    obj = self.model.objects.filter(id = kwargs["pk"])
+    if obj.exists():
+      obj.first().delete()
       messages.success(request, f'Animal Deleted Successful #{kwargs["pk"]}')
     return redirect(reverse('dashboard:animal_list'))
   

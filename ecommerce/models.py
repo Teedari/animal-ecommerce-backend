@@ -42,7 +42,23 @@ class UploadAnimalImages(BaseModel):
   
   
 class Category(BaseModel):
+  # POULTRY = 'Poultry'
+  # CATTLE = 'Cattle'
+  # SHEEP =  'Sheep'
+  # GOAT =  'Goat'
+  # SWINE =  'Swine'
+  # NONE = ""
+  
+  # ANIMAL_CHOICES = (
+  #   (NONE, "Classes of animals"),
+  #   (POULTRY, POULTRY),
+  #   (CATTLE, CATTLE),
+  #   (SHEEP, SHEEP),
+  #   (GOAT, GOAT),
+  #   (SWINE, SWINE),
+  # )
   name = models.CharField(max_length=200, unique=True)
+  # animal_classes = models.CharField(choices=ANIMAL_CHOICES, max_length=100)
   description = models.TextField(blank=True, null=True)
   
   def __str__(self):
@@ -152,7 +168,7 @@ class Order(BaseModel):
   
 class OrderedItem(BaseModel):
   order = models.ForeignKey(to='Order', related_name='ordereditem', on_delete=models.CASCADE)
-  product = models.ForeignKey(to='Animal', related_name='+',on_delete=models.DO_NOTHING)
+  product = models.ForeignKey(to='Animal', related_name='+',on_delete=models.CASCADE)
   price = models.DecimalField(max_digits=10, decimal_places=2)
   quantity = models.BigIntegerField(blank=False)
   
