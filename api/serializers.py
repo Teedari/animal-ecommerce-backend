@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 class CategorySerializer(serializers.ModelSerializer):
   class Meta:
     model = Category
-    fields = '__all__'
+    exclude = ['date_updated',]
     
     
     
@@ -16,7 +16,7 @@ class AnimalSerializer(serializers.ModelSerializer):
   category = serializers.SerializerMethodField()
   class Meta:
     model = Animal
-    fields = '__all__'
+    exclude = ['date_updated',]
     
   def get_images(self, instance):
     return UploadAnimalImages.objects.filter(animal=instance).values_list('image')
@@ -28,7 +28,7 @@ class OrderItemCreateSerializer(serializers.ModelSerializer):
   product_id = serializers.IntegerField(write_only=True, required=True)
   class Meta:
     model = OrderedItem
-    fields = '__all__'
+    exclude = ['date_updated',]
     extra_kwargs = {
       'order': {'required': False, 'read_only': True},
       'product': {'required': False, 'read_only': True}
@@ -94,7 +94,7 @@ class PaymentCreateSerializer(serializers.ModelSerializer):
   id = serializers.CharField(read_only=True)
   class Meta:
     model = Payment
-    fields = '__all__'
+    exclude = ['date_updated',]
     extra_kwargs = {
       'paid_by': {'read_only': True, 'required': False},
       'remarks': {'read_only': True, 'required': False},
