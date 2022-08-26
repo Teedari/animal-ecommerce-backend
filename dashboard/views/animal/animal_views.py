@@ -20,6 +20,9 @@ class AddNewAnimalView(View):
     context = {}
     if form.is_valid():
       instance = form.save(commit=False)
+      # instance.image_slug_1 = request.POST.get('upload_image_1', "")
+      # instance.image_slug_2 = request.POST.get('upload_image_2', "")
+      instance.save()
       messages.success(request, 'New Animal Added to stocks')
       context['form'] = self.form_class()
     else:

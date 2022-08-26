@@ -18,8 +18,10 @@ class Animal(BaseModel):
   weight = models.FloatField(max_length=200, null=True)
   sex = models.CharField(choices=(['female', 'Female'], ['male', 'Male']), max_length=10)
   price = models.DecimalField(decimal_places=2, max_digits=999, default=0.00, null=True)
-  discount = models.BigIntegerField(null=True)
+  discount = models.BigIntegerField(null=True, default=0)
   quantity = models.BigIntegerField(blank=True, default=0)
+  image_slug_1 = models.CharField(max_length=225, null=True)
+  image_slug_2 = models.CharField(max_length=225, null=True)
   
   
   

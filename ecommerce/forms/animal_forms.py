@@ -12,7 +12,6 @@ class UploadAnimalImagesForm(forms.ModelForm):
 class AddNewAnimalForm(forms.ModelForm):
   image_1 = forms.ImageField(label='1st Image',max_length=200, widget=forms.FileInput(attrs={'class': 'form-control'}))
   image_2 = forms.ImageField(label='2nd Image', max_length=200, widget=forms.FileInput(attrs={'class': 'form-control'}))
-  image_3 = forms.ImageField(label='3rd Image', max_length=200, widget=forms.FileInput(attrs={'class': 'form-control'}))
   class Meta:
     model = Animal
     exclude = ['quantity']
@@ -26,20 +25,21 @@ class AddNewAnimalForm(forms.ModelForm):
       'weight': forms.TextInput(attrs={'class': 'form-control'}),
       'price': forms.TextInput(attrs={'class': 'form-control'}),
       'discount': forms.TextInput(attrs={'class': 'form-control'}),
+      'image_slug_1': forms.TextInput(attrs={'class': 'form-control', 'type': 'hidden'}),
+      'image_slug_2': forms.TextInput(attrs={'class': 'form-control', 'type': 'hidden'}),
       # 'image_1': forms.FileInput(attrs={'class': 'form-control'}),
     }
     
   def save(self, commit: bool = ...):
     instance = super(AddNewAnimalForm, self).save(commit=False)
-    instance.save()
     
       
-    upload1 = UploadAnimalImages.objects.create(animal=instance, image=self.cleaned_data.get('image_1'))
-    upload1.save()
-    upload2 = UploadAnimalImages.objects.create(animal=instance, image=self.cleaned_data.get('image_2'))
-    upload2.save()
-    upload3 = UploadAnimalImages.objects.create(animal=instance, image=self.cleaned_data.get('image_3'))
-    upload3.save()
+    # upload1 = UploadAnimalImages.objects.create(animal=instance, image=self.cleaned_data.get('image_1'))
+    # upload1.save()
+    # upload2 = UploadAnimalImages.objects.create(animal=instance, image=self.cleaned_data.get('image_2'))
+    # upload2.save()
+    # upload3 = UploadAnimalImages.objects.create(animal=instance, image=self.cleaned_data.get('image_3'))
+    # upload3.save()
     
     return instance
       

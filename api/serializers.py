@@ -12,16 +12,11 @@ class CategorySerializer(serializers.ModelSerializer):
     
     
 class AnimalSerializer(serializers.ModelSerializer):
-  images = serializers.SerializerMethodField()
   category = serializers.SerializerMethodField()
   class Meta:
     model = Animal
     exclude = ['date_updated',]
     
-  def get_images(self, instance):
-    _images = UploadAnimalImages.objects.filter(animal=instance)
-    images = [_image.image.url for _image in _images]
-    return  images
   
   def get_category(self, instance):
     return CategorySerializer(instance.category).data
