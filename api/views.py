@@ -32,6 +32,8 @@ class OrderAPI(generics.ListCreateAPIView):
   permission_classes = [permissions.IsAuthenticated, AllowOnlyCustomerPermission,]
 
 
+
+
 class CreateListPaymentViewAPI(generics.ListCreateAPIView):
   serializer_class = PaymentCreateSerializer
   queryset = Payment.objects.all()

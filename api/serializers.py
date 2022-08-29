@@ -120,8 +120,7 @@ class PaymentSerializer(serializers.ModelSerializer):
 
 
 class PaymentCreateSerializer(serializers.ModelSerializer):
-  order_id = serializers.CharField(write_only=True)
-  id = serializers.CharField(read_only=True)
+  order = OrderCreateSerializer()
   class Meta:
     model = Payment
     exclude = ['date_updated',]
