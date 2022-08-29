@@ -216,6 +216,8 @@ class OrderedItem(BaseModel):
   
 class Payment(BaseModel):
   order = models.OneToOneField(to='Order', related_name='payment_order', on_delete=models.CASCADE, null=True)
+  name = models.CharField(max_length=100,)
+  phone_number = models.CharField(max_length=10)
   amount = models.DecimalField(max_digits=9999, decimal_places=2)
   payment_method = models.CharField(max_length=200)
   is_paid = models.BooleanField(default=False, null=True)
