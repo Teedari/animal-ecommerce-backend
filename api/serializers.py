@@ -1,4 +1,5 @@
 from dataclasses import field, fields
+from math import prod
 from rest_framework import serializers
 from rest_framework.validators import ValidationError
 from ecommerce.models import *
@@ -9,6 +10,11 @@ class CategorySerializer(serializers.ModelSerializer):
     model = Category
     exclude = ['date_updated',]
     
+    
+class DeliveryPointSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = DeliveryPoint
+    exclude = ['userprofile',]
     
     
 class AnimalSerializer(serializers.ModelSerializer):
@@ -41,7 +47,14 @@ class OrderItemCreateSerializer(serializers.ModelSerializer):
     if not product:
       raise ValidationError(_('Product is not found in database'), code='product-not-found')
     
-    attrs['product'] = product.first()
+    product = product.first()
+    
+    if product.price != attrs['price']:
+      raise ValidationError(_(f"Product #{product.name} price does not match"), code='product-price-does-not-match')
+    
+    attrs['product'] = product
+    
+    
       
     return super().validate(attrs)
     
@@ -51,9 +64,16 @@ class OrderItemCreateSerializer(serializers.ModelSerializer):
     return super().create(validated_data)
   
     
-  
+class OrderSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Order
+    fields = '__all__'
 class OrderCreateSerializer(serializers.ModelSerializer):
+  id = serializers.IntegerField(read_only=True)
   items = OrderItemCreateSerializer(many=True)
+  delivery_point_id = serializers.IntegerField(write_only=True)
+  # delivery_point = serializers.JSONField(read_only=True)
+  total_amount = serializers.DecimalField(read_only=True, decimal_places=2, max_digits=9)
   class Meta:
     model = Order
     fields = '__all__'
@@ -62,11 +82,19 @@ class OrderCreateSerializer(serializers.ModelSerializer):
       "status": {'required': False, 'read_only': True},
     }
     depth = 1
+    
+  def validate(self, attrs):  
+    point = DeliveryPoint.objects.filter(id=attrs.get('delivery_point_id', None))
+    if not point.exists():
+      raise ValidationError(_('Delivery point cannot be found'))
+    self.delivery_point = point.first()
+    return super().validate(attrs)
+    
 
   def create(self, validated_data):
     order = None
     try:
-      order = Order.objects.create(status=Order.WAITING)
+      order = Order.objects.create(status=Order.WAITING, delivery_point=self.delivery_point,)
       order.save()
     except Exception as ex:
       raise ValidationError(_('Order create failed try again'))
@@ -76,7 +104,12 @@ class OrderCreateSerializer(serializers.ModelSerializer):
       items.is_valid(raise_exception=True)
       items.save()
     except Exception as ex:
-      raise ValidationError(_(ex))    
+      raise ValidationError(_(ex))   
+    
+    validated_data['id'] = order.id
+    validated_data['total_amount'] = order.total_items_amount
+    validated_data['delivery_point'] = self.delivery_point
+    validated_data['status'] = order.status
     return validated_data
     
 

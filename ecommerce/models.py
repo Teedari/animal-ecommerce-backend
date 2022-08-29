@@ -177,10 +177,10 @@ class OrderedItem(BaseModel):
   
   
   
-  def clean(self):
-    from rest_framework.serializers import ValidationError
-    if self.quantity > self.product.quantity:
-      raise ValidationError(_('Order item quantity exceeds that of the quantity of the product itself'), code='order_quantity_exceed')
+  # def clean(self):
+  #   from rest_framework.serializers import ValidationError
+  #   if self.quantity > self.product.quantity:
+  #     raise ValidationError(_('Order item quantity exceeds that of the quantity of the product itself'), code='order_quantity_exceed')
 
 
   def save(self, *args, **kwargs) -> None:

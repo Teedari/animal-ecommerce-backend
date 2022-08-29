@@ -6,9 +6,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from account.models import UserProfile
 from api.permissions.OnlyCustomPermission import AllowOnlyCustomerPermission
-from api.serializers import AnimalSerializer, CategorySerializer, OrderCreateSerializer, PaymentCreateSerializer
+from api.serializers import AnimalSerializer, CategorySerializer, DeliveryPointSerializer, OrderCreateSerializer, PaymentCreateSerializer
 
-from ecommerce.models import Animal, Category, Order, Payment
+from ecommerce.models import Animal, Category, DeliveryPoint, Order, Payment
 # Create your views here.
 
 
@@ -39,6 +39,11 @@ class CreateListPaymentViewAPI(generics.ListCreateAPIView):
   
   def perform_create(self, serializer):
     serializer.save(paid_by=UserProfile.get_user_profile(self.request.user))
+    
+    
+class ListDeliveryPointsAPIView(generics.ListAPIView):
+  serializer_class = DeliveryPointSerializer
+  queryset = DeliveryPoint.objects.all()
   
   
 # class CreatePurchaseAPI(generics.CreateAPIView):
