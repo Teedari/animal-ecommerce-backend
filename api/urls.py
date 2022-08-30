@@ -25,6 +25,7 @@ urlpatterns = [
   # Payment
   # path('payments', CreateListPaymentViewAPI.as_view(), name='payment'),
   path('make/payment', PaymentOrderAPI.as_view(), name='make_payment'),
+  path('payments', PaymentListAPI.as_view(), name='list_payment'),
   
   path('delivery_points', ListDeliveryPointsAPIView.as_view(), name='delivery_points'),
   
