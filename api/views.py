@@ -34,15 +34,20 @@ class OrderAPI(generics.ListCreateAPIView):
 
 
 
-class CreateListPaymentViewAPI(generics.ListCreateAPIView):
-  serializer_class = PaymentCreateSerializer
-  queryset = Payment.objects.all()
-  permission_classes = [permissions.IsAuthenticated,]
+# class CreateListPaymentViewAPI(generics.ListCreateAPIView):
+#   serializer_class = PaymentCreateSerializer
+#   queryset = Payment.objects.all()
+#   permission_classes = [permissions.IsAuthenticated,]
   
+#   def perform_create(self, serializer):
+#     serializer.save(paid_by=UserProfile.get_user_profile(self.request.user))
+    
+class PaymentOrderAPI(generics.CreateAPIView):
+  serializer_class = PaymentCreateSerializer
+  permission_classes = [permissions.IsAuthenticated,]
   def perform_create(self, serializer):
     serializer.save(paid_by=UserProfile.get_user_profile(self.request.user))
-    
-    
+
 class ListDeliveryPointsAPIView(generics.ListAPIView):
   serializer_class = DeliveryPointSerializer
   queryset = DeliveryPoint.objects.all()
