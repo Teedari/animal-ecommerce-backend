@@ -18,15 +18,15 @@ class Animal(BaseModel):
   weight = models.FloatField(max_length=200, null=True)
   sex = models.CharField(choices=(['female', 'Female'], ['male', 'Male']), max_length=10)
   price = models.DecimalField(decimal_places=2, max_digits=999, default=0.00, null=True)
-  discount = models.BigIntegerField(null=True, default=0)
+  # discount = models.BigIntegerField(null=True, default=0)
   quantity = models.BigIntegerField(blank=True, default=0)
   image_slug_1 = models.CharField(max_length=225, null=True)
   image_slug_2 = models.CharField(max_length=225, null=True)
-  is_popular = models.CharField(choices=[('Yes', True), ('No', False)], max_length=10, default=False)
+  is_popular = models.CharField(choices=[ ('No', False), ('Yes', True)], max_length=10, default=False)
   
   
   def __str__(self) -> str:
-    return f'{self.name} - {self.category} - {self.quantity}'
+    return f'{self.name} - {self.category} - {self.is_popular}'
   
   def images(self):
     upload_images = self.animal_uploaded_image.all()

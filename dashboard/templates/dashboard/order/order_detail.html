@@ -71,8 +71,8 @@
               <div class="d-flex">
                 <div class="card-image" style="width: 200px; height: 200px">
                   <div class="image-container">
-                    {% if item.product.images %}
-                        <img src="{{item.product.images}}" alt="animal-image" />
+                    {% if item.product.image_slug_1 %}
+                        <img src="{{item.product.image_slug_2}}" alt="animal-image" />
                       
                           {% else %}
                             <img src="{% static 'assets/svgs/undraw_not_found.svg' %}" alt="animal-image" />

@@ -24,9 +24,9 @@ class AddNewAnimalForm(forms.ModelForm):
       'breed': forms.TextInput(attrs={'class': 'form-control'}),
       'weight': forms.TextInput(attrs={'class': 'form-control'}),
       'price': forms.TextInput(attrs={'class': 'form-control'}),
-      'discount': forms.TextInput(attrs={'class': 'form-control'}),
       'image_slug_1': forms.TextInput(attrs={'class': 'form-control', 'type': 'hidden'}),
       'image_slug_2': forms.TextInput(attrs={'class': 'form-control', 'type': 'hidden'}),
+      'is_popular': forms.Select(attrs={'class': 'form-control',}),
       # 'image_1': forms.FileInput(attrs={'class': 'form-control'}),
     }
     
