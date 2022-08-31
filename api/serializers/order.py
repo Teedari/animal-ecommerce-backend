@@ -1,17 +1,26 @@
+from functools import reduce
 from rest_framework import serializers
 from rest_framework.validators import ValidationError
 from api.serializers.ordereditem import OrderItemCreateSerializer, OrderedItemSerializer
+# from django.utils.translation import ugettext_lazy as _
 from ecommerce import models as md
 
 class OrderSerializer(serializers.ModelSerializer):
   items = serializers.SerializerMethodField()
+  total_price = serializers.SerializerMethodField()
   class Meta:
     model = md.Order
     fields = '__all__'
     depth = 2
     
   def get_items(self, instance):
-    return OrderedItemSerializer(instance=instance.ordereditem.all(), many=True).data
+    try:
+      return OrderedItemSerializer(instance=instance.ordereditem.all(), many=True).data
+    except Exception as ex:
+      return []
+  def get_total_price(self, instance):
+    items = instance.ordereditem.all()
+    return reduce(lambda prev, next:  prev + float(next.product.price) * int(next.quantity), items, 0)
 class OrderCreateSerializer(serializers.ModelSerializer):
   id = serializers.IntegerField(read_only=True)
   items = OrderItemCreateSerializer(many=True)
