@@ -32,7 +32,7 @@ def listAllAnimalsAPI(request):
     serializer = AnimalSerializer(animal, many=True)
     return Response(serializer.data)
   
-class OrderAPI(generics.ListCreateAPIView):
+class OrderAPI(generics.CreateAPIView):
   serializer_class = OrderCreateSerializer
   queryset = Order.objects.all()
   permission_classes = [permissions.IsAuthenticated, AllowOnlyCustomerPermission,]
@@ -45,13 +45,17 @@ class OrderListAPI(APIView):
 
   def get_object(self):
     try:
-      return self.model.objects.get(id=self.kwargs['pk'])
+      if 'pk' in self.kwargs:
+        self.many = False
+        return self.model.objects.get(id=self.kwargs['pk'])
+      self.many = True
+      return self.model.objects.all()
     except self.model.DoesNotExist as ex:
       raise validators.ValidationError((ex), code='does-not-exist')
     
   def serializer(self):
     order = self.get_object()
-    _serialize = OrderSerializer(instance=order)
+    _serialize =  OrderSerializer(instance=order, many=self.many)
     self.context = _serialize.data
     
   

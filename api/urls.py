@@ -19,8 +19,9 @@ urlpatterns = [
   path('auth/login', LoginUserAPI.as_view(), name='sign_in'),
   
   # Order Item
-  path('orders', OrderAPI.as_view(), name='order'),
-  path('order/<int:pk>', OrderListAPI.as_view(), name='list_orders'),
+  path('order', OrderAPI.as_view(), name='order'),
+  path('orders', OrderListAPI.as_view(), name='list_orders'),
+  path('orders/<int:pk>', OrderListAPI.as_view(), name='detail_order'),
   
   
   # Payment
