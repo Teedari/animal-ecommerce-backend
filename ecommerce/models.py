@@ -22,7 +22,7 @@ class Animal(BaseModel):
   quantity = models.BigIntegerField(blank=True, default=0)
   image_slug_1 = models.CharField(max_length=225, null=True)
   image_slug_2 = models.CharField(max_length=225, null=True)
-  
+  is_popular = models.CharField(choices=[('Yes', True), ('No', False)], max_length=10, default=False)
   
   
   def __str__(self) -> str:
