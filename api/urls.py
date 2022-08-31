@@ -20,6 +20,7 @@ urlpatterns = [
   
   # Order Item
   path('orders', OrderAPI.as_view(), name='order'),
+  path('order/<int:pk>', OrderListAPI.as_view(), name='list_orders'),
   
   
   # Payment
