@@ -5,7 +5,7 @@ from dashboard.views.category.category_views import CreateCategory, DeleteCatego
 from dashboard.views.dashboard_view import DashboardHomePageView
 from dashboard.views.delivery_point.delivery_point_view import CreateDeliveryPoints, EditDeliveryPointView, ListDeliveryPointsView
 from dashboard.views.user.list_all_users_view import DeleteUserView, ListUsersView, ToggleUserActiveStatusView
-from dashboard.views.user.profile_view import UpdateProfile
+from dashboard.views.user.profile_view import UpdateProfile, UpdateUserProfileDetails, UpdateUserProfilePassword
 from .views.payment.payment_views import ListPaymentView
 from .views.order.order_views import DeleteOrderView, DetailOrderView, ListOrderView, UpdateOrderStatusView
 from .views.user.user_admin_creation_view import CreateNewUserAdminView
@@ -20,6 +20,8 @@ urlpatterns = [
   
   # Profile
   path('user/profile', UpdateProfile.as_view(), name='user_profile'),
+  path('user/profile/<int:pk>/info', UpdateUserProfileDetails.as_view(), name='user_profile_info'),
+  path('user/profile/<int:pk>/change-password', UpdateUserProfilePassword.as_view(), name='user_profile_password'),
   
   #Category
   path("category", ListCategories.as_view(), name='category_list' ),   

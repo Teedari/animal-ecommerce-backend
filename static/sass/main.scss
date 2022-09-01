@@ -91,6 +91,10 @@ a {
     width: 40px;
     height: 40px;
   }
+  &.lg{
+    width: 70px;
+    height: 70px;
+  }
 
   img {
     width: 100%;
@@ -140,6 +144,17 @@ a {
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+}
+
+.nav-tab{
+  border-bottom: 1px solid #ccc;
+  .nav-item .active{
+    border-bottom: 2px solid $primary;
+  }
+
+  .nav-item .nav-link:not(.active){
+    color: #ccc !important;
   }
 }
 
@@ -347,6 +362,9 @@ a {
   .form-control {
     background-color: #f3f3f4 !important;
     border: 0;
+  }
+  .form-control.type_2 {
+    background-color: #f8f8f8 !important;
   }
 }
 
