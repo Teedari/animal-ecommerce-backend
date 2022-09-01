@@ -21,11 +21,13 @@ class DashboardHomePageView(UserViewAccessibilityMixin, View):
     else:
       orders = Order.objects.all()
       payments = Payment.objects.all()
+      self.context['number_of_users'] = UserProfile.objects.all().count()
+      self.context['number_of_animals'] = UserProfile.objects.all().count()
       
     # breakpoint()
     
-    self.context['order_count'] = orders.count()
-    self.context['payment_count'] = payments.count()
+    self.context['number_of_orders'] = orders.count()
+    self.context['number_of_payments'] = payments.count()
     return render(request, self.template_name, self.context)
 
   
