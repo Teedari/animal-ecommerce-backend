@@ -23,12 +23,16 @@
             <tr>
               <td>{{category.id}}</td>
               <td>{{category.name}}</td>
-              <td>{{category.description}}</td>
-              <td>
+              <td>{{category.description|truncatechars:50}}...</td>
+              <td class="d-flex gap-2">
+                <a href="{% url 'dashboard:category_edit' category.id %}" class="btn btn-info rounded-pill"><i class="fa fa-pencil text-white"></i> </a>
                 <a href="{% url 'dashboard:category_delete' category.id %}" class="btn btn-danger rounded-pill"><i class="fa fa-trash text-white"></i> </a>
               </td>
             </tr>
             {% empty %}
+            <tr>
+              <td class="text-center text-info py-4" colspan='4'>No data available at the moment</td>
+            </tr>
           {% endfor %}
         {% endif %}
       </tbody>

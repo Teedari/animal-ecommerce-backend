@@ -1,5 +1,5 @@
 {% extends "dashboard/base.html" %}
-
+{% load custom_tags %}
 {% block DashboardTitle %}
   Category
 {% endblock DashboardTitle %}
@@ -16,7 +16,7 @@
         <th>Payment Method</th>
         <th>Amount</th>
         <th>Status</th>
-        <th>Action</th>
+        <!-- <th>Action</th> -->
       </thead>
       <tbody>
         {% if object_list %}
@@ -25,10 +25,10 @@
               <td>{{forloop.counter}}</td>
               <td>{{payment.paid_by.user.get_username}}</td>
               <td>{{payment.payment_method}}</td>
-              <td>{{payment.amount}}</td>
+              <td>{{payment.amount|get_currency}}</td>
               <td>{{payment.status}}</td>
-              <td></td>
               {% comment %}
+              <td></td>
                 
               <!-- <td>
                 <a href="{% url 'dashboard:payment_delete' payment.id %}" class="btn btn-danger rounded-pill"><i class="fa fa-trash text-white"></i> </a>

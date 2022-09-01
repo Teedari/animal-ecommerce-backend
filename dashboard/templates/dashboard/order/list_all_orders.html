@@ -1,7 +1,7 @@
 {% extends "dashboard/base.html" %}
-
+{% load custom_tags %}
 {% block DashboardTitle %}
-  Category
+  Order
 {% endblock DashboardTitle %}
 
 {% block DashboardContent %}
@@ -11,8 +11,10 @@
       <thead>
         <th>#</th>
         <th>Customer</th>
-        <th>Items Bought</th>
+        <th>Amount/Items Bought</th>
         <th>Total Amount</th>
+        <th>Status</th>
+        <th>Status Changer</th>
         <th>Action</th>
       </thead>
       <tbody>
@@ -21,8 +23,15 @@
             <tr class="">
               <td>{{forloop.counter}}</td>
               <td class="text-capitalize">{{order.customer.user.get_username}}</td>
-              <td>{{order.items_in_cart}}</td>
+              <td>{{order.total_items_amount|get_currency}}({{order.items_in_cart}})</td>
+              <td>{{order.total_amount|get_currency}}</td>
               <td>{{order.status}}</td>
+              <td>
+                <form action="{% url 'dashboard:order_status_update' pk=order.id %}" method="post">
+                  {% csrf_token %}
+                  {{form.status}}
+                </form>
+              </td>
               <td>
                 <a href="{% url 'dashboard:order_detail' order.id %}" class="btn btn-info rounded-pill"><i class="fa fa-eye text-white"></i> </a>
                 <a href="{% url 'dashboard:order_delete' order.id %}" class="btn btn-danger rounded-pill"><i class="fa fa-trash text-white"></i> </a>
@@ -35,10 +44,22 @@
           {% endfor %}
           {% else %}
           <tr>
-            <td class="text-center text-info py-4" colspan='4'>No data available at the moment</td>
+            <td class="text-center text-info py-4" colspan='7'>No data available at the moment</td>
           </tr>
         {% endif %}
       </tbody>
     </table>
   </div>
 {% endblock DashboardContent %}
+
+
+{% block DashboardScript %}
+<script>
+  $(document).ready(function(){
+   $('select[name="status"]').change(function(){
+    $(this).closest('form').trigger('submit')
+   })
+  })
+</script>
+  
+{% endblock DashboardScript %}

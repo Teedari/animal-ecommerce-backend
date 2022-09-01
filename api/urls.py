@@ -19,11 +19,17 @@ urlpatterns = [
   path('auth/login', LoginUserAPI.as_view(), name='sign_in'),
   
   # Order Item
-  path('orders', OrderAPI.as_view(), name='order'),
+  path('order', OrderAPI.as_view(), name='order'),
+  path('orders', OrderListAPI.as_view(), name='list_orders'),
+  path('orders/<int:pk>', OrderListAPI.as_view(), name='detail_order'),
   
   
   # Payment
-  path('payments', CreateListPaymentViewAPI.as_view(), name='payment'),
+  # path('payments', CreateListPaymentViewAPI.as_view(), name='payment'),
+  path('make/payment', PaymentOrderAPI.as_view(), name='make_payment'),
+  path('payments', PaymentListAPI.as_view(), name='list_payment'),
+  
+  path('delivery_points', ListDeliveryPointsAPIView.as_view(), name='delivery_points'),
   
   # # Purchase
   # path('purchase', CreatePurchaseAPI.as_view(), name='purchase'),

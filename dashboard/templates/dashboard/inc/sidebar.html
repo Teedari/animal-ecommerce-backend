@@ -1,11 +1,9 @@
+{% load custom_tags %}
 <aside class="layout-sidebar" id="layout-sidebar">
   <div class="py-4 container">
     <div class="d-flex align-items-center justify-content-between">
       <div class="avatar">
-        <img
-          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-          alt=""
-        />
+        <i class="fa fa-user text-white"></i>
       </div>
       <div class="profile d-flex align-items-center gap-2">
         <div class="">
@@ -25,6 +23,7 @@
       <a href="{% url 'dashboard:homepage' %}" class="menu-item menu-title">
         <i class="fa fa-dashboard"></i><span class="menu-text"> Dashboard</span>
       </a>
+      {% if request.user|isAdmin %}
       <div class="menu-sub">
         <button
           class="menu-item menu-title"
@@ -77,12 +76,14 @@
           <a href="{% url 'dashboard:animal_list' %}" class="menu-item">List</a>
         </div>
       </div>
+      {% endif %}
       <a href="{% url 'dashboard:order_list' %}" class="menu-item menu-title"
         ><i class="fa fa-shopping-cart"></i><span class="menu-text"> Orders</span></a
       >
       <a href="{% url 'dashboard:payment_list' %}" class="menu-item menu-title"
         ><i class="fa fa-paypal"></i><span class="menu-text"> Payments</span></a
       >
+      {% if request.user|isAdmin %}
       <a href="{% url 'dashboard:user_list' %}" class="menu-item menu-title"
         ><i class="fa fa-users"></i><span class="menu-text">Users</span></a
       >
@@ -91,6 +92,7 @@
         class="menu-item menu-title"
         ><i class="fa fa-user"></i><span class="menu-text"> Create New Admin</span></a
       >
+      {% endif %}
     </section>
   </div>
 </aside>

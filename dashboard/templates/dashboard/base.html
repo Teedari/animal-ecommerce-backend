@@ -20,7 +20,7 @@
           {% include "components/logo_component.html" with size='S' %}
         </div>
         <div class="d-flex align-items-center">
-          <a class="avatar text-white text-decoration-none" href="#">
+          <a class="avatar text-white text-decoration-none" href="{% url 'dashboard:user_profile' %}">
             <h5 class="">{{user | short_name}}</h5>
           </a>
           <a data-bs-toggle="modal"data-bs-target='#signOutModal'  class="text-dark text-decoration-none ms-4"><i class="fa fa-users"></i> </a>

@@ -27,7 +27,9 @@ class SignInView(View):
         form.loginUser(request=request)
         return redirect(reverse('dashboard:homepage'))
       except Exception as ex:
-        print(ex)
+        # print(ex)
+        self.context['error'] = "User credentials incorrect"
+      self.context['form'] = form
     else:
       self.context['form'] = form
     return render(request, self.template_name, self.context)

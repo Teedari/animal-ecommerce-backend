@@ -5,7 +5,7 @@
 {% endblock DashboardTitle %}
 
 {% block DashboardContent %}
-  <h2 class="my-2 py-2 rounded-3 heading">Add New Animal</h2>
+  <h2 class="my-2 py-2 rounded-3 heading">Edit Animal #{{object.id}}</h2>
 
   <div class="row">
     <div class="col-md-8">
@@ -75,29 +75,6 @@
             {% endfor %}
           {% endif %}
           <div class="row">
-            <label for="" class=" py-2"><strong>Upload Images</strong></label>
-            <div class="col">
-              <div class="form-group">
-                {{form.image_1}}
-              </div>
-              {% if form.image_1.errors %}
-                {% for error in form.image_1.errors %}
-                  <small class="text-danger">{{error}}</small>
-                {% endfor %}
-              {% endif %}
-            </div>
-            <div class="col">
-              <div class="form-group">
-                {{form.image_2}}
-              </div>
-              {% if form.image_2.errors %}
-                {% for error in form.image_2.errors %}
-                  <small class="text-danger">{{error}}</small>
-                {% endfor %}
-              {% endif %}
-            </div>
-          </div>
-          <div class="row">
             <div class="col-md-6">
               <div class="form-group mt-2">
                 <label for="">{{form.price.label}}</label>
@@ -139,110 +116,11 @@
               <small class="text-danger">{{error}}</small>
             {% endfor %}
           {% endif %}
-          {{form.image_slug_1}}
-          {{form.image_slug_2}}
           <div class="text-end">
-            <button type="button" id="submit-form" class="btn btn-primary mt-4"><i class="fa fa-truck"></i> save</button>
+            <button type="submit" class="btn btn-primary mt-4"><i class="fa fa-pencil"></i> Update</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 {% endblock DashboardContent %}
-{% block DashboardScript %}
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-app.js";
-  import { getStorage, ref, uploadBytes, getDownloadURL} from "https://www.gstatic.com/firebasejs/9.9.3/firebase-storage.js"
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyBRuGfn6uqcNoCzZDHsqzUn7stvE2BSQiM",
-    authDomain: "animal-ecommerce-project.firebaseapp.com",
-    projectId: "animal-ecommerce-project",
-    storageBucket: "animal-ecommerce-project.appspot.com",
-    messagingSenderId: "78512254729",
-    appId: "1:78512254729:web:dad967b958923d74126dd8"
-  };
-
-  $(document).ready(function(){
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const storage = getStorage(app)
-  const databaseURL = "gs://animal-ecommerce-project.appspot.com"
-  const productImageRef = name => ref(storage, 'public/'.concat(name))
-
-  const triggerSubmissionForm = () => {
-    console.log("FORM TRIGGER HANDLER")
-    const input1 = $(`#id_image_slug_1`)
-    const input2 = $(`#id_image_slug_2`)
-
-    if(input1.val() !== '' & input2.val() !== ''){
-      $('#product-add-form').trigger('submit')
-      $('#loading-wrapper').hide()
-      $('#submit-form').removeProp('disabled', false).removeClass('disabled')
-      $('#loading-wrapper').prop('hidden')
-    }else{
-      $('#submit-form').removeProp('disabled', false).removeClass('disabled')
-    }
-  }
-  
-  $('#submit-form').click(function(){
-    $('#loading-wrapper').removeProp('hidden')
-    $('#submit-form').attr('disabled', true).addClass('disabled')
-    const validate = []
-    $('#product-add-form input').each((index, el) => {
-      el = $(el)
-      if($(el).prop('required')){
-        validate.push(el.val() !== "")
-      }
-    })
-    $('#product-add-form select').each((index, el) => {
-      el = $(el)
-      if(el.prop('required')){
-        validate.push(el.val() !== "")
-      }
-    })
-    $('#product-add-form textarea').each((index, el) => {
-      el = $(el)
-      if(el.prop('required')){
-        validate.push(el.val() !== "")
-      }
-    })
-    if(validate.every( value => value === true)){
-      console.log('FORM IS VALID')
-      const file1 = $('#id_image_1').prop('files')[0]
-      const file2 = $('#id_image_2').prop('files')[0]
-      if(file1 !== undefined & file2 !== undefined){
-        fileUpload(file1, "id_image_slug_1", triggerSubmissionForm)
-        fileUpload(file2, "id_image_slug_2", triggerSubmissionForm)
-      }
-    }else{
-      $('#product-add-form').trigger('submit')
-    }
-  })
-
-
-
-  const fileUpload = (file, name="", cb=()=>{}) => {
-    console.log("STARTED UPLOADING ", file)
-    uploadBytes(productImageRef(file.name), file)
-    .then( snapshot => {
-      console.log('FINISHED')
-      getDownloadURL(snapshot.ref).then(downloadableUrl => {
-          $(`#${name}`).val(downloadableUrl)
-        cb()
-      })
-    })
-    .catch( error => {
-      console.warn("ERROR OCCURIED")
-      console.warn(error)
-    })
-    
-    //$('#product-add-form').submit()
-  } 
-  })
-</script>
-{% endblock DashboardScript %}

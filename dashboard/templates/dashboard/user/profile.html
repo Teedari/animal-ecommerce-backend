@@ -1,0 +1,122 @@
+{% extends "dashboard/base.html" %}
+{% load custom_tags %}
+{% block DashboardTitle %}
+  Homepage
+{% endblock DashboardTitle %}
+
+{% block DashboardContent %}
+<h2 class="my-2 py-2 rounded-3 heading">Profile</h2>
+<div class="d-flex justify-content-center">
+  <a class="avatar lg text-white text-decoration-none" >
+    <h5 class="">{{user | short_name}}</h5>
+  </a>
+</div>
+  <section class="">
+    <ul class="nav justify-content-center mt-2 nav-tab">
+      <li class="nav-item">
+        <a class="nav-link active" data-bs-toggle="tab" data-bs-target="#user-info" aria-current="page" href="#">User information</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" data-bs-target="#user-pass" href="#">Change password</a>
+      </li>
+    </ul>
+    <div class="tab-content py-4" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="user-info" role="tabpanel" aria-labelledby="nav-user-info-tab">
+        <section class="row">
+          <div class="col-md-6 offset-md-3">
+            <form action="{% url 'dashboard:user_profile_info' pk=request.user.id %}" class="custom-form" method="post">
+              {% csrf_token %}
+
+              <div class="form-group">
+                <label for="">{{user_info_form.first_name.label}}</label>
+                {{user_info_form.first_name}}
+                {% if user_info_form.first_name.errors %}
+                  {% for error in user_info_form.first_name.errors %}
+                    <small class="text-danger mt-1">{{erro}}</small>
+                  {% endfor %}
+                {% endif %}
+              </div>
+              <div class="form-group">
+                <label for="">{{user_info_form.last_name.label}}</label>
+                {{user_info_form.last_name}}
+                {% if user_info_form.first_name.errors %}
+                {% for error in user_info_form.first_name.errors %}
+                  <small class="text-danger mt-1">{{erro}}</small>
+                {% endfor %}
+              {% endif %}
+              </div>
+              <div class="form-group">
+                <label for="">{{user_info_form.email.label}}</label>
+                {{user_info_form.email}}
+                {% if user_info_form.first_name.errors %}
+                {% for error in user_info_form.email.errors %}
+                  <small class="text-danger mt-1">{{erro}}</small>
+                {% endfor %}
+              {% endif %}
+              </div>
+              <button class="btn btn-primary mt-4">
+                <i class="fa fa-pencil"></i> Update User
+              </button>
+            </form>
+          </div>
+        </section>
+      </div>
+      <!-- user_pass_form -->
+      <div class="tab-pane fade" id="user-pass" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <section class="row">
+          <div class="col-md-6 offset-md-3">
+            <form action="{% url 'dashboard:user_profile_password' pk=request.user.id %}" class="custom-form" method="post">
+              {% csrf_token %}
+
+              <div class="form-group">
+                <label for="">{{user_pass_form.current_password.label}}</label>
+                {{user_pass_form.current_password}}
+                {% if user_pass_form.current_password.errors %}
+                  {% for error in user_pass_form.current_password.errors %}
+                    <small class="text-danger mt-1">{{erro}}</small>
+                  {% endfor %}
+                {% endif %}
+              </div>
+              <div class="form-group">
+                <label for="">{{user_pass_form.new_password.label}}</label>
+                {{user_pass_form.new_password}}
+                {% if user_pass_form.new_password.errors %}
+                  {% for error in user_pass_form.new_password.errors %}
+                    <small class="text-danger mt-1">{{erro}}</small>
+                  {% endfor %}
+                {% endif %}
+              </div>
+              <button type="submit" class="btn btn-primary mt-4">
+                <i class="fa fa-pencil"></i> Change password
+              </button>
+            </form>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+{% endblock DashboardContent %}
+
+{% block DashboardScript %}
+  <script>
+    $('document').ready(function(){
+      $('.copy-text-clipboard').click(function(){
+        const target = $(this).data()['target']
+        console.log(target)
+      })
+
+      if($('#id_user_role').val().toLowerCase() !== 'agent'){
+        $('#id_delivery_location').closest('.form-group').removeProp('required').hide()
+      }
+
+      $('#id_user_role').change(function(){
+        if($(this).val().toLowerCase() !== 'agent'){
+          $('#id_delivery_location').closest('.form-group').hide()
+        }else{
+          $('#id_delivery_location').closest('.form-group').show()
+        }
+      })
+    })
+  </script>
+{% endblock DashboardScript %}
+  

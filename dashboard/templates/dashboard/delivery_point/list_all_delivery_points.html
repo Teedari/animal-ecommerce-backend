@@ -1,5 +1,5 @@
 {% extends "dashboard/base.html" %}
-
+{% load custom_tags %}
 {% block DashboardTitle %}
   Category
 {% endblock DashboardTitle %}
@@ -24,11 +24,11 @@
             <tr class="">
               <td>{{point.id}}</td>
               <td>{{point.name}}</td>
-              <td>{{point.fee}}</td>
-              <td>{{point.description}}</td>
+              <td>{{point.fee|get_currency}}</td>
+              <td>{{point.description|truncatechars:50}}</td>
               <td>
-                <a href="" class="btn btn-danger rounded-pill"><i class="fa fa-trash text-white"></i> </a>
                 <a href="{% url 'dashboard:delivery_point_edit_detail' point.id %}" class="btn btn-info rounded-pill"><i class="fa fa-pencil text-white"></i> </a>
+                <a href="" class="btn btn-danger rounded-pill"><i class="fa fa-trash text-white"></i> </a>
               </td>
             </tr>
             {% empty %}

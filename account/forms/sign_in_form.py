@@ -9,6 +9,6 @@ class SignInForm(forms.Form):
   def loginUser(self, request):
     auth = authenticate(request, **self.cleaned_data)
     if not auth:
-      raise Exception('User does not exist in database')
+      raise forms.ValidationError('User does not exist in database')
     login(request, auth)
     

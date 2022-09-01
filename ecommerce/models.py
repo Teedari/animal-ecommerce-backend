@@ -18,13 +18,15 @@ class Animal(BaseModel):
   weight = models.FloatField(max_length=200, null=True)
   sex = models.CharField(choices=(['female', 'Female'], ['male', 'Male']), max_length=10)
   price = models.DecimalField(decimal_places=2, max_digits=999, default=0.00, null=True)
-  discount = models.BigIntegerField(null=True)
+  # discount = models.BigIntegerField(null=True, default=0)
   quantity = models.BigIntegerField(blank=True, default=0)
-  
+  image_slug_1 = models.CharField(max_length=225, null=True)
+  image_slug_2 = models.CharField(max_length=225, null=True)
+  is_popular = models.CharField(choices=[ ('No', False), ('Yes', True)], max_length=10, default=False)
   
   
   def __str__(self) -> str:
-    return f'{self.name} - {self.category} - {self.quantity}'
+    return f'{self.name} - {self.category} - {self.is_popular}'
   
   def images(self):
     upload_images = self.animal_uploaded_image.all()
@@ -144,6 +146,10 @@ class Order(BaseModel):
   def items_in_cart(self):
     return sum([ quantity[0] for quantity in self.items.values_list('quantity')])
   
+  @property
+  def payment(self):
+    return self.payment_order
+  
   def is_accepted(self):
     return self.status == Order.ACCEPTED
   
@@ -158,8 +164,8 @@ class Order(BaseModel):
       return False
     return self.total_amount == amount
   
-  def get_payments_history(self):
-    return self.payment_order
+  # def get_payments_history(self):
+  #   return self.payment_order
   
   
   
@@ -175,10 +181,10 @@ class OrderedItem(BaseModel):
   
   
   
-  def clean(self):
-    from rest_framework.serializers import ValidationError
-    if self.quantity > self.product.quantity:
-      raise ValidationError(_('Order item quantity exceeds that of the quantity of the product itself'), code='order_quantity_exceed')
+  # def clean(self):
+  #   from rest_framework.serializers import ValidationError
+  #   if self.quantity > self.product.quantity:
+  #     raise ValidationError(_('Order item quantity exceeds that of the quantity of the product itself'), code='order_quantity_exceed')
 
 
   def save(self, *args, **kwargs) -> None:
@@ -202,7 +208,7 @@ class OrderedItem(BaseModel):
       instance = cls.objects.create(**kwargs, product=product.first())
       instance.save()
     return instance
-  
+
   def product_info(self):
     info = {}
     info['']
@@ -214,6 +220,8 @@ class OrderedItem(BaseModel):
   
 class Payment(BaseModel):
   order = models.OneToOneField(to='Order', related_name='payment_order', on_delete=models.CASCADE, null=True)
+  name = models.CharField(max_length=100,)
+  phone_number = models.CharField(max_length=10)
   amount = models.DecimalField(max_digits=9999, decimal_places=2)
   payment_method = models.CharField(max_length=200)
   is_paid = models.BooleanField(default=False, null=True)
