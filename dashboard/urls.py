@@ -1,7 +1,7 @@
 from django.urls import path
 from django.views.generic import TemplateView
 from dashboard.views.animal.animal_views import AddNewAnimalView, AnimalDeleteView, AnimalEditView, ListAnimalsView
-from dashboard.views.category.category_views import CreateCategory, DeleteCategory, ListCategories
+from dashboard.views.category.category_views import CreateCategory, DeleteCategory, EditCategoryView, ListCategories
 from dashboard.views.dashboard_view import DashboardHomePageView
 from dashboard.views.delivery_point.delivery_point_view import CreateDeliveryPoints, EditDeliveryPointView, ListDeliveryPointsView
 from dashboard.views.user.list_all_users_view import DeleteUserView, ListUsersView, ToggleUserActiveStatusView
@@ -19,6 +19,7 @@ urlpatterns = [
   
   #Category
   path("category", ListCategories.as_view(), name='category_list' ),   
+  path("category/<int:pk>/edit", EditCategoryView.as_view(), name='category_edit' ),   
   path("category/<int:pk>/delete", DeleteCategory.as_view(), name='category_delete' ),   
   path("category/create", CreateCategory.as_view(), name='category_add' ), 
   

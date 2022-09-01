@@ -1,17 +1,19 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.views.generic import ListView, DeleteView
+from django.views.generic import ListView, DeleteView, UpdateView
 from django.views import View
+from account.mixins.user_view_accessibility_mixin import UserViewAccessibilityMixin
+from account.models import UserProfile
 from ecommerce.forms.category_forms import CategoryCreationForm
 from django.contrib import messages
 from ecommerce.models import Category
 # Create your views here.
 
-class CreateCategory(View):
+class CreateCategory(UserViewAccessibilityMixin, View):
   model = Category
   template_name = 'dashboard/category/create_category.html'
   form_class = CategoryCreationForm
-  
+  allow_user_profiles = [UserProfile.ADMIN]
   def get(self, request, *args, **kwargs):
     return render(request, self.template_name, {'form': self.form_class()})
   
@@ -29,11 +31,17 @@ class CreateCategory(View):
 
     return render(request, self.template_name, context)
   
+class EditCategoryView(UserViewAccessibilityMixin, UpdateView):
+  model = Category
+  template_name = 'dashboard/category/edit_category.html'
+  form_class = CategoryCreationForm
+  success_url = '/category'
+  is_admin_only = True
   
-class ListCategories(ListView):
+class ListCategories(UserViewAccessibilityMixin, ListView):
   model = Category
   template_name = 'dashboard/category/list_all_category.html'
-  
+  is_admin_only = True
   
 class DeleteCategory(View):
   model = Category
