@@ -36,6 +36,8 @@ class OrderAPI(generics.CreateAPIView):
   serializer_class = OrderCreateSerializer
   queryset = Order.objects.all()
   permission_classes = [permissions.IsAuthenticated, AllowOnlyCustomerPermission,]
+  def perform_create(self, serializer):
+    serializer.save(customer=UserProfile.get_user_profile(self.request.user))
 
 class OrderListAPI(APIView):
   serializer_class = OrderSerializer
