@@ -1,6 +1,6 @@
 from django.urls import path
 from django.views.generic import TemplateView
-from dashboard.views.animal.animal_views import AddNewAnimalView, AnimalDeleteView, ListAnimalsView
+from dashboard.views.animal.animal_views import AddNewAnimalView, AnimalDeleteView, AnimalEditView, ListAnimalsView
 from dashboard.views.category.category_views import CreateCategory, DeleteCategory, ListCategories
 from dashboard.views.dashboard_view import DashboardHomePageView
 from dashboard.views.delivery_point.delivery_point_view import CreateDeliveryPoints, EditDeliveryPointView, ListDeliveryPointsView
@@ -31,6 +31,7 @@ urlpatterns = [
   path('animals', ListAnimalsView.as_view(), name='animal_list'),
   path('animal/add', AddNewAnimalView.as_view(), name='animal_add'),
   path('animal/<int:pk>/delete', AnimalDeleteView.as_view(), name='animal_delete'),
+  path('animal/<int:pk>/edit', AnimalEditView.as_view(), name='animal_edit'),
   
   # Order
   path('orders', ListOrderView.as_view(), name='order_list'),

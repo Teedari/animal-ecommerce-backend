@@ -1,6 +1,6 @@
 from django.urls import reverse
 from django.shortcuts import render, redirect
-from ecommerce.forms.animal_forms import AddNewAnimalForm
+from ecommerce.forms.animal_forms import AddNewAnimalForm, AnimalUpdateForm
 from ecommerce.models import Animal
 from django.views import generic, View
 from django.contrib import messages
@@ -37,7 +37,14 @@ class ListAnimalsView(generic.ListView,):
   
   
 class AnimalEditView(generic.UpdateView):
-  pass
+  template_name = 'dashboard/animal/edit_animal.html'
+  model= Animal
+  
+  success_url = '/animals'
+  def get_form(self, form_class=None):
+    return super().get_form(AnimalUpdateForm)
+
+  
 
 class AnimalDeleteView(generic.DeleteView):
   template_name = 'dashboard/animal/list_all_animals.html'

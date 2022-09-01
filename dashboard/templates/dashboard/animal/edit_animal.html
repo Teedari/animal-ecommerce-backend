@@ -1,0 +1,126 @@
+{% extends "dashboard/base.html" %}
+
+{% block DashboardTitle %}
+  Homepage
+{% endblock DashboardTitle %}
+
+{% block DashboardContent %}
+  <h2 class="my-2 py-2 rounded-3 heading">Add New Animal</h2>
+
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card card-body shadow-md border-0 overflow-hidden">
+        <div id="loading-wrapper" hidden style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; background: rgba(0,0,0,0.2); display: flex; justify-content: center; align-items: center;">
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <form id="product-add-form" action="" enctype="multipart/form-data" method="post" class="custom-form">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mt-2">
+                <label for="">{{form.name.label}}</label>
+                {{form.name}}
+              </div>
+              {% if form.name.errors %}
+                {% for error in form.name.errors %}
+                  <small class="text-danger">{{error}}</small>
+                {% endfor %}
+              {% endif %}
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mt-2">
+                <label for="">{{form.category.label}}</label>
+                {{form.category}}
+              </div>
+              {% if form.category.errors %}
+                {% for error in form.category.errors %}
+                  <small class="text-danger">{{error}}</small>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div> <!-- /row -->
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mt-2">
+                <label for="">{{form.breed.label}}</label>
+                {{form.breed}}
+              </div>
+              {% if form.breed.errors %}
+                {% for error in form.breed.errors %}
+                  <small class="text-danger">{{error}}</small>
+                {% endfor %}
+              {% endif %}
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mt-2">
+                <label for="">{{form.weight.label}}(Kg)</label>
+                {{form.weight}}
+              </div>
+              {% if form.weight.errors %}
+                {% for error in form.weight.errors %}
+                  <small class="text-danger">{{error}}</small>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div> <!-- /row -->
+          <div class="form-group">
+            <label for="">{{form.sex.label}}</label>
+            {{form.sex}}
+          </div>
+          {% if form.sex.errors %}
+            {% for error in form.sex.errors %}
+              <small class="text-danger">{{error}}</small>
+            {% endfor %}
+          {% endif %}
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mt-2">
+                <label for="">{{form.price.label}}</label>
+                {{form.price}}
+              </div>
+              {% if form.price.errors %}
+                {% for error in form.price.errors %}
+                  <small class="text-danger">{{error}}</small>
+                {% endfor %}
+              {% endif %}
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mt-2">
+                <label for="">{{form.is_popular.label}}</label>
+                {{form.is_popular}}
+              </div>
+              {% if form.is_popular.errors %}
+                {% for error in form.is_popular.errors %}
+                  <small class="text-danger">{{error}}</small>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div> <!-- /row -->
+          <div class="form-group mt-2">
+            <label for="">{{form.quantity.label}}</label>
+            {{form.quantity}}
+          </div>
+          {% if form.quantity.errors %}
+            {% for error in form.quantity.errors %}
+              <small class="text-danger">{{error}}</small>
+            {% endfor %}
+          {% endif %}
+          <div class="form-group mt-2">
+            <label for="">{{form.description.label}}</label>
+            {{form.description}}
+          </div>
+          {% if form.description.errors %}
+            {% for error in form.description.errors %}
+              <small class="text-danger">{{error}}</small>
+            {% endfor %}
+          {% endif %}
+          <div class="text-end">
+            <button type="submit" class="btn btn-primary mt-4"><i class="fa fa-pencil"></i> Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock DashboardContent %}

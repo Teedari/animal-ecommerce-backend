@@ -1,3 +1,4 @@
+from dataclasses import field
 from django import forms
 
 from ecommerce.models import Animal, UploadAnimalImages
@@ -30,8 +31,11 @@ class AddNewAnimalForm(forms.ModelForm):
       # 'image_1': forms.FileInput(attrs={'class': 'form-control'}),
     }
     
+  
+    
   def save(self, commit: bool = ...):
     instance = super(AddNewAnimalForm, self).save(commit=False)
+  
     
       
     # upload1 = UploadAnimalImages.objects.create(animal=instance, image=self.cleaned_data.get('image_1'))
@@ -43,3 +47,17 @@ class AddNewAnimalForm(forms.ModelForm):
     
     return instance
       
+
+class AnimalUpdateForm(forms.ModelForm):
+  
+  class Meta:
+    model = Animal
+    exclude = ['image_slug_1', 'image_slug_2', 'quantity']
+    
+  def __init__(self, data=None, files=None, *args, **kwargs):
+    super().__init__(data=data, files=files, *args, **kwargs)
+    for _, fields in self.fields.items():
+      if _ == 'description':
+        fields.widget = forms.Textarea()
+      fields.widget.attrs = {'class': 'form-control'}
+    
