@@ -8,10 +8,11 @@ from django.urls import reverse
   
 class UserViewAccessibilityMixin(mixins.UserPassesTestMixin):
   allow_user_profiles = []
+  is_admin_only = None
   def test_func(self):
     if not acc_model.UserProfile.get_user_profile(self.request.user):
       return False
-    return acc_model.UserProfile.get_user_role(self.request.user) in self.allow_user_profiles
+    return  acc_model.UserProfile.get_user_role(self.request.user) in self.allow_user_profiles if not self.is_admin_only else acc_model.UserProfile.get_user_role(self.request.user) == acc_model.UserProfile.ADMIN
   
   
   def dispatch(self, request, *args, **kwargs):
