@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block Title %}
+  Sign In User
+{% endblock Title %}
+
 {% block Content %}
   <div class="account">
 
@@ -30,11 +34,16 @@
                       <small class="text-danger mb-2">{{error}}</small>
                     {% endfor %}
                   {% endif %}
-                  <button type="submit" class="btn btn-primary w-100 mt-4"><i class="fa fa-save"></i> Sign in</button>
+                  <button type="submit" class="btn btn-primary w-100 mt-4"><i class="fa fa-key"></i> Sign in</button>
                 </form>
-                <div class="text-end">
+                <!-- <div class="text-end">
                   <a href="" class="text-decoration-none text-dark">Forgot password?</a>
-                </div>
+                </div> -->
+                {% if error %}
+                  <div class="text-center py-4">
+                    <h6 class="text-danger">{{error}}</h6>
+                  </div>
+                {% endif %}
               </div>
             </div>
             <div class="col-md-6">
@@ -43,8 +52,8 @@
                   <img src="{% static 'assets/svgs/undraw_thought_process_re_om58.svg' %}" alt="" width="90%">
                 </div>
                 <div class="py-4 text-center">
-                  <h5><strong>Keep your personal data to updated!!</strong></h5>
-                  <small>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam beatae, molestias delectus animi eius alias voluptatem.</small>
+                  <h5><strong>Keep your personal data to updated Tradie!!</strong></h5>
+                  <small>Tradie user admin panel</small>
                 </div>
               </div>
             </div>
