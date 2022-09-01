@@ -2,6 +2,7 @@ from email import message
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import generic, View
+from account.mixins.user_view_accessibility_mixin import UserViewAccessibilityMixin
 from ecommerce.models import DeliveryPoint
 from ecommerce.forms.delivery_points_form import DeliveryPointCreationForm
 from django.contrib import messages
@@ -26,33 +27,23 @@ class CreateDeliveryPoints(View):
     return render(request, self.template_name, context)
   
 
-class ListDeliveryPointsView(generic.ListView):
+class ListDeliveryPointsView(UserViewAccessibilityMixin, generic.ListView):
   model = DeliveryPoint
   template_name = 'dashboard/delivery_point/list_all_delivery_points.html'
+  is_admin_only = True
   
-  
-class EditDeliveryPointView(generic.DetailView):
+class EditDeliveryPointView(UserViewAccessibilityMixin, generic.UpdateView):
   model = DeliveryPoint
   form_class = DeliveryPointCreationForm
   template_name = 'dashboard/delivery_point/edit_delivery_point.html'
+  success_url = '/delivery'
+  is_admin_only = True
   
-  def get_context_data(self, **kwargs):
-      context = super().get_context_data(**kwargs)
-      context["form"] = self.form_class(initial=kwargs['object'].get_serialized_form_data)
-      return context
-  
-  def post(self, request, *args, **kwargs):
-    form = self.form_class(data=request.POST)
-    if form.is_valid():
-      messages.success(request, 'Updated successfully')
-      return UpdateDeliveryPoint.as_view()(request, *args, **kwargs)
-    messages.error(request, 'Delivery point update unsuccessful')
-    return render(request, self.template_name, {'form': form, 'object': self.get_object()})
       
   
   
 
-class UpdateDeliveryPoint(generic.UpdateView):
+class UpdateDeliveryPoint(UserViewAccessibilityMixin, generic.UpdateView):
   model = DeliveryPoint
   fields =[
     'name',
@@ -62,4 +53,5 @@ class UpdateDeliveryPoint(generic.UpdateView):
   
   success_url= '/delivery'
   
+  is_admin_only = True
 
