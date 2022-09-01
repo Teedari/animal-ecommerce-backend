@@ -19,7 +19,6 @@ class CreateNewUserAdminView(View):
   def post(self, request, *args, **kwargs):
     context = {}
     form = self.form_class(data=request.POST)
-    
     if form.is_valid():
       instance = form.save()
       context['data'] = instance
