@@ -146,6 +146,10 @@ class Order(BaseModel):
   def items_in_cart(self):
     return sum([ quantity[0] for quantity in self.items.values_list('quantity')])
   
+  @property
+  def payment(self):
+    return self.payment_order
+  
   def is_accepted(self):
     return self.status == Order.ACCEPTED
   
@@ -160,8 +164,8 @@ class Order(BaseModel):
       return False
     return self.total_amount == amount
   
-  def get_payments_history(self):
-    return self.payment_order
+  # def get_payments_history(self):
+  #   return self.payment_order
   
   
   
@@ -204,7 +208,7 @@ class OrderedItem(BaseModel):
       instance = cls.objects.create(**kwargs, product=product.first())
       instance.save()
     return instance
-  
+
   def product_info(self):
     info = {}
     info['']

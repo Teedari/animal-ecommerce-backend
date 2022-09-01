@@ -23,7 +23,7 @@
             <tr class="">
               <td>{{forloop.counter}}</td>
               <td class="text-capitalize">{{order.customer.user.get_username}}</td>
-              <td>GHc {{order.total_items_amount}}({{order.items_in_cart}})</td>
+              <td>{{order.total_items_amount|get_currency}}({{order.items_in_cart}})</td>
               <td>{{order.total_amount|get_currency}}</td>
               <td>{{order.status}}</td>
               <td>

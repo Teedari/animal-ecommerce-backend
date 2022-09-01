@@ -22,6 +22,8 @@ class UserProfile(BaseModel):
   phone_number = models.CharField(max_length=10)
   user_role = models.CharField(choices=USER_ROLES,default=UNKNOWN, max_length=100)
   
+  def __str__(self) -> str:
+    return f'{self.user.username} - {self.user_role}'
   
   @property
   def is_customer(self):

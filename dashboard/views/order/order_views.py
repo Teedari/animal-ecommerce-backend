@@ -17,7 +17,7 @@ class ListOrderView(UserViewAccessibilityMixin, generic.ListView):
     profile = UserProfile.get_user_profile(self.request.user)
     if profile.user_role == UserProfile.AGENT:
       return md.Order.objects.filter(delivery_point__userprofile__in=[profile])
-    # return super().get_queryset()
+    return super().get_queryset()
   
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
