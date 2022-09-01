@@ -1,5 +1,7 @@
 from django import template
 
+from account.models import UserProfile
+
 
 
 register = template.Library()
@@ -27,4 +29,7 @@ def get_currency(value):
 #   else: 
 #     return {'src': 'assets/svgs/undraw_empty.svg', 'default': True}
   
-  
+@register.filter
+def isAdmin(user):
+  profile = UserProfile.objects.filter(user=user)
+  return profile.first().user_role == UserProfile.ADMIN

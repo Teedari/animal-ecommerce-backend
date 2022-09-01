@@ -1,3 +1,4 @@
+{% load custom_tags %}
 <aside class="layout-sidebar" id="layout-sidebar">
   <div class="py-4 container">
     <div class="d-flex align-items-center justify-content-between">
@@ -25,6 +26,7 @@
       <a href="{% url 'dashboard:homepage' %}" class="menu-item menu-title">
         <i class="fa fa-dashboard"></i><span class="menu-text"> Dashboard</span>
       </a>
+      {% if request.user|isAdmin %}
       <div class="menu-sub">
         <button
           class="menu-item menu-title"
@@ -77,12 +79,14 @@
           <a href="{% url 'dashboard:animal_list' %}" class="menu-item">List</a>
         </div>
       </div>
+      {% endif %}
       <a href="{% url 'dashboard:order_list' %}" class="menu-item menu-title"
         ><i class="fa fa-shopping-cart"></i><span class="menu-text"> Orders</span></a
       >
       <a href="{% url 'dashboard:payment_list' %}" class="menu-item menu-title"
         ><i class="fa fa-paypal"></i><span class="menu-text"> Payments</span></a
       >
+      {% if request.user|isAdmin %}
       <a href="{% url 'dashboard:user_list' %}" class="menu-item menu-title"
         ><i class="fa fa-users"></i><span class="menu-text">Users</span></a
       >
@@ -91,6 +95,7 @@
         class="menu-item menu-title"
         ><i class="fa fa-user"></i><span class="menu-text"> Create New Admin</span></a
       >
+      {% endif %}
     </section>
   </div>
 </aside>
