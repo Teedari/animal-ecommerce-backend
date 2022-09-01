@@ -43,9 +43,10 @@ class ListCategories(UserViewAccessibilityMixin, ListView):
   template_name = 'dashboard/category/list_all_category.html'
   is_admin_only = True
   
-class DeleteCategory(View):
+class DeleteCategory(UserViewAccessibilityMixin,View):
   model = Category
   template_name = 'dashboard/category/list_all_category.html'
+  is_admin_only = True
    
   def get(self, request, *args, **kwargs):
     if self.model.remove(int(kwargs['pk'])):
