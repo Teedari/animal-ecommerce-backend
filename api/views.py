@@ -18,19 +18,56 @@ from ecommerce.models import Animal, Category, DeliveryPoint, Order, Payment
 # Create your views here.
 
 
+
 @api_view(['GET'])
 def listOfCategoryAPI(request):
   if request.method == 'GET':
     categories = Category.objects.all()
     serializer = CategorySerializer(categories, many=True)
     return Response(serializer.data)
-  
+
+ 
 @api_view(['GET'])
 def listAllAnimalsAPI(request):
   if request.method == 'GET':
     animal = Animal.objects.all()
     serializer = AnimalSerializer(animal, many=True)
     return Response(serializer.data)
+  
+
+class ProductListAPI(generics.ListAPIView):
+  serializer_class = AnimalSerializer
+  
+  def get_params(self):
+    if 'filter' in self.request.GET.keys():
+      queryStr = self.request.GET['filter']
+      param_list = [*map(lambda x: x.split(':'), queryStr.split(';'))]
+      params = {}
+      for param in param_list:
+          if len(param) == 2:
+            params[param[0]] = param[1]
+      return params
+  
+  def get_queryset(self):
+    queryset = Animal.objects.all()
+    
+    queryParams = self.get_params()
+    if queryParams:
+      try:
+        for key in queryParams.keys():
+          if key == 'name':
+            queryset = queryset.filter(name__startswith=queryParams[key])
+          if key == 'category':
+            queryset = queryset.filter(category__id=queryParams[key])
+          if key == 'id':
+            queryset = queryset.filter(id=queryParams[key])
+          if key == 'is_popular' and queryParams[key].lower() == 'yes' or queryParams[key].lower() == 'no':
+            queryset = queryset.filter(is_popular=queryParams[key].capitalize())
+      except Exception as ex:
+        pass
+      
+    
+    return queryset
   
 class OrderAPI(generics.CreateAPIView):
   serializer_class = OrderCreateSerializer
