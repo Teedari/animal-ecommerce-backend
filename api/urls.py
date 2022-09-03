@@ -10,7 +10,7 @@ urlpatterns = [
   ), name='openapi-schema'),
   
   path('categorys', listOfCategoryAPI, name='category_list'),
-  path('animals', listAllAnimalsAPI, name='animal_list'),
+  path('animals', ProductListAPI.as_view(), name='animal_list'),
   
   # Auth
   path('auth/register/customer', AddNewCustomerUserAPI.as_view(), name='auth_register_user'),
