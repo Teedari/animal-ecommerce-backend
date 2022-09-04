@@ -1,7 +1,7 @@
 from django.urls import path, re_path
 from .views import *
 from rest_framework.schemas import get_schema_view
-from account.views.api import AddNewAdminUserAPI, AddNewAgentUserAPI, AddNewCustomerUserAPI, LoginUserAPI
+from account.views.api import AddNewAdminUserAPI, AddNewAgentUserAPI, AddNewCustomerUserAPI, LoginUserAPI, SignOutUserAPI
 
 app_name = 'api'
 urlpatterns = [
@@ -17,6 +17,7 @@ urlpatterns = [
   path('auth/register/admin', AddNewAdminUserAPI.as_view(), name='auth_register_admin'),
   path('auth/register/agent', AddNewAgentUserAPI.as_view(), name='auth_register_agent'),
   path('auth/login', LoginUserAPI.as_view(), name='sign_in'),
+  path('auth/logout', SignOutUserAPI.as_view(), name='sign_out'),
   
   # Order Item
   path('order', OrderAPI.as_view(), name='order'),
