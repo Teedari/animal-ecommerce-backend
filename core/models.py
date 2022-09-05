@@ -6,5 +6,6 @@ class BaseModel(models.Model):
   date_updated = models.DateTimeField(auto_now=True)
   
   class Meta:
+    ordering = ['-date_created']
     abstract = True
   

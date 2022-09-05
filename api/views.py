@@ -88,7 +88,7 @@ class OrderListAPI(APIView):
         self.many = False
         return self.model.objects.get(id=self.kwargs['pk'])
       self.many = True
-      return self.model.objects.all()
+      return self.model.objects.filter(customer=UserProfile.get_user_profile(self.request.user))
     except self.model.DoesNotExist as ex:
       raise validators.ValidationError((ex), code='does-not-exist')
     
@@ -124,7 +124,8 @@ class PaymentOrderAPI(generics.CreateAPIView):
 class PaymentListAPI(generics.ListAPIView):
   # permission_classes = [ permissions.IsAuthenticated, ]
   serializer_class = PaymentListSerializer
-  queryset = Payment.objects.all()
+  def get_queryset(self):
+    return Payment.objects.filter(paid_by = UserProfile.get_user_profile(self.request.user))
 
 class ListDeliveryPointsAPIView(generics.ListAPIView):
   serializer_class = DeliveryPointSerializer

@@ -33,7 +33,7 @@ class PaymentCreateSerializer(serializers.ModelSerializer):
       'paid_by': {'read_only': True, 'required': False},
       'remarks': {'read_only': True, 'required': False},
     }
-    
+    ordering = ['-date_created']
     
   def create(self, validated_data):
     
@@ -57,16 +57,14 @@ class PaymentCreateSerializer(serializers.ModelSerializer):
       payment.is_paid = True
       payment.save()
       validated_data['id'] = payment.id
-      md.Order.objects.filter(id=order.get('id')).update(status=md.Order.ACCEPTED)
+      md.Order.objects.filter(id=order.get('id')).update(status=md.Order.ACCEPTED, customer=validated_data.get('paid_by', None))
     except Exception as ex:
-      print(ex)
       raise serializers.ValidationError(_(f'Payment of order #{order.get("id")} was unsuccessful'))
     o = OrderCreateSerializer(instance=md.Order.objects.filter(id=order.get('id')).first())
     # o.is_valid(raise_exception=True)
     # validated_data['order'] = o.validated_data
     validated_data['order'] = o.data
     dd = PaymentCreateSerializer(instance=validated_data)
-
     return validated_data
   
   
