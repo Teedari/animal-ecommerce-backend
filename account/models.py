@@ -12,8 +12,8 @@ class UserProfile(BaseModel):
   AGENT = 'Agent' # this could be the delivery driver or the agent
   
   USER_ROLES = (
-    (UNKNOWN, UNKNOWN.upper()),
-    (CUSTOMER, CUSTOMER.upper()),
+    # (UNKNOWN, UNKNOWN.upper()),
+    # (CUSTOMER, CUSTOMER.upper()),
     (ADMIN, ADMIN.upper()),
     (AGENT, AGENT.upper()),
   )
