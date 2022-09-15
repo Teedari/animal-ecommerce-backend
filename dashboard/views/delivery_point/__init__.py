@@ -1,1 +1,0 @@
-from .delivery_point_view import *
