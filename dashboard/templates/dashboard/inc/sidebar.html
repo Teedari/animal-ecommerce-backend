@@ -1,0 +1,98 @@
+{% load custom_tags %}
+<aside class="layout-sidebar" id="layout-sidebar">
+  <div class="py-4 container">
+    <div class="d-flex align-items-center justify-content-between">
+      <div class="avatar">
+        <i class="fa fa-user text-white"></i>
+      </div>
+      <div class="profile d-flex align-items-center gap-2">
+        <div class="">
+          <h6>Welcome back,</h6>
+          <small class="text-capitalize"><strong>{{user}}</strong></small>
+        </div>
+        <button
+        class="btn btn-default shadow-lg avatar d-flex align-items-center justify-content-center"
+        >
+        <i class="fa fa-gear animate-spin"></i>
+      </button>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <section class="menu">
+      <a href="{% url 'dashboard:homepage' %}" class="menu-item menu-title">
+        <i class="fa fa-dashboard"></i><span class="menu-text"> Dashboard</span>
+      </a>
+      {% if request.user|isAdmin %}
+      <div class="menu-sub">
+        <button
+          class="menu-item menu-title"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#menu-category"
+        >
+          <i class="fa fa-cubes"></i> <span class="menu-text">Category</span>
+        </button>
+        <div id="menu-category" class="collapse menu-sub-items">
+          <a href="{% url 'dashboard:category_add' %}" class="menu-item"
+            >Create</a
+          >
+          <a href="{% url 'dashboard:category_list' %}" class="menu-item"
+            >List</a
+          >
+        </div>
+      </div>
+      <div class="menu-sub">
+        <button
+          class="menu-item menu-title"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#menu-delivery_point"
+        >
+          <i class="fa fa-truck"></i> <span class="menu-text">Delivery point</span>
+        </button>
+        <div id="menu-delivery_point" class="collapse menu-sub-items">
+          <a href="{% url 'dashboard:delivery_point_add' %}" class="menu-item"
+            >Create</a
+          >
+          <a href="{% url 'dashboard:delivery_point_list' %}" class="menu-item"
+            >List</a
+          >
+        </div>
+      </div>
+      <div class="menu-sub">
+        <button
+          class="menu-item menu-title"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#menu-animal"
+        >
+          <i class="fa fa-superpowers"></i><span class="menu-text"> Animal</span>
+        </button>
+        <div id="menu-animal" class="collapse menu-sub-items">
+          <a href="{% url 'dashboard:animal_add' %}" class="menu-item"
+            >Create</a
+          >
+          <a href="{% url 'dashboard:animal_list' %}" class="menu-item">List</a>
+        </div>
+      </div>
+      {% endif %}
+      <a href="{% url 'dashboard:order_list' %}" class="menu-item menu-title"
+        ><i class="fa fa-shopping-cart"></i><span class="menu-text"> Orders</span></a
+      >
+      <a href="{% url 'dashboard:payment_list' %}" class="menu-item menu-title"
+        ><i class="fa fa-paypal"></i><span class="menu-text"> Payments</span></a
+      >
+      {% if request.user|isAdmin %}
+      <a href="{% url 'dashboard:user_list' %}" class="menu-item menu-title"
+        ><i class="fa fa-users"></i><span class="menu-text">Users</span></a
+      >
+      <a
+        href="{% url 'dashboard:user_create_admin' %}"
+        class="menu-item menu-title"
+        ><i class="fa fa-user"></i><span class="menu-text"> Create New Admin</span></a
+      >
+      {% endif %}
+    </section>
+  </div>
+</aside>

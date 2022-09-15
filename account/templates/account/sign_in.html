@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block Title %}
+  Sign In User
+{% endblock Title %}
+
+{% block Content %}
+  <div class="account">
+
+    <div class="container">
+      <section class="account-layout">
+        <div>
+          <div class="row align-items-center">
+            <div class="col-md-6">
+              <div class="mx-auto" style="max-width: 400px;">
+                {% include "components/logo_component.html" %}
+                <h5 class="mt-4">Sign in</h5>
+                <form action="" method="post" class="account-form">
+                  {% csrf_token %}
+                  <div class="form-group mt-4">
+                    {{form.username}}
+                  </div>
+                  {% if form.username.errors %}
+                    {% for error in form.username.errors %}
+                      <small class="text-danger mb-2">{{error}}</small>
+                    {% endfor %}
+                  {% endif %}
+                  <div class="form-group mt-4">
+                    {{form.password}}
+                  </div>
+                  {% if form.password.errors %}
+                    {% for error in form.password.errors %}
+                      <small class="text-danger mb-2">{{error}}</small>
+                    {% endfor %}
+                  {% endif %}
+                  <button type="submit" class="btn btn-primary w-100 mt-4"><i class="fa fa-key"></i> Sign in</button>
+                </form>
+                <!-- <div class="text-end">
+                  <a href="" class="text-decoration-none text-dark">Forgot password?</a>
+                </div> -->
+                {% if error %}
+                  <div class="text-center py-4">
+                    <h6 class="text-danger">{{error}}</h6>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="d-flex flex-column justify-content-center align-items-center">
+                <div>
+                  <img src="{% static 'assets/svgs/undraw_thought_process_re_om58.svg' %}" alt="" width="90%">
+                </div>
+                <div class="py-4 text-center">
+                  <h5><strong>Keep Track of Tradie Data!!</strong></h5>
+                  <small>Tradie user admin panel</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+{% endblock Content %}

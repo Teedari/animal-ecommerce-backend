@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{% block Title %}
+  Oops - Error Occuried
+{% endblock Title %}
+{% block Content %}
+  <div class="account">
+
+    <div class="container">
+      <section class="account-layout">
+        <!-- START FROM HERE, All editing of this page should start from here -->
+        <div class="d-flex justify-content-center w-100">
+          <div class="d-flex flex-column justify-content-center align-items-center">
+            <div>
+              <img src="{% static 'assets/svgs/undraw_page_not_found_re_e9o6.svg' %}" alt="" width="80%">
+            </div>
+            <div class="py-4 text-center">
+              <h1 class="heading-404">Oops!</h1>
+              <h5 class="text-white py-4"><strong>It seems something went wrong</strong></h5>
+              <div class="d-flex justify-content-center w-100">
+                <a href="" class="avatar text-decoration-none">
+                  <i class="fa fa-chevron-left"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END HERE -->
+      </section>
+    </div>
+  </div>
+{% endblock Content %}
