@@ -81,7 +81,10 @@ class UpdateUserProfilePassword(generic.FormView):
   
   
   def post(self, request, *args, **kwargs):
-    if self.get_form().is_valid():
+    form = self.get_form()
+    if form.is_valid():
+      form.change_password(self.request.user)
+      self._is_password_change = True
       messages.success(request, 'Password changed successfully')
       return redirect(reverse('account:sign_out'))
     else:
