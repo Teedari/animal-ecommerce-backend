@@ -30,8 +30,6 @@ class ProductCreationForm(forms.ModelForm):
 
     ProductImage.create_product_image(product=instance, image=self.cleaned_data.get('image_1'))
     ProductImage.create_product_image(product=instance, image=self.cleaned_data.get('image_2'))
-      
-    
     return instance
       
 
