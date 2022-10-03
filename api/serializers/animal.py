@@ -6,7 +6,7 @@ from ecommerce import models as md
 class AnimalSerializer(serializers.ModelSerializer):
   category = serializers.SerializerMethodField()
   class Meta:
-    model = md.Animal
+    model = md.Product
     exclude = ['date_updated',]
     
   

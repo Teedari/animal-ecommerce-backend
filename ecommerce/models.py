@@ -10,37 +10,46 @@ from django.utils.translation import gettext_lazy as _
 
 
 
-class Animal(BaseModel):
+
+
+
+class Product(BaseModel):
   name = models.CharField(max_length=200)
-  description = models.CharField(max_length=200, blank=True, null=True)
-  category = models.ForeignKey(to='Category', related_name='animal_category', on_delete=models.SET_NULL, null=True)
-  breed = models.CharField(max_length=200, null=True)
+  notes = models.CharField(max_length=200, blank=True, null=True)
+  category = models.ForeignKey(to='Category', related_name='product_category', on_delete=models.SET_NULL, null=True)
+  # breed = models.CharField(max_length=200, null=True)
   weight = models.FloatField(max_length=200, null=True)
   sex = models.CharField(choices=(['female', 'Female'], ['male', 'Male']), max_length=10)
   price = models.DecimalField(decimal_places=2, max_digits=999, default=0.00, null=True)
   # discount = models.BigIntegerField(null=True, default=0)
   quantity = models.BigIntegerField(blank=True, default=0)
-  image_slug_1 = models.CharField(max_length=225, null=True)
-  image_slug_2 = models.CharField(max_length=225, null=True)
+  # image_slug_1 = models.CharField(max_length=225, null=True)
+  # image_slug_2 = models.CharField(max_length=225, null=True)
   is_popular = models.CharField(choices=[ ('No', False), ('Yes', True)], max_length=10, default=False)
   
   
   def __str__(self) -> str:
     return f'{self.name} - {self.category} - {self.is_popular}'
   
-  def images(self):
-    upload_images = self.animal_uploaded_image.all()
-    return upload_images.first().image.url
+  # def images(self):
+  #   upload_images = self.Product_uploaded_image.all()
+  #   return upload_images.first().image.url
 
+
+class ProductImage(BaseModel):
+  product = models.ForeignKey(to='Product', related_name='product_image', on_delete=models.CASCADE)
+  image = models.ImageField(upload_to='images')
   
-class UploadAnimalImages(BaseModel):
-  animal =models.ForeignKey(to='Animal', on_delete=models.CASCADE, related_name='animal_uploaded_image')
-  image = models.ImageField(upload_to='media/images/animals')
+  def __str__(self):
+    return f'{self.id} | {self.product.name}'
   
   
-  
-  def __str__(self) -> str:
-    return f'{self.id} - {self.date_created}'
+  @classmethod
+  def create_product_image(cls, product, image):
+    obj = cls.objects.create(product=product, image=image)
+    obj.save()
+
+
   
   
 class Category(BaseModel):
@@ -51,8 +60,8 @@ class Category(BaseModel):
   # SWINE =  'Swine'
   # NONE = ""
   
-  # ANIMAL_CHOICES = (
-  #   (NONE, "Classes of animals"),
+  # Product_CHOICES = (
+  #   (NONE, "Classes of Products"),
   #   (POULTRY, POULTRY),
   #   (CATTLE, CATTLE),
   #   (SHEEP, SHEEP),
@@ -60,7 +69,7 @@ class Category(BaseModel):
   #   (SWINE, SWINE),
   # )
   name = models.CharField(max_length=200, unique=True)
-  # animal_classes = models.CharField(choices=ANIMAL_CHOICES, max_length=100)
+  # Product_classes = models.CharField(choices=Product_CHOICES, max_length=100)
   description = models.TextField(blank=True, null=True)
   
   def __str__(self):
@@ -84,7 +93,7 @@ class Category(BaseModel):
 #     (OUT_OF_STOCK, get_readable_choice_value(OUT_OF_STOCK))
 #   )
   
-#   product = models.ForeignKey(to='Animal', on_delete=models.CASCADE)
+#   product = models.ForeignKey(to='Product', on_delete=models.CASCADE)
 #   quantity = models.BigIntegerField(default=0)
 #   price = models.DecimalField(decimal_places=2, max_digits=999, default=0)
 #   discount = models.BigIntegerField(null=True)
@@ -174,7 +183,7 @@ class Order(BaseModel):
   
 class OrderedItem(BaseModel):
   order = models.ForeignKey(to='Order', related_name='ordereditem', on_delete=models.CASCADE)
-  product = models.ForeignKey(to='Animal', related_name='+',on_delete=models.CASCADE)
+  product = models.ForeignKey(to='Product', related_name='+',on_delete=models.CASCADE)
   price = models.DecimalField(max_digits=10, decimal_places=2)
   quantity = models.BigIntegerField(blank=False)
   
@@ -202,7 +211,7 @@ class OrderedItem(BaseModel):
     instance = None
     product_id = kwargs['product_id']
     kwargs.pop('product_id')
-    product = Animal.objects.filter(id=product_id)
+    product = Product.objects.filter(id=product_id)
 
     if product.exists():
       instance = cls.objects.create(**kwargs, product=product.first())

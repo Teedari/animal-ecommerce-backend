@@ -1,6 +1,5 @@
 from django.urls import path
-from django.views.generic import TemplateView
-from dashboard.views.animal.animal_views import AddNewAnimalView, AnimalDeleteView, AnimalEditView, ListAnimalsView
+from dashboard.views.product import product_views as product
 from dashboard.views.category.category_views import CreateCategory, DeleteCategory, EditCategoryView, ListCategories
 from dashboard.views.dashboard_view import DashboardHomePageView
 from dashboard.views.delivery_point.delivery_point_view import CreateDeliveryPoints, EditDeliveryPointView, ListDeliveryPointsView
@@ -34,11 +33,11 @@ urlpatterns = [
   path('delivery/create', CreateDeliveryPoints.as_view(), name='delivery_point_add'),
   path('delivery/<int:pk>/edit', EditDeliveryPointView.as_view(), name='delivery_point_edit_detail'),
   
-  # Animal
-  path('animals', ListAnimalsView.as_view(), name='animal_list'),
-  path('animal/add', AddNewAnimalView.as_view(), name='animal_add'),
-  path('animal/<int:pk>/delete', AnimalDeleteView.as_view(), name='animal_delete'),
-  path('animal/<int:pk>/edit', AnimalEditView.as_view(), name='animal_edit'),
+  # Product
+  path('products', product.ListAllProductView.as_view(), name='product_list'),
+  path('product/add', product.AddNewProductView.as_view(), name='product_add'),
+  path('product/<int:pk>/delete', product.DeleteProductView.as_view(), name='product_delete'),
+  path('product/<int:pk>/edit', product.EditProductView.as_view(), name='product_edit'),
   
   # Order
   path('orders', ListOrderView.as_view(), name='order_list'),

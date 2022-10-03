@@ -14,7 +14,7 @@ from api.serializers.order import OrderCreateSerializer, OrderSerializer
 from api.serializers.payment import PaymentCreateSerializer, PaymentListSerializer
 
 
-from ecommerce.models import Animal, Category, DeliveryPoint, Order, Payment
+from ecommerce.models import Product, Category, DeliveryPoint, Order, Payment
 # Create your views here.
 
 
@@ -30,7 +30,7 @@ def listOfCategoryAPI(request):
 @api_view(['GET'])
 def listAllAnimalsAPI(request):
   if request.method == 'GET':
-    animal = Animal.objects.all()
+    animal = Product.objects.all()
     serializer = AnimalSerializer(animal, many=True)
     return Response(serializer.data)
   
@@ -49,7 +49,7 @@ class ProductListAPI(generics.ListAPIView):
       return params
   
   def get_queryset(self):
-    queryset = Animal.objects.all()
+    queryset = Product.objects.all()
     
     queryParams = self.get_params()
     if queryParams:
