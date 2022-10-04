@@ -9,8 +9,8 @@
   {% if data %}
     
     <div class="alert alert-info">
-      <strong>username: {{data.user.username}}, email: {{data.user.email}}, <span id="data-password">passcode: {{data.generated_password}}</span>
-      <i class="fa fa-copy copy-text-clipboard" data-target="#info-password"></i>
+      <strong>username: {{data.user.username}}, email: {{data.user.email}}, passcode: <span id="data-password">{{data.generated_password}}</span>
+      <i class="fa fa-copy copy-text-clipboard" data-target="#data-password"></i>
       </strong>
     </div>
   {% endif %}
@@ -68,10 +68,23 @@
 {% block DashboardScript %}
   <script>
     $('document').ready(function(){
-      $('.copy-text-clipboard').click(function(){
-        const target = $(this).data()['target']
-        console.log(target)
-      })
+      function myFunction() {
+        // Get the text field
+        var copyText = $($(this).data('target'));
+        console.log(copyText)
+       // Select the text field
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // For mobile devices
+      
+         // Copy the text inside the text field
+        navigator.clipboard.writeText(copyText.html());
+      
+        // Alert the copied text
+        alert("Copied the text: " + copyText.html());
+
+      
+      }  
+      $('.copy-text-clipboard').click(myFunction)
 
       if($('#id_user_role').val().toLowerCase() !== 'agent'){
         $('#id_delivery_location').closest('.form-group').removeProp('required').hide()
