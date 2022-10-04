@@ -7,11 +7,12 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from account.models import UserProfile
 from api.permissions.OnlyCustomPermission import AllowOnlyCustomerPermission
-from api.serializers.animal import AnimalSerializer
+from api.serializers.product import ProductCreationSerializer, ProductSerializer
 from api.serializers.category import CategorySerializer
 from api.serializers.delivery_point import DeliveryPointSerializer
 from api.serializers.order import OrderCreateSerializer, OrderSerializer
 from api.serializers.payment import PaymentCreateSerializer, PaymentListSerializer
+from api.serializers.product_image import ProductImageCreationSerializer
 
 
 from ecommerce.models import Product, Category, DeliveryPoint, Order, Payment
@@ -31,12 +32,14 @@ def listOfCategoryAPI(request):
 def listAllAnimalsAPI(request):
   if request.method == 'GET':
     animal = Product.objects.all()
-    serializer = AnimalSerializer(animal, many=True)
+    serializer = ProductSerializer(animal, many=True)
     return Response(serializer.data)
   
-
+class ProductAddAPI(generics.CreateAPIView):
+  serializer_class = ProductCreationSerializer
+  
 class ProductListAPI(generics.ListAPIView):
-  serializer_class = AnimalSerializer
+  serializer_class = ProductSerializer
   
   def get_params(self):
     if 'filter' in self.request.GET.keys():
@@ -69,6 +72,9 @@ class ProductListAPI(generics.ListAPIView):
     
     return queryset
   
+
+class ProductImageCreationAPI(generics.CreateAPIView):
+  serializer_class = ProductImageCreationSerializer
 class OrderAPI(generics.CreateAPIView):
   serializer_class = OrderCreateSerializer
   queryset = Order.objects.all()

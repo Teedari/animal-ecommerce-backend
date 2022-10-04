@@ -6,11 +6,12 @@ from account.views.api import AddNewAdminUserAPI, AddNewAgentUserAPI, AddNewCust
 app_name = 'api'
 urlpatterns = [
   path('openapi', get_schema_view(
-      title="Your Project",
+      title="Animal Ecommerce",
   ), name='openapi-schema'),
   
   path('categorys', listOfCategoryAPI, name='category_list'),
-  path('animals', ProductListAPI.as_view(), name='animal_list'),
+  path('products', ProductListAPI.as_view(), name='product_list'),
+  path('product/add', ProductAddAPI.as_view(), name='product_add'),
   
   # Auth
   path('auth/register/customer', AddNewCustomerUserAPI.as_view(), name='auth_register_user'),
@@ -31,6 +32,9 @@ urlpatterns = [
   path('payments', PaymentListAPI.as_view(), name='list_payment'),
   
   path('delivery_points', ListDeliveryPointsAPIView.as_view(), name='delivery_points'),
+  
+  
+  path('product_image', ProductImageCreationAPI.as_view(), name='product_image'),
   
   # # Purchase
   # path('purchase', CreatePurchaseAPI.as_view(), name='purchase'),

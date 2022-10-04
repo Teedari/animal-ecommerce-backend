@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework.validators import ValidationError
-from api.serializers.animal import AnimalSerializer
+from api.serializers.product import ProductSerializer
 from ecommerce import models as md
 
 
@@ -11,7 +11,7 @@ class OrderedItemSerializer(serializers.ModelSerializer):
     fields ='__all__'
     
   def get_product(self, instance):
-    return AnimalSerializer(instance=instance.product).data
+    return ProductSerializer(instance=instance.product).data
   
 class OrderItemCreateSerializer(serializers.ModelSerializer):
   product_id = serializers.IntegerField(write_only=True, required=True)

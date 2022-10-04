@@ -1,4 +1,5 @@
 from decimal import Decimal
+import decimal
 from functools import reduce
 from typing import Dict
 from django.db import models
@@ -31,14 +32,22 @@ class Product(BaseModel):
   def __str__(self) -> str:
     return f'{self.name} - {self.category} - {self.is_popular}'
   
+  
+  @classmethod
+  def add_new_product(cls, name:str, notes:str, category:str, weight:float, sex:str, price:decimal):
+    instance = cls.objects.create(name=name, sex=sex, weight=weight, price=price, category=category)
+    instance.notes = notes if notes else ''
+    instance.save()
+    return instance
+  
   # def images(self):
   #   upload_images = self.Product_uploaded_image.all()
   #   return upload_images.first().image.url
 
 
 class ProductImage(BaseModel):
-  product = models.ForeignKey(to='Product', related_name='product_image', on_delete=models.CASCADE)
-  image = models.ImageField(upload_to='images')
+  product = models.ForeignKey(to='Product', related_name='product_images', on_delete=models.CASCADE, null=True)
+  image = models.ImageField(upload_to='')
   
   def __str__(self):
     return f'{self.id} | {self.product.name}'
@@ -48,6 +57,12 @@ class ProductImage(BaseModel):
   def create_product_image(cls, product, image):
     obj = cls.objects.create(product=product, image=image)
     obj.save()
+    return obj
+    
+  @classmethod
+  def get_product_images_by_product(cls, product):
+    instances = cls.objects.filter(product=product)
+    return instances if instances.exists() else None
 
 
   
