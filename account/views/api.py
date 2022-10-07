@@ -31,7 +31,7 @@ class LoginUserAPI(APIView):
       user = UserLoginSerializer(instance=serializer.data).data
       user.pop('password')
       data = {
-        'user': user,
+        **user,
         **get_tokens_for_user(auth)
       }
       return response.Response(data=data, status=status.HTTP_200_OK)

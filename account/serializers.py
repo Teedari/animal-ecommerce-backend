@@ -11,7 +11,7 @@ class CreateNewUserBaseSerializer(serializers.ModelSerializer):
   class Meta:
     abstract = True
     model = User
-    fields = ['username', 'email', 'password', 'role']
+    fields = ['username', 'first_name', 'last_name', 'email', 'password', 'role']
     
   def get_role(self, *args):
     return UserProfile.CUSTOMER
@@ -26,6 +26,12 @@ class CreateNewUserBaseSerializer(serializers.ModelSerializer):
     user.email = validated_data['email']
     user.set_password(validated_data['password'])
     user.is_staff = False
+    
+    first_name = validated_data.get('first_name', None)
+    last_name = validated_data.get('last_name', None)
+    
+    if first_name: user.first_name = first_name
+    if last_name: user.last_name = last_name
     
     if self.get_role() == UserProfile.ADMIN:
       user.is_superuser = True
@@ -74,10 +80,12 @@ class CreateAgentUserSerializer(CreateNewUserBaseSerializer):
 class UserLoginSerializer(serializers.Serializer):
   username = serializers.CharField()
   password = serializers.CharField()
-  profile = serializers.SerializerMethodField(read_only=True)
   
-  def get_profile(self, instance):
-    return instance
+  
+  # profile = serializers.SerializerMethodField(read_only=True)
+  
+  # def get_profile(self, instance):
+  #   return instance
     # if self.is_valid():
     #   return None
     

@@ -3,11 +3,39 @@ from django.urls import reverse
 import os
 import tempfile
 from core.settings import BASE_DIR
-from rest_framework.status import HTTP_201_CREATED
+from rest_framework import status
 from ecommerce.models import Category
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 # Create your tests here.
+
+
+
+class TestAccountAPI(TestCase):
+  def setUp(self) -> None:
+    self.client = Client()
+    self.dummy_data = {
+      'username': 'john_doe',
+      'first_name': 'john',
+      'last_name': 'doe',
+      'email': 'doe@test.com',
+      'password': 'doe12345'
+    }
+    
+  def test_should_register_customer(self):
+    response = self.client.post(reverse('api:auth_register_user'), self.dummy_data)
+    self.assertEqual(status.HTTP_201_CREATED, response.status_code)
+    
+  def test_should_signin_customer(self):
+    self.test_should_register_customer()
+    data = {
+      'username': self.dummy_data['username'],
+      'password': self.dummy_data['password']
+    }
+  
+    response = self.client.post(reverse('api:sign_in'), data, format='json')
+    self.assertEqual(status.HTTP_200_OK, response.status_code)
+    print(response.json())
 
 class ProductImageAPITest(TestCase):
   def setUp(self) -> None:
@@ -21,7 +49,7 @@ class ProductImageAPITest(TestCase):
       'image': image
     }
     response = self.client.post(reverse('api:product_image'), payload, format='json')
-    self.assertEqual(HTTP_201_CREATED, response.status_code)
+    self.assertEqual(status.HTTP_201_CREATED, response.status_code)
 
 class ProductAPITest(TestCase):
   
@@ -62,5 +90,4 @@ class ProductAPITest(TestCase):
   
     
     response = Client().post(reverse('api:product_add'), payload)
-    print(response.json())
     self.assertEqual(201, response.status_code)

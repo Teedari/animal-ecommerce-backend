@@ -68,23 +68,17 @@
 {% block DashboardScript %}
   <script>
     $('document').ready(function(){
-      function myFunction() {
+      function copyPassword() {
         // Get the text field
         var copyText = $($(this).data('target'));
-        console.log(copyText)
-       // Select the text field
+        // Select the text field
         copyText.select();
-        copyText.setSelectionRange(0, 99999); // For mobile devices
-      
-         // Copy the text inside the text field
+        // Copy the text inside the text field
         navigator.clipboard.writeText(copyText.html());
-      
         // Alert the copied text
         alert("Copied the text: " + copyText.html());
-
-      
       }  
-      $('.copy-text-clipboard').click(myFunction)
+      $('.copy-text-clipboard').click(copyPassword)
 
       if($('#id_user_role').val().toLowerCase() !== 'agent'){
         $('#id_delivery_location').closest('.form-group').removeProp('required').hide()
