@@ -19,15 +19,12 @@ class Product(BaseModel):
   name = models.CharField(max_length=200)
   notes = models.CharField(max_length=200, blank=True, null=True)
   category = models.ForeignKey(to='Category', related_name='product_category', on_delete=models.SET_NULL, null=True)
-  # breed = models.CharField(max_length=200, null=True)
   weight = models.FloatField(max_length=200, null=True)
   sex = models.CharField(choices=(['female', 'Female'], ['male', 'Male']), max_length=10)
   price = models.DecimalField(decimal_places=2, max_digits=1000, default=0.00, null=True)
-  # discount = models.BigIntegerField(null=True, default=0)
   quantity = models.BigIntegerField(blank=True, default=0)
-  # image_slug_1 = models.CharField(max_length=225, null=True)
-  # image_slug_2 = models.CharField(max_length=225, null=True)
   is_popular = models.CharField(choices=[ ('No', False), ('Yes', True)], max_length=10, default=False)
+  owner = models.ForeignKey(to='account.UserProfile', null=True, related_name='product_owner', on_delete=models.CASCADE)
   
   
   def __str__(self) -> str:
@@ -41,11 +38,6 @@ class Product(BaseModel):
     instance.save()
     return instance
   
-  # def images(self):
-  #   upload_images = self.Product_uploaded_image.all()
-  #   return upload_images.first().image.url
-
-
 class ProductImage(BaseModel):
   product = models.ForeignKey(to='Product', related_name='product_images', on_delete=models.CASCADE, null=True)
   image = CloudinaryField()
@@ -85,7 +77,6 @@ class Category(BaseModel):
   #   (SWINE, SWINE),
   # )
   name = models.CharField(max_length=200, unique=True)
-  # Product_classes = models.CharField(choices=Product_CHOICES, max_length=100)
   description = models.TextField(blank=True, null=True)
   
   def __str__(self):
@@ -98,35 +89,7 @@ class Category(BaseModel):
       category.first().delete()
       return True
   
-  
-# MODEL-PRODUCT
-# class Product(BaseModel):
-#   AVAILABLE = 'available'
-#   OUT_OF_STOCK = 'out_of_stock'
-  
-#   STATUS = (
-#     (AVAILABLE, AVAILABLE),
-#     (OUT_OF_STOCK, get_readable_choice_value(OUT_OF_STOCK))
-#   )
-  
-#   product = models.ForeignKey(to='Product', on_delete=models.CASCADE)
-#   quantity = models.BigIntegerField(default=0)
-#   price = models.DecimalField(decimal_places=2, max_digits=999, default=0)
-#   discount = models.BigIntegerField(null=True)
-#   status = models.CharField(choices=STATUS, default=OUT_OF_STOCK, max_length=100, blank=True)
-  
-#   @property
-#   def jsonfields(self):
-#     return {
-#       'quantity': self.quantity,
-#       'price': self.price,
-#       'discount': self.discount
-#     }
-  
-  
-  
-  
-  
+   
 # MODEL - Order
 class Order(BaseModel):
   WAITING = 'waiting'
