@@ -39,7 +39,7 @@ class OrderCreateSerializer(serializers.ModelSerializer):
   def validate(self, attrs):  
     point = md.DeliveryPoint.objects.filter(id=attrs.get('delivery_point_id', None))
     if not point.exists():
-      raise ValidationError(_('Delivery point cannot be found'))
+      raise ValidationError(('Delivery point cannot be found'))
     self.delivery_point = point.first()
     return super().validate(attrs)
     
@@ -50,14 +50,14 @@ class OrderCreateSerializer(serializers.ModelSerializer):
       order = md.Order.objects.create(status=md.Order.WAITING, delivery_point=self.delivery_point,)
       order.save()
     except Exception as ex:
-      raise ValidationError(_('Order create failed try again'))
+      raise ValidationError(('Order create failed try again'))
     
     try:
       items = OrderItemCreateSerializer(data = validated_data['items'], order=order, many=True)
       items.is_valid(raise_exception=True)
       items.save()
     except Exception as ex:
-      raise ValidationError(_(ex))   
+      raise ValidationError((ex))   
     
     validated_data['id'] = order.id
     validated_data['total_amount'] = order.total_amount
