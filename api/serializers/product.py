@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from api.serializers.category import CategorySerializer
-from api.serializers.product_image import ProductImageCreationSerializer
+from api.serializers.product_image import ProductImageCreationSerializer, ProductImageSerializer
 from ecommerce import models as md
 
 
@@ -17,7 +17,8 @@ class ProductSerializer(serializers.ModelSerializer):
   
   def get_images(self, instance):
    images = instance.product_images.all()
-   return ProductImageCreationSerializer(images, many=True, context=self.context).data
+  #  breakpoint()
+   return ProductImageSerializer(images, many=True).data
 
 
 
@@ -59,6 +60,6 @@ class ProductCreationSerializer(serializers.ModelSerializer):
   
   def get_images(self, instance):
     images = instance.product_images.all()
-    return ProductImageCreationSerializer(images, many=True, context=self.context).data
+    return ProductImageSerializer(images, many=True).data
     
     

@@ -14,7 +14,7 @@ from pathlib import Path
 import os
 # import django_heroku
 from decouple import config
-
+import cloudinary
 import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False if config('DEPLOYMENT') == 'production' else True
+DEBUG = False if config('DEPLOYMENT', default='development') == 'production' else True
 if DEBUG:
     ALLOWED_HOSTS = ['192.168.43.203', '127.0.0.1']
 else:
@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     "corsheaders",
     'drf_yasg',
+    'cloudinary',
 
     
     
@@ -188,6 +189,16 @@ else:
             conn_max_age=600
         )
     }
+    
+    
+    
+# CLOUDINARY
+cloudinary.config( 
+  cloud_name = config('CLOUDINARY_API_NAME'), 
+  api_key = config('CLOUDINARY_API_KEY'), 
+  api_secret = config('CLOUDINARY_API_SECRET_KEY'),
+  secure = config('CLOUDINARY_API_SECURE')
+)
 
 
 # Password validation
