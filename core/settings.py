@@ -31,7 +31,9 @@ DEBUG = False if config('DEPLOYMENT') == 'production' else True
 if DEBUG:
     ALLOWED_HOSTS = ['192.168.43.203', '127.0.0.1']
 else:
-    ALLOWED_HOSTS = ['*']
+    RENDER_EXTERNAL_HOSTNAME = config('RENDER_EXTERNAL_HOSTNAME', default='*') 
+    if RENDER_EXTERNAL_HOSTNAME:    
+        ALLOWED_HOSTS =[ RENDER_EXTERNAL_HOSTNAME ]
 
 CORS_ALLOWED_ORIGINS = [
     "http://192.168.43.203",
@@ -182,13 +184,12 @@ if DEBUG:
         }
     }
 else:
-    
     DATABASES = {
-        'default': dj_database_url.config(
-            default='postgres://aquilat_postgres_user:0dy3pLhEXrJ0BRM2D0nRE03oKCl8cnUZ@dpg-ccfqlu53t3903r879920-a.oregon-postgres.render.com/aquilat_postgres',
-            conn_max_age=600
-        )
+    'default': dj_database_url.config(default=config('POSTGRES_DB_URL'),conn_max_age=600)
     }
+
+
+
 
 
 # Password validation
