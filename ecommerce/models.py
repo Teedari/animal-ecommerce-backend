@@ -21,7 +21,7 @@ class Product(BaseModel):
   # breed = models.CharField(max_length=200, null=True)
   weight = models.FloatField(max_length=200, null=True)
   sex = models.CharField(choices=(['female', 'Female'], ['male', 'Male']), max_length=10)
-  price = models.DecimalField(decimal_places=2, max_digits=999, default=0.00, null=True)
+  price = models.DecimalField(decimal_places=2, max_digits=1000, default=0.00, null=True)
   # discount = models.BigIntegerField(null=True, default=0)
   quantity = models.BigIntegerField(blank=True, default=0)
   # image_slug_1 = models.CharField(max_length=225, null=True)
@@ -199,7 +199,7 @@ class Order(BaseModel):
 class OrderedItem(BaseModel):
   order = models.ForeignKey(to='Order', related_name='ordereditem', on_delete=models.CASCADE)
   product = models.ForeignKey(to='Product', related_name='+',on_delete=models.CASCADE)
-  price = models.DecimalField(max_digits=10, decimal_places=2)
+  price = models.DecimalField(max_digits=1000, decimal_places=2)
   quantity = models.BigIntegerField(blank=False)
   
   
@@ -246,7 +246,7 @@ class Payment(BaseModel):
   order = models.OneToOneField(to='Order', related_name='payment_order', on_delete=models.CASCADE, null=True)
   name = models.CharField(max_length=100,)
   phone_number = models.CharField(max_length=10)
-  amount = models.DecimalField(max_digits=9999, decimal_places=2)
+  amount = models.DecimalField(max_digits=1000, decimal_places=2, default=0.00)
   payment_method = models.CharField(max_length=200)
   is_paid = models.BooleanField(default=False, null=True)
   paid_by = models.ForeignKey(to='account.UserProfile', on_delete=models.CASCADE, null=True)
@@ -259,7 +259,7 @@ class Payment(BaseModel):
 
 class DeliveryPoint(BaseModel):
   name = models.CharField(max_length=200)
-  fee = models.DecimalField(decimal_places=2, max_digits=9999)
+  fee = models.DecimalField(decimal_places=2, max_digits=1000)
   description = models.CharField(max_length=200, null=True, blank=True)
   userprofile = models.ManyToManyField('account.UserProfile')
   

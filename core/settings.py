@@ -14,6 +14,8 @@ from pathlib import Path
 import os
 # import django_heroku
 from decouple import config
+
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -160,12 +162,32 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+if DEBUG:
+    DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('POSTGRES_DB_NAME'),
+        'USER': config('POSTGRES_DB_USER'),
+        'PASSWORD': config('POSTGRES_DB_PASS'),
+        'HOST': config('POSTGRES_DB_HOST'),
+        'PORT': config('POSTGRES_DB_PORT'),
+        }
     }
-}
+else:
+    
+    DATABASES = {
+        'default': dj_database_url.config(
+            default='postgres://aquilat_postgres_user:0dy3pLhEXrJ0BRM2D0nRE03oKCl8cnUZ@dpg-ccfqlu53t3903r879920-a.oregon-postgres.render.com/aquilat_postgres',
+            conn_max_age=600
+        )
+    }
 
 
 # Password validation
