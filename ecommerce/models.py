@@ -8,6 +8,7 @@ from core.models import BaseModel
 from django.db.models import F, Sum
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+from cloudinary.models import CloudinaryField
 
 
 
@@ -47,7 +48,7 @@ class Product(BaseModel):
 
 class ProductImage(BaseModel):
   product = models.ForeignKey(to='Product', related_name='product_images', on_delete=models.CASCADE, null=True)
-  image = models.ImageField(upload_to='')
+  image = CloudinaryField()
   
   def __str__(self):
     return f'{self.id} | {self.product.name}'
