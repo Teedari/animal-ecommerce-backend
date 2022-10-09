@@ -13,7 +13,6 @@ class ListOrderView(UserViewAccessibilityMixin, generic.ListView):
   allow_user_profiles = [UserProfile.ADMIN, UserProfile.AGENT]
   
   def get_queryset(self):
-    # breakpoint()
     profile = UserProfile.get_user_profile(self.request.user)
     if profile.user_role == UserProfile.AGENT:
       return md.Order.objects.filter(delivery_point__userprofile__in=[profile])

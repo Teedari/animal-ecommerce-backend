@@ -93,15 +93,16 @@ class Category(BaseModel):
 # MODEL - Order
 class Order(BaseModel):
   WAITING = 'waiting'
-  ACCEPTED = 'accepted'
-  DECLINED =  'declined'
+  # ACCEPTED = 'accepted'
+  # DECLINED =  'declined'
   DELIVERING = 'delivering'
   RECEIVED = 'received'
   
   ORDERED_STATUS = (
+    ('', 'Select'),
     (WAITING, WAITING),
-    (ACCEPTED, ACCEPTED),
-    (DECLINED, DECLINED),
+    # (ACCEPTED, ACCEPTED),
+    # (DECLINED, DECLINED),
     (DELIVERING, DELIVERING),
     (RECEIVED, RECEIVED),
   )
@@ -138,8 +139,8 @@ class Order(BaseModel):
   def payment(self):
     return self.payment_order
   
-  def is_accepted(self):
-    return self.status == Order.ACCEPTED
+  def is_waiting(self):
+    return self.status == Order.WAITING
   
   def is_delivering(self):
     return self.status == Order.DELIVERING
