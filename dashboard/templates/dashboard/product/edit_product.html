@@ -100,11 +100,11 @@
             {% endfor %}
           {% endif %}
           <div class="form-group mt-2">
-            <label for="">{{form.description.label}}</label>
-            {{form.description}}
+            <label for="">{{form.notes.label}}</label>
+            {{form.notes}}
           </div>
-          {% if form.description.errors %}
-            {% for error in form.description.errors %}
+          {% if form.notes.errors %}
+            {% for error in form.notes.errors %}
               <small class="text-danger">{{error}}</small>
             {% endfor %}
           {% endif %}
