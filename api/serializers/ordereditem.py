@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework.validators import ValidationError
 from api.serializers.product import ProductSerializer
 from ecommerce import models as md
+# from django.utils.translation import ugettext_lazy as _
 
 
 class OrderedItemSerializer(serializers.ModelSerializer):
@@ -29,14 +30,13 @@ class OrderItemCreateSerializer(serializers.ModelSerializer):
       self.order = order
     
   def validate(self, attrs):
-    product = md.Animal.objects.filter(id=attrs['product_id'])
+    product = md.Product.objects.filter(id=attrs['product_id'])
     if not product:
-      raise ValidationError(_('Product is not found in database'), code='product-not-found')
+      raise ValidationError(('Product is not found in database'), code='product-not-found')
     
     product = product.first()
-    
     if product.price != attrs['price']:
-      raise ValidationError(_(f"Product #{product.name} price does not match"), code='product-price-does-not-match')
+      raise ValidationError((f"Product #{product.name} price does not match"), code='product-price-does-not-match')
     
     attrs['product'] = product
     
