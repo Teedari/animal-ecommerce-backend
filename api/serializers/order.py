@@ -11,7 +11,7 @@ class OrderSerializer(serializers.ModelSerializer):
   class Meta:
     model = md.Order
     fields = '__all__'
-    depth = 2
+    depth = 1
     
   def get_items(self, instance):
     try:
@@ -48,6 +48,7 @@ class OrderCreateSerializer(serializers.ModelSerializer):
     order = None
     try:
       order = md.Order.objects.create(status=md.Order.WAITING, delivery_point=self.delivery_point,)
+      order.customer = validated_data.get('customer')
       order.save()
     except Exception as ex:
       raise ValidationError(('Order create failed try again'))
