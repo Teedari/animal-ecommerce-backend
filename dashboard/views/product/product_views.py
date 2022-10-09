@@ -18,7 +18,7 @@ class AddNewProductView(View):
   
   
   def post(self, request, *args, **kwargs):
-    form = self.form_class(request.POST, request.FILES)
+    form = self.form_class(data=request.POST, files=request.FILES, owner=UserProfile.get_user_profile(request.user))
     context = {}
     if form.is_valid():
       instance = form.save()
