@@ -40,7 +40,7 @@ class ListAllProductView(UserViewAccessibilityMixin, generic.ListView,):
 class EditProductView(UserViewAccessibilityMixin, generic.UpdateView):
   template_name = 'dashboard/product/edit_product.html'
   model= Product
-  success_url = '/animals'
+  success_url = '/products'
   allow_user_profiles = [UserProfile.ADMIN]
   
   def get_form(self, form_class=None):

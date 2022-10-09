@@ -39,7 +39,7 @@ class AnimalUpdateForm(forms.ModelForm):
   
   class Meta:
     model = Product
-    exclude = ['image_slug_1', 'image_slug_2', 'quantity']
+    exclude = ['image_slug_1', 'image_slug_2', 'quantity', 'owner']
     
   def __init__(self, data=None, files=None, *args, **kwargs):
     super().__init__(data=data, files=files, *args, **kwargs)
