@@ -1,6 +1,7 @@
 from decimal import Decimal
 import decimal
 from functools import reduce
+from itertools import product
 from typing import Dict
 from django.db import models
 from core.helpers.funcs import get_readable_choice_value
@@ -208,7 +209,13 @@ class OrderedItem(BaseModel):
   def product_info(self):
     info = {}
     info['']
-    
+
+  def get_images(self):
+    images =  ProductImage.objects.filter(product__id=self.product.id)
+    return images if images.exists() else None
+  
+  def first_image(self):
+    return self.get_images().first()
     
     
     
