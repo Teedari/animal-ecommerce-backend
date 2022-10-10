@@ -24,48 +24,42 @@ class PaymentListSerializer(serializers.ModelSerializer):
     return OrderSerializer(instance=instance.order).data
 
 class PaymentCreateSerializer(serializers.ModelSerializer):
-  order = OrderCreateSerializer(write_only=True)
-  id = serializers.IntegerField(read_only=True)
+  order_id = serializers.IntegerField(write_only=True)
   class Meta:
     model = md.Payment
     exclude = ['date_updated',]
     extra_kwargs = {
+      'order': {'read_only': True, 'required': False},
       'paid_by': {'read_only': True, 'required': False},
       'remarks': {'read_only': True, 'required': False},
     }
     ordering = ['-date_created']
     
+  def validate(self, attrs):
+    if 'amount' not in attrs.keys():
+      raise serializers.ValidationError(('Amount field required'))
+    try:
+       self.order = md.Order.objects.get(id=attrs.get('order_id'))
+    except md.Order.DoesNotExist as ex:
+      raise serializers.ValidationError((ex))
+    if  float(self.order.total_amount) < float(attrs.get('amount')):
+      raise serializers.ValidationError((f'Insufficent amount, Try paying the exact amount requested - GHc { self.order.total_amount }'), code='insufficent_balance')
+    elif  float(self.order.total_amount) > float(attrs.get('amount')):
+      raise serializers.ValidationError((f'Amount is more, Try paying the exact amount requested - GHc { self.order.total_amount }'), code='amount_exceed')
+    return super().validate(attrs)
+    
   def create(self, validated_data):
-    
-    order = OrderCreateSerializer(data=validated_data.get('order'))
-    order.is_valid(raise_exception=True)
-    order.save()
-    order = order.data
-    # breakpoint()
-    if  float(order.get('total_amount')) < float(validated_data.get('amount')):
-      md.Order.objects.filter(id=order.get('id')).delete()
-      raise serializers.ValidationError(_(f'Insufficent amount, Try paying the exact amount requested - GHc { order.get("total_amount") }'), code='insufficent_balance')
-    elif  float(order.get('total_amount')) > float(validated_data.get('amount')):
-      md.Order.objects.filter(id=order.get('id')).delete()
-      raise serializers.ValidationError(_(f'Amount is more, Try paying the exact amount requested - GHc { order.get("total_amount") }'), code='amount_exceed')
-    
-    
+    order = OrderCreateSerializer(instance=self.order).data
 
     try:
-      validated_data.pop('order')
       payment = md.Payment.objects.create(**validated_data, order=md.Order.objects.filter(id=order.get('id')).first())
       payment.is_paid = True
       payment.save()
       validated_data['id'] = payment.id
-      md.Order.objects.filter(id=order.get('id')).update(status=md.Order.ACCEPTED, customer=validated_data.get('paid_by', None))
+      md.Order.objects.filter(id=order.get('id')).update(status=md.Order.DELIVERING, customer=validated_data.get('paid_by', None))
     except Exception as ex:
-      raise serializers.ValidationError(_(f'Payment of order #{order.get("id")} was unsuccessful'))
-    o = OrderCreateSerializer(instance=md.Order.objects.filter(id=order.get('id')).first())
-    # o.is_valid(raise_exception=True)
-    # validated_data['order'] = o.validated_data
-    validated_data['order'] = o.data
-    dd = PaymentCreateSerializer(instance=validated_data)
-    return validated_data
+      raise serializers.ValidationError((f'Payment of order #{order.get("id")} was unsuccessful'))
+    return payment
   
   
   
