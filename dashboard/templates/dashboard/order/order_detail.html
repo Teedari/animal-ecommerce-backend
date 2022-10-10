@@ -1,156 +1,162 @@
-{% extends "dashboard/base.html" %}
-{% load static %}
-{% load custom_tags %}
-
+{% extends "dashboard/base.html" %} 
+{% load static %} {% load custom_tags %} 
 {% block DashboardTitle %} Category {% endblock DashboardTitle %} 
 {% block DashboardContent %}
 <div class="row mb-4">
   <div class="col-md-10 offset-md-1">
-    <h2 class="my-2 py-2 rounded-3 heading" >Order Detail</h2>
+    <h2 class="my-2 py-2 rounded-3 heading">Order Detail</h2>
     {% if order.is_accepted %}
 
-      <div class="card card-body shadow-lg px-4 rounded-lg">
-        <div class="thank-you text-center">
-          <!-- <h3 class="text-primary">Thanks 4 shopping</h3> -->
-          <p class="m-0 mt-2">
-            <strong
-              >Hi
-              
-              ☺, this is an order made by <span class="text-capitalize">{{order.customer.get_username}}</span> </strong
-            >
-          </p>
-          <p class="">
-            <strong class="text-decoration-underline"
-              >Tracking Order Process</strong
-            >
-          </p>
-        </div>
+    <div class="card card-body shadow-lg px-4 rounded-lg">
+      <div class="thank-you text-center">
+        <!-- <h3 class="text-primary">Thanks 4 shopping</h3> -->
+        <p class="m-0 mt-2">
+          <strong
+            >Hi ☺, this is an order made by
+            <span class="text-capitalize">{{order.customer.get_username}}</span>
+          </strong>
+        </p>
+        <p class="">
+          <strong class="text-decoration-underline"
+            >Tracking Order Process</strong
+          >
+        </p>
+      </div>
 
-        <div class="custom-carousel">
-          <div class="custom-carousel-tab-container">
-            <div
-              class="custom-carousel-tab {% if order.is_waiting %} active {% endif %}"
-            >
-              <div class="custom-carousel-tab-icon">
-                <i class="fa fa-shopping-basket"></i>
-              </div>
-              <p class="custom-carousel-tab-label">Order Confirmed</p>
+      <div class="custom-carousel">
+        <div class="custom-carousel-tab-container">
+          <div
+            class="custom-carousel-tab {% if order.is_waiting %} active {% endif %}"
+          >
+            <div class="custom-carousel-tab-icon">
+              <i class="fa fa-shopping-basket"></i>
             </div>
-            <div
-              class="custom-carousel-tab {% if order.is_delivering %} active {% endif %}"
-            >
-              <div class="custom-carousel-tab-icon">
-                <i class="fa fa-truck"></i>
-              </div>
-              <p class="custom-carousel-tab-label">Order Delivering</p>
-            </div>
-            <div
-              class="custom-carousel-tab {% if order.is_received %} active {% endif %}"
-            >
-              <div class="custom-carousel-tab-icon">
-                <i class="fa fa-send-o"></i>
-              </div>
-              <p class="custom-carousel-tab-label">Received</p>
-            </div>
-          </div>
-          <div class="d-flex justify-content-between">
-            <label for="" class="d-flex gap-4 h6"
-              ><strong>Order No.</strong><span>{{order.id}}</span></label
-            >
-            <label for="" class="d-flex gap-4 h6"
-              ><strong>Order Date</strong
-              ><span>{{order.date_created}}</span></label
-            >
+            <p class="custom-carousel-tab-label">Order Confirmed</p>
           </div>
           <div
-            class="custom-carousel-list d-flex flex-column gap-2"
-            style="max-height: 300px; overflow-y: auto"
+            class="custom-carousel-tab {% if order.is_delivering %} active {% endif %}"
           >
-            {% for item in order.items %}
-            <div class="custom-carousel-list-item">
-              <div class="card card-body">
-                <div class="d-flex">
-                  <div class="card-image" style="width: 200px; height: 200px">
-                    <div class="image-container">
-                      {% if item.first_image %}
-                          <img src="{{item.first_image.image.url}}" alt="animal-image" />
-                        
-                            {% else %}
-                              <img src="{% static 'assets/svgs/undraw_not_found.svg' %}" alt="animal-image" />
-                            
-                        
-                      {% endif %}
-                    </div>
+            <div class="custom-carousel-tab-icon">
+              <i class="fa fa-truck"></i>
+            </div>
+            <p class="custom-carousel-tab-label">Order Delivering</p>
+          </div>
+          <div
+            class="custom-carousel-tab {% if order.is_received %} active {% endif %}"
+          >
+            <div class="custom-carousel-tab-icon">
+              <i class="fa fa-send-o"></i>
+            </div>
+            <p class="custom-carousel-tab-label">Received</p>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <label for="" class="d-flex gap-4 h6"
+            ><strong>Order No.</strong><span>{{order.id}}</span></label
+          >
+          <label for="" class="d-flex gap-4 h6"
+            ><strong>Order Date</strong
+            ><span>{{order.date_created}}</span></label
+          >
+        </div>
+        <div
+          class="custom-carousel-list d-flex flex-column gap-2"
+          style="max-height: 300px; overflow-y: auto"
+        >
+          {% for item in order.items %}
+          <div class="custom-carousel-list-item">
+            <div class="card card-body">
+              <div class="d-flex">
+                <div class="card-image" style="width: 200px; height: 200px">
+                  <div class="image-container">
+                    {% if item.first_image %}
+                    <img
+                      src="{{item.first_image.image.url}}"
+                      alt="animal-image"
+                    />
+
+                    {% else %}
+                    <img
+                      src="{% static 'assets/svgs/undraw_not_found.svg' %}"
+                      alt="animal-image"
+                    />
+
+                    {% endif %}
                   </div>
-                  <div
-                    class="d-flex align-items-center justify-content-between px-4"
-                    style="flex-grow: 1"
-                  >
-                    <div>
-                      <h4>{{item.product.name}}</h4>
-                      <h6>{{item.product.breed}}</h6>
-                    </div>
-                    <div><h6>{{item.quantity}}</h6></div>
-                    <div>
-                      <h6>{{item.price|get_currency}}</h6>
-                    </div>
+                </div>
+                <div
+                  class="d-flex align-items-center justify-content-between px-4"
+                  style="flex-grow: 1"
+                >
+                  <div>
+                    <h4>{{item.product.name}}</h4>
+                    <h6>{{item.product.breed}}</h6>
+                  </div>
+                  <div><h6>{{item.quantity}}</h6></div>
+                  <div>
+                    <h6>{{item.price|get_currency}}</h6>
                   </div>
                 </div>
               </div>
             </div>
-            {% endfor %}
           </div>
-          <section class="py-2">
-            <h5><strong>Payment & Delivery Details</strong></h5>
-            <div class="row">
-              <div class=" col-md-12 col-lg-8">
-                <table class="table">
-                  <tr>
-                    <td>Payment method</td>
-                      <td>{{order.payment.payment_method}}</td>
-                  </tr>
-                  <tr>
-                    <td>Destination Point</td>
-                    {% if order.delivery_point %}
-                      <td>{{order.delivery_point.name}}</td>
-                    {% endif %}
-                  </tr>
-                  <tr>
-                    <td>Delivered to</td>
-                    <td class="text-capitalize">{{order.customer.get_username}}</td>
-                  </tr>
-                </table>
-              </div>
-              <div class="col-md-12 col-lg-4">
-                <table class="table table-no-border">
-                  <tr>
-                    <td>Subtotal</td>
-                    <td><strong>{{order.total_items_amount|get_currency}}</strong></td>
-                  </tr>
-                  <tr>
-                    <td>Delivering Charges</td>
-                    <td><strong>{{order.delivery_point.fee|get_currency}}</strong></td>
-                  </tr>
-                  <tr>
-                    <td class="text-primary">Total</td>
-                    <td><strong>{{order.total_amount|get_currency}}</strong></td>
-                  </tr>
-                </table>
-              </div>
-            </div>
-          </section>
+          {% endfor %}
         </div>
+        <section class="py-2">
+          <h5><strong>Payment & Delivery Details</strong></h5>
+          <div class="row">
+            <div class="col-md-12 col-lg-8">
+              <table class="table">
+                <tr>
+                  <td>Payment method</td>
+                  <td>{{order.payment.payment_method}}</td>
+                </tr>
+                <tr>
+                  <td>Destination Point</td>
+                  {% if order.delivery_point %}
+                  <td>{{order.delivery_point.name}}</td>
+                  {% endif %}
+                </tr>
+                <tr>
+                  <td>Delivered to</td>
+                  <td class="text-capitalize">
+                    {{order.customer.get_username}}
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="col-md-12 col-lg-4">
+              <table class="table table-no-border">
+                <tr>
+                  <td>Subtotal</td>
+                  <td>
+                    <strong>{{order.total_items_amount|get_currency}}</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Delivering Charges</td>
+                  <td>
+                    <strong>{{order.delivery_point.fee|get_currency}}</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-primary">Total</td>
+                  <td><strong>{{order.total_amount|get_currency}}</strong></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </section>
       </div>
+    </div>
 
     {% else %}
-      <div class="text-center">
-        <h3 class="text-danger">Order with ID #{{order.id}} has not been paid</h3>
-      </div>
+    <div class="text-center">
+      <h3 class="text-danger">Order with ID #{{order.id}} has not been paid</h3>
+    </div>
     {% endif %}
   </div>
 </div>
-{% endblock DashboardContent %}
-
-{% block DashboardScript %}
-  
+{% endblock DashboardContent %} 
+{% block DashboardScript %} 
 {% endblock DashboardScript %}
