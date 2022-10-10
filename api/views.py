@@ -37,6 +37,9 @@ def listAllAnimalsAPI(request):
   
 class ProductAddAPI(generics.CreateAPIView):
   serializer_class = ProductCreationSerializer
+  permission_classes = [permissions.IsAuthenticated, AllowOnlyCustomerPermission,]
+  def perform_create(self, serializer):
+    return serializer.save(owner=UserProfile.get_user_profile(self.request.user))
   
 class ProductListAPI(generics.ListAPIView):
   serializer_class = ProductSerializer

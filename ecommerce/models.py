@@ -32,8 +32,9 @@ class Product(BaseModel):
   
   
   @classmethod
-  def add_new_product(cls, name:str, notes:str, category:str, weight:float, sex:str, price:decimal):
+  def add_new_product(cls, name:str, notes:str, category:str, weight:float, sex:str, price:decimal, owner=None):
     instance = cls.objects.create(name=name, sex=sex, weight=weight, price=price, category=category)
+    instance.owner = owner
     instance.notes = notes if notes else ''
     instance.save()
     return instance

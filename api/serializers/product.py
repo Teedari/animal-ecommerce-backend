@@ -23,18 +23,24 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class ProductCreationSerializer(serializers.ModelSerializer):
-  product_images = serializers.ListField(
-    min_length=2,
-    child=serializers.ImageField(),
-    write_only=True
-  )
+  # product_images = serializers.ListField(
+  #   min_length=2,
+  #   child=serializers.ImageField(),
+  #   write_only=True
+  # )
+  image_1 = serializers.FileField(write_only=True)
+  image_2 = serializers.FileField(write_only=True)
   
   images = serializers.SerializerMethodField(read_only=True)
   
   class Meta:
     model = md.Product
-    fields = '__all__'
+    # fields = '__all__'
+    exclude = ['quantity',]
     
+    extra_kwargs = {
+      'owner': {'read_only':True, 'required': False}
+    }
 
   def create(self, validated_data):
     product_instance = md.Product.add_new_product(
@@ -44,11 +50,18 @@ class ProductCreationSerializer(serializers.ModelSerializer):
       sex=validated_data.get('sex'),
       price=validated_data.get('price'),
       category=validated_data.get('category'),
+      owner=validated_data.get('owner')
     )
-    images = list(map(lambda image: {'image': image}, validated_data.get('product_images')))
-    instance = ProductImageCreationSerializer(data=images, product=product_instance, many=True)
-    instance.is_valid(raise_exception=True)
-    instance.save()
+
+    try:
+      md.ProductImage.create_product_image(product=product_instance, image=validated_data.get('image_1'))
+      md.ProductImage.create_product_image(product=product_instance, image=validated_data.get('image_2'))
+    except Exception as e:
+      raise serializers.ValidationError((e))
+    
+    # instance = ProductImageCreationSerializer(data= validated_data.get('image_1').file, product=product_instance)
+    # instance.is_valid(raise_exception=True)
+    # instance.save()
     
     
     # data = ProductSerializer(instance=product_instance).data
