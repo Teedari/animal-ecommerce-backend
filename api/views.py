@@ -41,6 +41,15 @@ class ProductAddAPI(generics.CreateAPIView):
   def perform_create(self, serializer):
     return serializer.save(owner=UserProfile.get_user_profile(self.request.user))
   
+  
+class ProductListByUserAPI(generics.ListAPIView):
+  serializer_class = ProductSerializer
+  permission_classes = [permissions.IsAuthenticated, AllowOnlyCustomerPermission,]
+  
+  def get_queryset(self):
+    return Product.objects.filter(owner=UserProfile.get_user_profile(self.request.user))
+  
+  
 class ProductListAPI(generics.ListAPIView):
   serializer_class = ProductSerializer
   

@@ -11,6 +11,7 @@ urlpatterns = [
   
   path('categorys', listOfCategoryAPI, name='category_list'),
   path('products', ProductListAPI.as_view(), name='product_list'),
+  path('customer/owned/products', ProductListByUserAPI.as_view(), name='customer_owned_product_list'),
   path('product/add', ProductAddAPI.as_view(), name='product_add'),
   
   # Auth
