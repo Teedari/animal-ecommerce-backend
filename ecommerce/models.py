@@ -139,6 +139,12 @@ class Order(BaseModel):
   def payment(self):
     return self.payment_order
   
+  def is_accepted(self):
+    try:
+      return self.payment_order
+    except Exception as e:
+      return None
+  
   def is_waiting(self):
     return self.status == Order.WAITING
   

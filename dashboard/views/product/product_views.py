@@ -58,5 +58,5 @@ class DeleteProductView(UserViewAccessibilityMixin, generic.DeleteView):
     if obj.exists():
       obj.first().delete()
       messages.success(request, f'Animal Deleted Successful #{kwargs["pk"]}')
-    return redirect(reverse('dashboard:animal_list'))
+    return redirect(reverse('dashboard:product_list'))
   
