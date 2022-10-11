@@ -5,7 +5,7 @@ from django.utils.decorators import method_decorator
 from django.db.models import Q
 from account.mixins.user_view_accessibility_mixin import UserViewAccessibilityMixin
 from account.models import UserProfile
-from ecommerce.models import Order, Payment
+from ecommerce.models import Order, Payment, Product
 
 class DashboardHomePageView(UserViewAccessibilityMixin, View):
   template_name = 'dashboard/index.html'
@@ -22,7 +22,7 @@ class DashboardHomePageView(UserViewAccessibilityMixin, View):
       orders = Order.objects.all()
       payments = Payment.objects.all()
       self.context['number_of_users'] = UserProfile.objects.all().count()
-      self.context['number_of_animals'] = UserProfile.objects.all().count()
+      self.context['number_of_animals'] = Product.objects.all().count()
       
     # breakpoint()
     

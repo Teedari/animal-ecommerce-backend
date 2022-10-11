@@ -14,28 +14,36 @@
           <div class="px-2 py-4">
             <h4>Users Count</h4>
             <h1><strong>{{number_of_users}}</strong> <i class="fa fa-users text-muted"></i></h1>
-            <small class="text-muted">Views</small>
+            <a href="{% url 'dashboard:user_list' %}">
+              <small class="text-muted">Views</small>
+            </a>
           </div>
         </div>
         <div class="col-md-3">
           <div class="px-2 py-4">
             <h4>Animal Count</h4>
             <h1><strong>{{number_of_animals}}</strong> <i class="fa fa-optin-monster text-muted"></i></h1>
-            <small class="text-muted">Views</small>
+            <a href="{% url 'dashboard:product_list' %}">
+              <small class="text-muted">Views</small>
+            </a>
           </div>
         </div>
         <div class="col-md-3">
           <div class="px-2 py-4">
             <h4>Payments Count</h4>
             <h1><strong>{{number_of_payments}}</strong> <i class="fa fa-credit-card-alt text-muted"></i></h1>
-            <small class="text-muted">Views</small>
+            <a href="{% url 'dashboard:payment_list' %}">
+              <small class="text-muted">Views</small>
+            </a>
           </div>
         </div>
         <div class="col-md-3">
           <div class="px-2 py-4">
             <h4>Orders Count</h4>
             <h1><strong>{{number_of_orders}}</strong> <i class="fa fa-cart-plus text-muted"></i></h1>
-            <small class="text-muted">Views</small>
+            <a href="{% url 'dashboard:order_list' %}">
+              <small class="text-muted">Views</small>
+            </a>
           </div>
         </div>
       </div>
@@ -47,14 +55,18 @@
           <div class="px-2 py-4">
             <h4>Payments Count</h4>
             <h1><strong>{{number_of_payments}}</strong> <i class="fa fa-credit-card-alt text-muted"></i></h1>
-            <small class="text-muted">Views</small>
+            <a href="{% url 'dashboard:payment_list' %}">
+              <small class="text-muted">Views</small>
+            </a>
           </div>
         </div>
         <div class="col-md-6">
           <div class="px-2 py-4">
             <h4>Orders Count</h4>
             <h1><strong>{{number_of_orders}}</strong> <i class="fa fa-cart-plus text-muted"></i></h1>
-            <small class="text-muted">Views</small>
+            <a href="{% url 'dashboard:order_list' %}">
+              <small class="text-muted">Views</small>
+            </a>
           </div>
         </div>
       </div>
