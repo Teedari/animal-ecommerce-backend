@@ -252,5 +252,9 @@ class DeliveryPoint(BaseModel):
       'fee': self.fee,
       'description': self.description
     }
-  
+  @classmethod
+  def getUserProfileDeliveryPoints(cls, users:list):
+    points = cls.objects.filter(userprofile__in=[*users])
+    if points:
+      return points.values('name')
   

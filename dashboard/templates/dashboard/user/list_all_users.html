@@ -15,6 +15,7 @@
         <th>#</th>
         <th>Username</th>
         <th>ROLE</th>
+        <th>Associated Delivery Points</th>
         <th></th>
       </thead>
       <tbody>
@@ -24,7 +25,15 @@
               <td>{{forloop.counter}}</td>
               <td>{{profile.user.username}}</td>
               <td>{{profile.user_role}}</td>
-                
+              <td>
+                {% if profile.is_agent %}
+                  {% for points in profile.get_assigned_delivery_points  %}
+                    
+                     <span class="bg-primary text-white px-2 mr-2"> {{points.name}}</span>
+                  
+                  {% endfor %}
+                {% endif %}
+              </td>
               <td>
                 <div class="dropdown">
                   <div class="p-2" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">

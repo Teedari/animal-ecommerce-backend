@@ -5,6 +5,7 @@ from core.models import BaseModel
 
 
 
+
 class UserProfile(BaseModel):
   UNKNOWN = 'Unknown'
   CUSTOMER = 'Customer'
@@ -81,6 +82,11 @@ class UserProfile(BaseModel):
     
   def user_remove(self):
     self.user.delete()
+    
+  def get_assigned_delivery_points(self):
+   from ecommerce.models import DeliveryPoint
+   return DeliveryPoint.getUserProfileDeliveryPoints(users=[self])
+
   
   
   
