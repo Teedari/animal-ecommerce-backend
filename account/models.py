@@ -20,7 +20,7 @@ class UserProfile(BaseModel):
   )
   user = models.OneToOneField(to=User, on_delete=models.CASCADE, related_name='+')
   email_verified = models.BooleanField(default=False)
-  phone_number = models.CharField(max_length=10)
+  phone_number = models.CharField(max_length=10, null=True)
   user_role = models.CharField(choices=USER_ROLES,default=UNKNOWN, max_length=100)
   
   def __str__(self) -> str:
@@ -50,11 +50,11 @@ class UserProfile(BaseModel):
       Exception('This user role is not available')
       
   @classmethod 
-  def create_user(cls, user, user_role=None):
+  def create_user(cls, user, phone_number=None, user_role=None):
     if user.is_active and user.is_superuser and user.is_superuser:
       user_role = cls.ADMIN
       
-    instance = cls.objects.create(user=user, user_role=user_role)
+    instance = cls.objects.create(user=user, phone_number=phone_number, user_role=user_role)
     instance.save()
     
     return instance
@@ -72,7 +72,6 @@ class UserProfile(BaseModel):
   
   def toggle_user_active_status(self):
     user = User.objects.filter(id = self.user.id)
-    print(user)
     if user:
       user = user.first()
       user.is_active = False if  user.is_active else True

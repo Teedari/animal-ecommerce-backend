@@ -1,5 +1,5 @@
-from account.serializers import  CreateAdminUserSerializer, CreateAgentUserSerializer, CreateCustomerUserSerializer, UserLoginSerializer
-from rest_framework.generics import CreateAPIView
+from account.serializers import  CreateAdminUserSerializer, CreateAgentUserSerializer, CreateCustomerUserSerializer, UpdateUserProfileInfoSerializer, UserChangePasswordVerificationSerializer, UserLoginSerializer
+from rest_framework.generics import CreateAPIView, UpdateAPIView
 from rest_framework.views import APIView
 from rest_framework import permissions, response, exceptions, status
 from django.contrib.auth import authenticate, logout
@@ -15,6 +15,22 @@ class AddNewAdminUserAPI(CreateAPIView):
   serializer_class = CreateAdminUserSerializer
 class AddNewAgentUserAPI(CreateAPIView):
   serializer_class = CreateAgentUserSerializer
+
+class UserProfileUpdatePasswordVerificationAPI(APIView):
+  serializer_class = UserChangePasswordVerificationSerializer
+  permission_classes = [permissions.AllowAny]
+  
+  def post(self, request):
+    try:
+      serializer = self.serializer_class(data=request.data)
+      serializer.is_valid(raise_exception=True)
+      return response.Response(data=serializer.data, status=status.HTTP_200_OK)
+    except Exception as e:
+      raise e
+class UpdateUserProfileAPI(UpdateAPIView):
+  serializer_class = UpdateUserProfileInfoSerializer
+  def get_queryset(self):
+    return super().get_queryset()
   
  
 class LoginUserAPI(APIView):
@@ -23,7 +39,6 @@ class LoginUserAPI(APIView):
     try:
       serializer = UserLoginSerializer(data=request.data)
       serializer.is_valid(raise_exception=True)
-      # breakpoint()
       auth = authenticate(request, username = serializer.data.get('username', None), password=serializer.data.get('password', None))
       if not auth:
         raise exceptions.AuthenticationFailed('Invalid Credentials')
