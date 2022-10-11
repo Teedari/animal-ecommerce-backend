@@ -9,6 +9,9 @@ from ecommerce.models import Product, ProductImage
 #     fields = '__all__'
     
 attrs = {'class': 'form-control'}
+labels = {
+  'price': 'Unit Price'
+}
 
 class ProductCreationForm(forms.ModelForm):
   image_1 = forms.ImageField(label='1st Image')
@@ -16,6 +19,7 @@ class ProductCreationForm(forms.ModelForm):
   class Meta:
     model = Product
     exclude = ['quantity', 'owner']
+    labels = labels
     
     
   def __init__(self, data=None, files=None, owner=None, *args, **kwargs) -> None:
@@ -40,6 +44,7 @@ class AnimalUpdateForm(forms.ModelForm):
   class Meta:
     model = Product
     exclude = ['image_slug_1', 'image_slug_2', 'quantity', 'owner']
+    labels=labels
     
   def __init__(self, data=None, files=None, *args, **kwargs):
     super().__init__(data=data, files=files, *args, **kwargs)
