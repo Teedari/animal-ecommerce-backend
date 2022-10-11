@@ -1,4 +1,4 @@
-from account.serializers import  CreateAdminUserSerializer, CreateAgentUserSerializer, CreateCustomerUserSerializer, UpdateUserProfileInfoSerializer, UserChangePasswordVerificationSerializer, UserLoginSerializer
+from account.serializers import  CreateAdminUserSerializer, CreateAgentUserSerializer, CreateCustomerUserSerializer, UpdateUserProfileInfoSerializer, UserChangePasswordSerializer, UserChangePasswordVerificationSerializer, UserLoginSerializer
 from rest_framework.generics import CreateAPIView, UpdateAPIView
 from rest_framework.views import APIView
 from rest_framework import permissions, response, exceptions, status
@@ -27,12 +27,11 @@ class UserProfileUpdatePasswordVerificationAPI(APIView):
       return response.Response(data=serializer.data, status=status.HTTP_200_OK)
     except Exception as e:
       raise e
-class UpdateUserProfileAPI(UpdateAPIView):
-  serializer_class = UpdateUserProfileInfoSerializer
-  def get_queryset(self):
-    return super().get_queryset()
-  
- 
+
+class UserChangePasswordAPI(CreateAPIView):
+  permission_classes = [permissions.AllowAny,]
+  serializer_class = UserChangePasswordSerializer
+
 class LoginUserAPI(APIView):
   permission_classes = [permissions.AllowAny,]
   def post(self, request):

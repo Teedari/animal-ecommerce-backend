@@ -110,10 +110,23 @@ class UserChangePasswordVerificationSerializer(serializers.Serializer):
       raise serializers.ValidationError(_('User does not exist in database'), code='user-does-not-exist')
     return super().validate(attrs)
   
-  # def save(self, **kwargs):
-  #   self.run_validation()
-  #   return super().save(**kwargs)
   
+class UserChangePasswordSerializer(serializers.ModelSerializer):
+  # auth = UserChangePasswordVerificationSerializer()
+  
+  user_username = serializers.CharField(max_length=200)
+  user_email = serializers.CharField(max_length=200)
+  password = serializers.CharField(max_length=200)
+  
+  class Meta:
+    model = User
+    fields = ['user_username', 'user_email', 'password']
+    
+  def create(self, validated_data):
+    user = User.objects.get(username=validated_data.get('user_username'))    
+    user.set_password(validated_data.get('password'))
+    user.save()
+    return validated_data
   
 class CreateCustomerUserSerializer(CreateNewUserBaseSerializer):
   

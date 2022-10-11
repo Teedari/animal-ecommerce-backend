@@ -82,3 +82,16 @@ class TestAccountAPI(TestCase):
     }
     response = self.client.post(reverse('api:auth_user_verify_existence'), data=data)
     self.assertEqual(status.HTTP_200_OK, response.status_code)
+    
+  def test_should_change_users_password(self):
+    self.test_should_register_customer()
+    data = {
+      'auth': {
+      'username': self.dummy_data['username'],
+      'email': self.dummy_data['email'],
+        },
+      'password': '1234567890'
+    }
+    response = self.client.post(reverse('api:auth_user_change_password'), data=data, format='json')
+    breakpoint()
+    self.assertEqual(status.HTTP_200_OK, response.status_code)

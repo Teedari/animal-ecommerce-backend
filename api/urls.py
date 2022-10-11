@@ -1,7 +1,7 @@
 from django.urls import path, re_path
 from .views import *
 from rest_framework.schemas import get_schema_view
-from account.views.api import AddNewAdminUserAPI, AddNewAgentUserAPI, AddNewCustomerUserAPI, LoginUserAPI, SignOutUserAPI, UpdateUserProfileAPI, UserProfileUpdatePasswordVerificationAPI
+from account.views.api import AddNewAdminUserAPI, AddNewAgentUserAPI, AddNewCustomerUserAPI, LoginUserAPI, SignOutUserAPI, UserChangePasswordAPI, UserProfileUpdatePasswordVerificationAPI
 
 app_name = 'api'
 urlpatterns = [
@@ -20,6 +20,7 @@ urlpatterns = [
   path('auth/register/agent', AddNewAgentUserAPI.as_view(), name='auth_register_agent'),
   # path('auth/user/update-profile', UpdateUserProfileAPI.as_view(), name='auth_user_update_profile'),
   path('auth/user/verify/exists', UserProfileUpdatePasswordVerificationAPI.as_view(), name='auth_user_verify_existence'),
+  path('auth/user/change-password', UserChangePasswordAPI.as_view(), name='auth_user_change_password'),
   path('auth/login', LoginUserAPI.as_view(), name='sign_in'),
   path('auth/logout', SignOutUserAPI.as_view(), name='sign_out'),
   
