@@ -71,7 +71,7 @@ class ProductListAPI(generics.ListAPIView):
       try:
         for key in queryParams.keys():
           if key == 'name':
-            queryset = queryset.filter(name__startswith=queryParams[key])
+            queryset = queryset.filter(name__istartswith=queryParams[key])
           if key == 'category':
             queryset = queryset.filter(category__id=queryParams[key])
           if key == 'id':
