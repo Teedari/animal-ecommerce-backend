@@ -28,10 +28,10 @@ class ProductCreationSerializer(serializers.ModelSerializer):
   #   child=serializers.ImageField(),
   #   write_only=True
   # )
-  image_1 = serializers.FileField(write_only=True)
-  image_2 = serializers.FileField(write_only=True)
+  # image_1 = serializers.FileField(write_only=True)
+  # image_2 = serializers.FileField(write_only=True)
   
-  images = serializers.SerializerMethodField(read_only=True)
+  # images = serializers.SerializerMethodField(read_only=True)
   
   class Meta:
     model = md.Product
@@ -53,11 +53,11 @@ class ProductCreationSerializer(serializers.ModelSerializer):
       owner=validated_data.get('owner')
     )
 
-    try:
-      md.ProductImage.create_product_image(product=product_instance, image=validated_data.get('image_1'))
-      md.ProductImage.create_product_image(product=product_instance, image=validated_data.get('image_2'))
-    except Exception as e:
-      raise serializers.ValidationError((e))
+    # try:
+    #   md.ProductImage.create_product_image(product=product_instance, image=validated_data.get('image_1'))
+    #   md.ProductImage.create_product_image(product=product_instance, image=validated_data.get('image_2'))
+    # except Exception as e:
+    #   raise serializers.ValidationError((e))
     
     # instance = ProductImageCreationSerializer(data= validated_data.get('image_1').file, product=product_instance)
     # instance.is_valid(raise_exception=True)

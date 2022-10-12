@@ -50,9 +50,12 @@ class ProductImage(BaseModel):
   
   @classmethod
   def create_product_image(cls, product, image):
-    obj = cls.objects.create(product=product, image=image)
-    obj.save()
-    return obj
+    try:
+      obj = cls.objects.create(product=product, image=image)
+      obj.save()
+      return obj
+    except Exception as e:
+      raise ValidationError(_(e), code='image-create-unsuccessful')
     
   @classmethod
   def get_product_images_by_product(cls, product):

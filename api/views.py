@@ -12,7 +12,7 @@ from api.serializers.category import CategorySerializer
 from api.serializers.delivery_point import DeliveryPointSerializer
 from api.serializers.order import OrderCreateSerializer, OrderSerializer
 from api.serializers.payment import PaymentCreateSerializer, PaymentListSerializer
-from api.serializers.product_image import ProductImageCreationSerializer
+from api.serializers.product_image import ProductImageAddSerializer, ProductImageCreationSerializer
 
 
 from ecommerce.models import Product, Category, DeliveryPoint, Order, Payment
@@ -86,7 +86,7 @@ class ProductListAPI(generics.ListAPIView):
   
 
 class ProductImageCreationAPI(generics.CreateAPIView):
-  serializer_class = ProductImageCreationSerializer
+  serializer_class = ProductImageAddSerializer
 class OrderAPI(generics.CreateAPIView):
   serializer_class = OrderCreateSerializer
   queryset = Order.objects.all()

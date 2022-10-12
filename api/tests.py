@@ -30,26 +30,26 @@ class ProductAPITest(TestCase):
     category = Category.objects.create(name='how')
     category.save()
     self.category = category
-    self.image_file = self.get_temp_image_file()
+    # self.image_file = self.get_temp_image_file()
       
   
-  def get_temp_image_file(self):
-    try:
-      image = open(os.path.join(BASE_DIR, 'media/test/product_test_image.png'), 'rb')
-    except FileNotFoundError:
-      image = open(os.path.join(BASE_DIR, 'media/test/product_test_image.png'), 'wb')
-    return image
+  # def get_temp_image_file(self):
+  #   try:
+  #     image = open(os.path.join(BASE_DIR, 'media/test/product_test_image.png'), 'rb')
+  #   except FileNotFoundError:
+  #     image = open(os.path.join(BASE_DIR, 'media/test/product_test_image.png'), 'wb')
+  #   return image
     
     
   def test_should_add_new_product(self):
-    image = open(os.path.join(BASE_DIR, 'media/test/test.png'), 'rb')
-    image2 = open(os.path.join(BASE_DIR, 'media/test/test.png'), 'rb')
+    # image = open(os.path.join(BASE_DIR, 'media/test/test.png'), 'rb')
+    # image2 = open(os.path.join(BASE_DIR, 'media/test/test.png'), 'rb')
     # with open(os.path.join(BASE_DIR, 'media/test/test.png'), 'rb') as fp:
     # file = SimpleUploadedFile('test_image.png', b'file_content', content_type='image/png')
     # print(file)
     payload = {
    
-    "product_images": [image, image2],
+    # "product_images": [image, image2],
 
     "name": "string",
     "notes": "string",
@@ -63,4 +63,5 @@ class ProductAPITest(TestCase):
   
     
     response = Client().post(reverse('api:product_add'), payload)
+    breakpoint()
     self.assertEqual(201, response.status_code)

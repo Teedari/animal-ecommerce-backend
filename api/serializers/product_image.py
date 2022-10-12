@@ -31,3 +31,31 @@ class ProductImageCreationSerializer(serializers.ModelSerializer):
     instance = md.ProductImage.create_product_image(product=self.product, image=validated_data.get('image'))
     
     return instance
+  
+  
+  
+
+
+# NEW
+  
+  
+  
+class ProductImageCreateItemSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = md.ProductImage
+    fields = '__all__'
+    
+  def create(self, validated_data):
+    instance = md.ProductImage.create_product_image(product=self.product, image=validated_data.get('image'))
+    return instance
+  
+  
+  
+class ProductImageAddSerializer(serializers.Serializer):
+  image_1 = serializers.FileField()
+  # image_2 = serializers.ImageField()
+  
+  def create(self, validated_data):
+    breakpoint()
+      # product_image = ProductImageCreateItemSerializer()
+    return super().create(validated_data)

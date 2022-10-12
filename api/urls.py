@@ -14,6 +14,7 @@ urlpatterns = [
   path('customer/owned/products', ProductListByUserAPI.as_view(), name='customer_owned_product_list'),
   path('product/add', ProductAddAPI.as_view(), name='product_add'),
   
+  
   # Auth
   path('auth/register/customer', AddNewCustomerUserAPI.as_view(), name='auth_register_user'),
   path('auth/register/admin', AddNewAdminUserAPI.as_view(), name='auth_register_admin'),
@@ -37,8 +38,8 @@ urlpatterns = [
   
   path('delivery_points', ListDeliveryPointsAPIView.as_view(), name='delivery_points'),
   
-  
-  path('product_image', ProductImageCreationAPI.as_view(), name='product_image'),
+  path('product_image/add', ProductImageCreationAPI.as_view(), name='image_add_to_product'),
+  # path('product_image', ProductImageCreationAPI.as_view(), name='product_image'),
   
   # # Purchase
   # path('purchase', CreatePurchaseAPI.as_view(), name='purchase'),
