@@ -21,7 +21,7 @@ class UserProfile(BaseModel):
   user = models.OneToOneField(to=User, on_delete=models.CASCADE, related_name='+')
   email_verified = models.BooleanField(default=False)
   phone_number = models.CharField(max_length=10, null=True)
-  user_role = models.CharField(choices=USER_ROLES,default=UNKNOWN, max_length=100)
+  user_role = models.CharField(choices=USER_ROLES, max_length=100)
   
   def __str__(self) -> str:
     return f'{self.user.username} - {self.user_role}'

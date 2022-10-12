@@ -39,7 +39,7 @@ class CustomUserCreationForm(forms.ModelForm):
     user.save()
     
     try:
-      profile = UserProfile.create_user(user, self.cleaned_data['user_role'])
+      profile = UserProfile.create_user(user=user, user_role=self.cleaned_data['user_role'])
       # breakpoint()
       if self.cleaned_data['user_role'] == UserProfile.AGENT:
         for location in self.cleaned_data.get('delivery_location'):
