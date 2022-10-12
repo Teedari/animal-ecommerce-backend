@@ -39,6 +39,7 @@ urlpatterns = [
   path('delivery_points', ListDeliveryPointsAPIView.as_view(), name='delivery_points'),
   
   path('product_image/add', ProductImageCreationAPI.as_view(), name='image_add_to_product'),
+  
   # path('product_image', ProductImageCreationAPI.as_view(), name='product_image'),
   
   # # Purchase

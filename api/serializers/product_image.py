@@ -1,5 +1,7 @@
 from dataclasses import field, fields
+from itertools import product
 from rest_framework import serializers
+from api.serializers import product as pro
 from ecommerce import models as md
 
 class ProductImageSerializer(serializers.ModelSerializer):
@@ -13,10 +15,10 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
 class ProductImageCreationSerializer(serializers.ModelSerializer):
   # title = serializers.CharField(write_only=True)
+  image = serializers.FileField(write_only=True)
   class Meta:
     model = md.ProductImage
     fields = '__all__'
-    
     extra_kwargs ={
       'product': {'required': False}
     }
@@ -28,9 +30,9 @@ class ProductImageCreationSerializer(serializers.ModelSerializer):
   
     
   def create(self, validated_data):
-    instance = md.ProductImage.create_product_image(product=self.product, image=validated_data.get('image'))
-    
-    return instance
+    instance = md.ProductImage.create_product_image(product=validated_data.get('product'), image=validated_data.get('image'))
+    instance = md.ProductImage.create_product_image(product=validated_data.get('product'), image=validated_data.get('image'))
+    return validated_data
   
   
   
@@ -51,11 +53,12 @@ class ProductImageCreateItemSerializer(serializers.ModelSerializer):
   
   
   
-class ProductImageAddSerializer(serializers.Serializer):
-  image_1 = serializers.FileField()
-  # image_2 = serializers.ImageField()
+# class ProductImageAddSerializer(serializers.Serializer):
+#   image_1 = serializers.FileField(write_only=True,)
+#   product = serializers
+#   # image_2 = serializers.ImageField()
   
-  def create(self, validated_data):
-    breakpoint()
-      # product_image = ProductImageCreateItemSerializer()
-    return super().create(validated_data)
+#   def create(self, validated_data):
+#     product_image = ProductImageCreateItemSerializer()
+#     breakpoint
+    
