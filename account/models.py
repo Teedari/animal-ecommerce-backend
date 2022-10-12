@@ -42,7 +42,9 @@ class UserProfile(BaseModel):
   def get_username(self):
     return self.user.get_username()
   
-  
+  @property
+  def get_phone_number(self):
+    return self.phone_number if self.phone_number else 'No contact'
   
   @classmethod
   def add_user_to_group(cls, user_role):

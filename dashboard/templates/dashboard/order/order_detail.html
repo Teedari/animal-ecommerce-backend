@@ -120,7 +120,14 @@
                 <tr>
                   <td>Delivered to</td>
                   <td class="text-capitalize">
-                    {{order.customer.get_username}}
+                    <div class="border p-4 text-center">
+                      <h3><strong>Customers Information</strong></h3>
+                      {{order.customer.get_username}}
+                      <br />
+                      {{order.customer.user.email}}
+                      <br />
+                      {{order.customer.get_phone_number}}
+                    </div>
                   </td>
                 </tr>
               </table>
